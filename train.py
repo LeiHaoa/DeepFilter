@@ -25,7 +25,7 @@ def train_epoch(train_loader, net, optimizer):
     #optimizer.zero_grad()
     for i, data in enumerate(train_loader, 0):
         inputs, labels = data #TODO #DONE
-        inputs, labels = Variable(inputs).float(), Variable(labels).float()
+        inputs, labels = Variable(inputs).float(), Variable(labels).long()
         if use_cuda:
             inputs, labels = inputs.cuda(), labels.cuda()
         optimizer.zero_grad()
@@ -86,14 +86,13 @@ def test_epoch(test_loader, net, optimizer):
     tmp_file = open("./tmp.out", 'w')
     for i, data in enumerate(test_loader, 0):
         inputs, labels = data #TODO #DONE
-        inputs, labels = Variable(inputs).float(), Variable(labels).float()
+        inputs, labels = Variable(inputs).float(), Variable(labels).long()
         total += len(inputs)
         if use_cuda:
             inputs, labels = inputs.cuda(), labels.cuda()
 
         outputs = net(inputs) #outputs is the prob of each class(P or N)
         _, predicted = torch.max(outputs, 1)
-        _, labels = torch.max(labels, 1)
         #print(predicted.is_cuda, labels.is_cuda)
         write_to_tmp_file(predicted, labels, tmp_file) #----debug
         t00, t01, t10, t11 = print_cmp2x2(predicted, labels)
@@ -108,7 +107,7 @@ def test_epoch(test_loader, net, optimizer):
     print("P|L\t0\t1\n0\t{}\t{}\n1\t{}\t{}".format(g00, g01, g10, g11))
     TNR =  g01 / (g01 + g10)
     print("TNR: ", TNR)
-    print("haoz feature(bigger better): ", -1 * math.log((TNR + 0.0001) * (false/total)))
+    print("haoz feature(bigger better): ", -1 * math.log(TNR * (false/total)))
     tmp_file.close()
 
     return epoch_loss
@@ -117,7 +116,7 @@ def test_epoch(test_loader, net, optimizer):
 region_file = "/home/old_home/haoz/workspace/data/NA12878/ConfidentRegions.bed"
 fasta_file = "/home/old_home/haoz/workspace/data/hg38/hg38.fa"
 bam_file = "/home/old_home/haoz/workspace/data/NA12878/NA12878_S1.bam"
-base_path = "./workspace"
+base_path = "/home/haoz/python/workspace"
 truth_path =  "/home/haoz/data/HG001_GRCh38_GIAB_highconf_CG-IllFB-IllGATKHC-Ion-10X-SOLID_CHROM1-X_v.3.3.2_highconf_PGandRTGphasetransfer.vcf"
 out_dir = os.path.join(base_path, "out/models")
 re_exec = False
@@ -126,7 +125,7 @@ strelka2_result_path = "/home/haoz/data/variants.vcf"
 fastvc_result_path = "/home/haoz/data/out_fisher.vcf"
 #--------------------------------------------------------#
 
-reload_from_dupfile = True #load from file(True) or compute generate data again(Fasle)
+reload_from_dupfile = False #load from file(True) or compute generate data again(Fasle)
 data_path = "./dataset_fastvc.pkl"
 if re_exec:
     dataset = Dataset(reload_from_dupfile, re_exec, [region_file, fasta_file, bam_file], 
@@ -148,7 +147,7 @@ net = Net(n_feature, [140, 160, 170, 100, 10] , 2)
 if use_cuda:
     net.cuda()
 max_epoch = 500 
-save_freq = 20 # save every xx save_freq
+save_freq = 10 # save every xx save_freq
 n_epoch = 0
 batch_size = 128
 nthreads = 20
@@ -159,12 +158,11 @@ nthreads = 20
 #optimizer = optim.Adam(net.parameters(), lr = 0.01)
 optimizer = torch.optim.Adadelta(net.parameters(), lr=1.0, rho=0.96, eps=1e-05, weight_decay=0)
 #loss_func = torch.nn.MSELoss()
-weight = torch.Tensor([1, 10])
+weight = torch.Tensor([1, 40])
 if(use_cuda):
     weight = weight.cuda()
-#loss_func = torch.nn.CrossEntropyLoss(weight = weight)
+loss_func = torch.nn.CrossEntropyLoss(weight = weight)
 #loss_func = torch.nn.BCELoss()
-loss_func = torch.nn.BCEWithLogitsLoss(pos_weight = weight)
 #------------------------------------------------------------#
 
 for epoch in range(max_epoch):
@@ -190,7 +188,7 @@ for epoch in range(max_epoch):
     #optimizer.zero_grad()
     for i, data in enumerate(train_loader, 0):
         inputs, labels = data #TODO #DONE
-        inputs, labels = Variable(inputs).float(), Variable(labels).float()
+        inputs, labels = Variable(inputs).float(), Variable(labels).long()
         if use_cuda:
             inputs, labels = inputs.cuda(), labels.cuda()
         optimizer.zero_grad()
@@ -217,7 +215,7 @@ for epoch in range(max_epoch):
 
     print("mean loss of epoch %d is: %f" % (epoch, sum(epoch_loss) / len(epoch_loss)))
     test_epoch(test_loader, net, optimizer)
-    if n_epoch % save_freq  == -1: #== (save_freq - 1):
+    if n_epoch % save_freq  == 0: # (save_freq - 1):
         if not os.path.exists(out_dir):
             os.mkdir(out_dir)
         tag = "fastvc_{}".format(datetime.datetime.now().strftime("%y-%m-%d-%H-%M-%S"))

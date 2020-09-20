@@ -22,7 +22,7 @@ class Net(torch.nn.Module):
     self.hidden3 = nn.Linear(hidden_sizes[2], hidden_sizes[3])
     self.hidden4 = nn.Linear(hidden_sizes[3], hidden_sizes[4])
     self.predict = nn.Linear(hidden_sizes[-1], n_output) # output layer
-    self.actf = nn.Sigmoid()
+    #self.predict = nn.Linear(hidden_sizes[0], n_output) # output layer
   
   def forward(self, x): 
     '''
@@ -37,8 +37,8 @@ class Net(torch.nn.Module):
     x = F.leaky_relu(self.hidden4(x))
     x = self.predict(x) 
     #print("6\n", x)
-    #return x
-    return F.softmax(x, dim = 1)
+    return x
+    #return F.softmax(x, dim = 1)
 
   def initialize_weights(self):
     print("initializeing net work")

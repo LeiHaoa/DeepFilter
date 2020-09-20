@@ -306,12 +306,12 @@ def get_labels_dict(data_dict, truth_path):
     negtive_num = 0
     for k, v in data_dict.items():
         if k in truth_vars:
-            labels_dict[k] = [1, 0]
-            #labels_dict[k] = 1
+            #labels_dict[k] = [1, 0]
+            labels_dict[k] = 1
             positive_num += 1
         else:
-            labels_dict[k] = [0, 1]
-            #labels_dict[k] = 0
+            #labels_dict[k] = [0, 1]
+            labels_dict[k] = 0
             negtive_num += 1
     return positive_num, negtive_num, labels_dict
 
