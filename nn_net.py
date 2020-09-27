@@ -23,6 +23,7 @@ class Net(torch.nn.Module):
     self.hidden4 = nn.Linear(hidden_sizes[3], hidden_sizes[4])
     self.predict = nn.Linear(hidden_sizes[-1], n_output) # output layer
     #self.predict = nn.Linear(hidden_sizes[0], n_output) # output layer
+    self.dropout = nn.Dropout(p = 0.9)
   
   def forward(self, x): 
     '''
@@ -31,10 +32,15 @@ class Net(torch.nn.Module):
     '''
     #print("----------------print out input--------------")
     x = F.leaky_relu(self.hidden0(x)) 
+    x = self.dropout(x)
     x = F.leaky_relu(self.hidden1(x)) 
+    x = self.dropout(x)
     x = F.leaky_relu(self.hidden2(x))
+    x = self.dropout(x)
     x = F.leaky_relu(self.hidden3(x))
+    x = self.dropout(x)
     x = F.leaky_relu(self.hidden4(x))
+    #x = self.dropout(x)
     x = self.predict(x) 
     #print("6\n", x)
     return x

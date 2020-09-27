@@ -17,7 +17,8 @@ from MyLogger import Logger
 from nn_net import Net
 import math
 
-sys.stdout = Logger(filename = "./logindel.txt")
+log_tag = "drop0.9_loose"
+sys.stdout = Logger(filename = "./logs/indel_{}_{}.txt".format(datetime.datetime.now().strftime("%y-%m-%d-%H-%M-%S"), log_tag))
 def train_epoch(train_loader, net, optimizer):
     epoch_loss = [] 
     runing_loss = 0.0
@@ -103,14 +104,19 @@ def test_epoch(test_loader, net, optimizer):
         compare_labels = (predicted == labels)
         false_preds = np.where(compare_labels.data.cpu().numpy() == 0)[0]
         false += len(false_preds)
-    print("test epoch: [total]:{}, [false]:{}, [truth]:{}, error rate:{}".format(total, false, total - false, false/total) )
-    print("P|L\t0\t1\n0\t{}\t{}\n1\t{}\t{}".format(g00, g01, g10, g11))
+    print("test info:\n [total]:{}, [false]:{}, [truth]:{}, error rate:{}".format(total, false, total - false, false/total) )
+    print("P\\L\t0\t1\n0\t{}\t{}\n1\t{}\t{}".format(g00, g01, g10, g11))
     TNR =  g01 / (g01 + g10)
-    print("TNR: ", TNR)
-    print("haoz feature(bigger better): ", -1 * math.log(TNR * (false/total)))
+    print("[01/(01+10)] TNR:\t ", TNR)
+    haoz_feature = -1 * math.log((TNR + 0.000001) * (false/total))
+    print("[00/(10+00)] filtered False rate:\t {}".format(g00 /(g10 + g00)))
+    print("[01/(01+11)] filtered Truth rate:\t {}".format(g01 / (g01 + g11)))
+    print("[11/(10+11)] Precision:\t {}".format(g10 / (g10 + g11)))
+    print("[11/(01+11)] Recall:\t {}".format(g11 / (g01 + g11)))
+    print("haoz feature(bigger better):\t ", haoz_feature)
     tmp_file.close()
 
-    return epoch_loss
+    return haoz_feature
 
 #--------------------------------------------------------#
 region_file = "/home/old_home/haoz/workspace/data/NA12878/ConfidentRegions.bed"
@@ -121,12 +127,13 @@ truth_path =  "/home/haoz/data/HG001_GRCh38_GIAB_highconf_CG-IllFB-IllGATKHC-Ion
 out_dir = os.path.join(base_path, "out/models")
 re_exec = False
 strelka2_result_path = "/home/haoz/data/variants.vcf"
-#strelka2_result_path = "/home/old_home/haoz/workspace/VCTools/strelka-2.9.10.centos6_x86_64/hg38run_germline_test/results/variants/variants.vcf"
-fastvc_result_path = "/home/haoz/data/out_fisher.vcf"
+strelka2_result_path = "/home/old_home/haoz/workspace/VCTools/strelka-2.9.10.centos6_x86_64/hg38run_germline_test/results/variants/variants.vcf"
+#fastvc_result_path = "/home/haoz/data/out_fisher.vcf"
+fastvc_result_path = "/home/haoz/data/wgs_loose_goodvar.txt"
 #--------------------------------------------------------#
 
 reload_from_dupfile = False #load from file(True) or compute generate data again(Fasle)
-data_path = "./dataset_fastvc.pkl"
+data_path = "./dataset_loose.pkl"
 if re_exec:
     dataset = Dataset(reload_from_dupfile, re_exec, [region_file, fasta_file, bam_file], 
                             base_path, truth_path)
@@ -158,13 +165,14 @@ nthreads = 20
 #optimizer = optim.Adam(net.parameters(), lr = 0.01)
 optimizer = torch.optim.Adadelta(net.parameters(), lr=1.0, rho=0.96, eps=1e-05, weight_decay=0)
 #loss_func = torch.nn.MSELoss()
-weight = torch.Tensor([1, 40])
+weight = torch.Tensor([1, 100])
 if(use_cuda):
     weight = weight.cuda()
 loss_func = torch.nn.CrossEntropyLoss(weight = weight)
 #loss_func = torch.nn.BCELoss()
 #------------------------------------------------------------#
 
+max_haoz_feature = 0
 for epoch in range(max_epoch):
     print("epoch", epoch, " processing....")
     if (not reload_from_dupfile) and (epoch != 0):
@@ -214,8 +222,10 @@ for epoch in range(max_epoch):
             runing_loss = 0.0
 
     print("mean loss of epoch %d is: %f" % (epoch, sum(epoch_loss) / len(epoch_loss)))
-    test_epoch(test_loader, net, optimizer)
-    if n_epoch % save_freq  == 0: # (save_freq - 1):
+    epoch_feature = test_epoch(test_loader, net, optimizer)
+    #if n_epoch % save_freq  == 0: # (save_freq - 1):
+    if epoch_feature > max_haoz_feature:
+        max_haoz_feature = epoch_feature
         if not os.path.exists(out_dir):
             os.mkdir(out_dir)
         tag = "fastvc_{}".format(datetime.datetime.now().strftime("%y-%m-%d-%H-%M-%S"))
