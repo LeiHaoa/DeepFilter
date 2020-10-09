@@ -12,13 +12,13 @@ from torch.autograd import Variable
 from torchvision import transforms
 
 import data_loader
-from data_loader import Dataset, FastvcDataset
+from data_loader import Dataset, FVC_INDEL_FEATURES, FVC_SNV_FEATURES, FastvcTrainLoader
 from MyLogger import Logger
 from nn_net import Net
 import math
 
-log_tag = "drop0.9_loose"
-sys.stdout = Logger(filename = "./logs/indel_{}_{}.txt".format(datetime.datetime.now().strftime("%y-%m-%d-%H-%M-%S"), log_tag))
+log_tag = "train_snv_drop5_loose_1_100" #[CHANGE]
+sys.stdout = Logger(filename = "./logs/{}_{}.txt".format(log_tag, datetime.datetime.now().strftime("%y-%m-%d-%H-%M-%S")))
 def train_epoch(train_loader, net, optimizer):
     epoch_loss = [] 
     runing_loss = 0.0
@@ -119,6 +119,8 @@ def test_epoch(test_loader, net, optimizer):
     return haoz_feature
 
 #--------------------------------------------------------#
+strelka2_result_path = "/home/haoz/data/variants.vcf"
+#strelka2_result_path = "/home/old_home/haoz/workspace/VCTools/strelka-2.9.10.centos6_x86_64/hg38run_germline_test/results/variants/variants.vcf"
 region_file = "/home/old_home/haoz/workspace/data/NA12878/ConfidentRegions.bed"
 fasta_file = "/home/old_home/haoz/workspace/data/hg38/hg38.fa"
 bam_file = "/home/old_home/haoz/workspace/data/NA12878/NA12878_S1.bam"
@@ -126,19 +128,19 @@ base_path = "/home/haoz/python/workspace"
 truth_path =  "/home/haoz/data/HG001_GRCh38_GIAB_highconf_CG-IllFB-IllGATKHC-Ion-10X-SOLID_CHROM1-X_v.3.3.2_highconf_PGandRTGphasetransfer.vcf"
 out_dir = os.path.join(base_path, "out/models")
 re_exec = False
-strelka2_result_path = "/home/haoz/data/variants.vcf"
-strelka2_result_path = "/home/old_home/haoz/workspace/VCTools/strelka-2.9.10.centos6_x86_64/hg38run_germline_test/results/variants/variants.vcf"
 #fastvc_result_path = "/home/haoz/data/out_fisher.vcf"
-fastvc_result_path = "/home/haoz/data/wgs_loose_goodvar.txt"
+#fastvc_result_path = "/home/haoz/data/wgs_loose_goodvar.txt"
+fastvc_result_path = "/home/haoz/data/train3.txt" #[CHANGE]
 #--------------------------------------------------------#
 
 reload_from_dupfile = False #load from file(True) or compute generate data again(Fasle)
-data_path = "./dataset_loose.pkl"
+VarType = 'SNV' #SNV or INDEL
+data_path = "./dataset_{}.pkl".format(VarType)
 if re_exec:
-    dataset = Dataset(reload_from_dupfile, re_exec, [region_file, fasta_file, bam_file], 
+    dataset = Dataset(reload_from_dupfile, re_exec, VarType, [region_file, fasta_file, bam_file], 
                             base_path, truth_path)
 else:
-    dataset = Dataset(reload_from_dupfile, re_exec, [fastvc_result_path, strelka2_result_path],
+    dataset = Dataset(reload_from_dupfile, re_exec, VarType, [fastvc_result_path, strelka2_result_path],
                             base_path, truth_path)
 if reload_from_dupfile:
     dataset.load(data_path)
@@ -149,23 +151,24 @@ else:
     dataset.store(data_path)
 #------------------------network setting---------------------#
 use_cuda = True
-n_feature = data_loader.FVC_FEATURES + data_loader.SK2_FEATURES # fastvc 31 + sk2 17
+n_feature = data_loader.FVC_INDEL_FEATURES if VarType == "INDEL" else data_loader.FVC_SNV_FEATURES
+print("[info] n_feature: ", n_feature)
 net = Net(n_feature, [140, 160, 170, 100, 10] , 2)
 if use_cuda:
     net.cuda()
-max_epoch = 500 
+max_epoch = 10 
 save_freq = 10 # save every xx save_freq
 n_epoch = 0
 batch_size = 128
 nthreads = 20
 #init
-#net.initialize_weights()
+net.initialize_weights()
 #optimizer
 #optimizer = optim.SGD(net.parameters(), lr = 0.01, momentum = 0.9)
 #optimizer = optim.Adam(net.parameters(), lr = 0.01)
-optimizer = torch.optim.Adadelta(net.parameters(), lr=1.0, rho=0.96, eps=1e-05, weight_decay=0)
+optimizer = torch.optim.Adadelta(net.parameters(), lr=0.1, rho=0.96, eps=1e-05, weight_decay=0)
 #loss_func = torch.nn.MSELoss()
-weight = torch.Tensor([1, 100])
+weight = torch.Tensor([1, 100]) #[CHANGE]
 if(use_cuda):
     weight = weight.cuda()
 loss_func = torch.nn.CrossEntropyLoss(weight = weight)
@@ -177,12 +180,12 @@ for epoch in range(max_epoch):
     print("epoch", epoch, " processing....")
     if (not reload_from_dupfile) and (epoch != 0):
         dataset.split(random_state = None)
-    test_dataset = FastvcDataset(dataset.data['test'])
+    test_dataset = FastvcTrainLoader(dataset.data['test'])
     test_loader = torch.utils.data.DataLoader(test_dataset, 
                                 batch_size = batch_size, shuffle = True,
                                 num_workers = nthreads, 
                                 pin_memory = True)
-    train_dataset = FastvcDataset(dataset.data['train'])
+    train_dataset = FastvcTrainLoader(dataset.data['train'])
     train_loader = torch.utils.data.DataLoader(train_dataset, 
                                 batch_size = batch_size, shuffle = True,
                                 num_workers = nthreads, 
@@ -211,20 +214,12 @@ for epoch in range(max_epoch):
 
         if i % 1000 == 999:
             print("[%5d] loss: %.3f" % (i + 1, runing_loss / 999))
-            #np.set_printoptions(precision = 3, threshold=10000)
-            #print("[inputs info]: \n {}".format(inputs.data.cpu().numpy()))
-            #print("[pred info]:\n {}".format(outputs.data.cpu().numpy()))
-            #print("[label info]:\n {}".format(labels.data.cpu().numpy()))
-            #print('[net info]:')
-            #for layer in net.modules():
-            #    if isinstance(layer, nn.Linear):
-            #        print(layer.weight)
             runing_loss = 0.0
 
     print("mean loss of epoch %d is: %f" % (epoch, sum(epoch_loss) / len(epoch_loss)))
     epoch_feature = test_epoch(test_loader, net, optimizer)
-    #if n_epoch % save_freq  == 0: # (save_freq - 1):
-    if epoch_feature > max_haoz_feature:
+    if n_epoch == - 1: # (save_freq - 1):
+    #if epoch_feature > max_haoz_feature:
         max_haoz_feature = epoch_feature
         if not os.path.exists(out_dir):
             os.mkdir(out_dir)

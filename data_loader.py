@@ -22,8 +22,10 @@ indels_label = {
                 "Insertion":[0, 1, 0], 
                 "Complex":  [0, 0, 1], 
                 }
+snv_label = "SNV"
 
-FVC_FEATURES = 25  + 1
+FVC_INDEL_FEATURES = 25  + 1 
+FVC_SNV_FEATURES = FVC_INDEL_FEATURES - 5
 #SK2_FEATURES = 13
 SK2_FEATURES = 0
 
@@ -92,8 +94,8 @@ def origional_format_data_item(jri, fisher):
         #print("origin data:" , jri)
     return key, data
 
-def format_data_item(jri, fisher = True):
-    #fisher should always be true
+def format_indel_data_item(jri, fisher = True):
+    #[FIXME] fisher should always be true, otherwish the map is wrong
     data = list()
     # key is chrom:pos like "chr1:131022:A:AT"
     key = jri[2] + ":" + jri[3] + ":" + jri[5] + ":" + jri[6]
@@ -107,9 +109,19 @@ def format_data_item(jri, fisher = True):
     else:
         data.extend(indels_label[jri[fe2i["varType"]]])
 
-    if len(data) != FVC_FEATURES:
+    if len(data) != FVC_INDEL_FEATURES:
         print("fvc data length error: \n", len(data), data, " ori\n", jri)
-        #print("origin data:" , jri)
+    return key, data
+
+def format_snv_data_item(jri, fisher = True):
+    data = list()
+    # key is chrom:pos like "chr1:131022:A:T"
+    key = jri[2] + ":" + jri[3] + ":" + jri[5] + ":" + jri[6]
+    for sf in fvc_sf:
+        data.append(jri[fe2i[sf]])
+
+    if len(data) != FVC_SNV_FEATURES:
+        print("fvc data length error: \n", len(data), data, " ori\n", jri)
     return key, data
 
 def read_strelka_data(items):
@@ -173,61 +185,51 @@ def read_strelka_data(items):
         print("sk2 data length error: \n", len(data), data, "ori: \n", items)
     return key, data
 
-def get_data(fvc_result_path, sk2_result_path):
-    #--- read fastvc result file and format ---#
-    fastvc_dict = dict()
-    with open(fvc_result_path, 'r') as f:
-        for line in f:
-            items = line.split("\t")
-            if len(items) == 36:
-                k, d = format_data_item(items, False)
-                fastvc_dict[k] = d
-            elif len(items) == 38 :
-                k, d = format_data_item(items, True)
-                fastvc_dict[k] = d
-    print("get fastvc data done: ", len(fastvc_dict))
-    '''------------------------先不要strelka了---------------------------------------
-    #--- read strelka2 result and format ---#
-    sk2_dict = dict()
-    with open(sk2_result_path, 'r') as f:
-        for line in f:
-            if line[0] == '#': 
-                continue
-            items = line.split('\t')
-            if len(items) == 10:
-                k, d = read_strelka_data(items)
-                sk2_dict[k] = d 
-    print("get sk2 data done: ", len(sk2_dict))
-    #--- combine fastvc and sk2 result : all data merged into fastvc_dict---#
-    fastvc_empty = [0.0] * FVC_FEATURES
-    sk2_empty = [0.0] * SK2_FEATURES
-    for k, v in fastvc_dict.items():
-        if k not in sk2_dict:
-           fastvc_dict[k] += sk2_empty
-    for k, v in sk2_dict.items():
-        if k in fastvc_dict:
-            fastvc_dict[k] += v
-        else:
-            fastvc_dict[k] = fastvc_empty + v
-   --------------------------------------------------------------- ''' 
-    return fastvc_dict           
+def get_data(fvc_result_path, vtype = 'SNV'):
+    if vtype.upper() == 'SNV':
+        return get_snv_data(fvc_result_path)
+    elif vtype.upper() == 'INDEL':
+        return get_indel_data(fvc_result_path)
+    else:
+        print("unrecognized variant type: {} !".format(vtype))
+        exit(-1)
 
-def get_indel_data(fvc_result_path, sk2_result_path):
+def get_indel_data(fvc_result_path):
     #--- read fastvc result file and format ---#
     fastvc_indel_dict = dict()
+    index = -1
     with open(fvc_result_path, 'r') as f:
         for line in f:
+            index += 1
             items = line.split("\t")
             if items[fe2i['varType']] not in indels_label:
                 continue
             if len(items) == 36:
-                k, d = format_data_item(items, False)
-                fastvc_indel_dict[k] = d
+                k, d = format_indel_data_item(items, False)
+                fastvc_indel_dict[k] = [d, index]
             elif len(items) == 38 :
-                k, d = format_data_item(items, True)
-                fastvc_indel_dict[k] = d
-    print("get fastvc data done: ", len(fastvc_indel_dict))
+                k, d = format_indel_data_item(items, True)
+                fastvc_indel_dict[k] = [d, index]
+    print("get fastvc indels data done: ", len(fastvc_indel_dict))
     return fastvc_indel_dict
+
+def get_snv_data(fvc_result_path):
+    fastvc_snv_dict = dict()
+    index = -1
+    with open(fvc_result_path, 'r') as f:
+        for line in f:
+            index += 1
+            items = line.split("\t")
+            if items[fe2i['varType']] != snv_label:
+                continue
+            if len(items) == 36:
+                k, d = format_snv_data_item(items, False)
+                fastvc_snv_dict[k] = [d, index]
+            elif len(items) == 38 :
+                k, d = format_snv_data_item(items, True)
+                fastvc_snv_dict[k] = [d, index]
+    print("get fastvc SNV data done: ", len(fastvc_snv_dict))
+    return fastvc_snv_dict
 
 def run_tools_and_get_data(fastvc_cmd, gen_cmd, strelka_cmd, base_path):
     tmpspace = os.path.join(base_path, "tmpspace") 
@@ -248,7 +250,7 @@ def run_tools_and_get_data(fastvc_cmd, gen_cmd, strelka_cmd, base_path):
         for line in f:
             items = line.split("\t")
             if len(items) == 36 :
-                k, d = format_data_item(items, False)
+                k, d= format_data_item(items, False)
                 fastvc_dict[k] = d
             elif len(items) == 38 :
                 k, d = format_data_item(items, True)
@@ -295,8 +297,8 @@ def get_labels_dict(data_dict, truth_path):
             if(len(items) == 10 ):
                 chrom, pos, id, ref, alt, _, filter = items[:7]         
                 #if len(chrom) < 6 and filter == "PASS" and (len(ref) > 1 or len(alt) > 1) :
-                #if len(chrom) < 6 and filter == "PASS":
-                if len(chrom) < 6: #-------just for chm test
+                if len(chrom) < 6 and filter == "PASS":
+                #if len(chrom) < 6: #-------just for chm test
                     alts = alt.split(",")
                     for alt in alts:
                         site = chrom + ":" + pos + ":" + ref + ":" + alt
@@ -344,8 +346,23 @@ def prepare_cmds(fasta_file, region_file, bam_file, thread_number, base_path):
 
     return fastvc_cmd, gen_cmd, sk2_cmd
 
-class FastvcDataset(torch.utils.data.Dataset):
-    #def __init__(self, region_file, fasta_file, bam_file, base_path, truth_path):
+class FastvcCallLoader(torch.utils.data.Dataset):
+
+    def __init__(self, data):
+        self.inputs = data[0]
+        self.labels = data[1]
+        self.raw_indexs = data[2]
+
+    def __getitem__(self, index):
+        input, label = self.inputs[index], self.labels[index]
+        raw_index = self.raw_indexs[index]
+        return input, np.asarray(label), raw_index
+
+    def __len__(self):
+        return len(self.labels)
+
+class FastvcTrainLoader(torch.utils.data.Dataset):
+
     def __init__(self, data):
         self.inputs = data[0]
         self.labels = data[1]
@@ -358,18 +375,17 @@ class FastvcDataset(torch.utils.data.Dataset):
         return len(self.labels)
 
 class Dataset:
-    def __init__(self, reload, re_exec, pama_list, base_path, truth_path):
+    def __init__(self, reload, re_exec, vartype, pama_list, base_path, truth_path):
         self.data = dict()
         if not reload:
             merged_data_dict = {}
             if re_exec:
                 region_file, fasta_file, bam_file = pama_list
                 fastvc_cmd, gen_cmd, sk2_cmd = prepare_cmds(fasta_file, region_file, bam_file, 40, base_path)
-                #merged_data: dict: key=chrom:pos, value = [fastvc_feature, sk2_feature] (FVC_FEATURE2 + SK2_FEATURES dim)
                 merged_data_dict = run_tools_and_get_data(fastvc_cmd, gen_cmd, sk2_cmd, base_path) 
             else:
                 fvc_res_path, sk2_res_path = pama_list
-                merged_data_dict = get_indel_data(fvc_res_path, sk2_res_path) 
+                merged_data_dict = get_data(fvc_res_path, vtype = vartype) 
             assert(len(merged_data_dict) > 0)
 
             print("get merged data done, merged data dict size: ", len(merged_data_dict))
@@ -378,11 +394,12 @@ class Dataset:
             keys = list()
             self.inputs = list()
             self.labels = list()
+            self.raw_indexs = list()
             for k, v in merged_data_dict.items():
-                #self.data.append([k, np.asarray(v), merged_label_dict[k]])
                 keys.append(k)
-                self.inputs.append(v)
+                self.inputs.append(v[0])
                 self.labels.append(merged_label_dict[k])
+                self.raw_indexs.append(v[1])
             #--- standlizaton ---#            
             '''
             min_max_scaler = preprocessing.MinMaxScaler()
@@ -393,6 +410,7 @@ class Dataset:
             print("start normalization...")
             #self.inputs = preprocessing.normalize(self.inputs, axis = 0, norm = 'l2') 
             self.inputs = preprocessing.scale(self.inputs, axis = 0, with_mean = True, with_std = True, copy = True) 
+            print("[info] inputs shape:", self.inputs.shape)
             '''
             np.set_printoptions(precision = 3, threshold=1000)
             for i in range(10000):
