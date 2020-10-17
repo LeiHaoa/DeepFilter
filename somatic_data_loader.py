@@ -4,19 +4,24 @@ import subprocess
 import sys
 
 import numpy as np
+from numpy.lib.shape_base import split
 import torch
 from sklearn import preprocessing 
 from sklearn.model_selection import train_test_split
 import pickle
-from features import features_to_index as fe2i, fvc_selected_features as fvc_sf
+#from features import features_to_index as fe2i, fvc_selected_features as fvc_sf
+from features import som_features_to_index as fe2i, som_selected_features as fvc_sf
 
-type_to_label = {"SNV":     [1, 0, 0, 0, 0, 0], 
-                "Deletion": [0, 1, 0, 0, 0, 0], 
-                "Insertion":[0, 0, 1, 0, 0, 0], 
-                "Complex":  [0, 0, 0, 1, 0, 0], 
-                "MNV":      [0, 0, 0, 0, 1, 0], 
-                "NONE":     [0, 0, 0, 0, 0, 1]}
-
+type_to_label = {"SNV":           [1, 0, 0], 
+                "Insertion":      [0, 1, 0], 
+                "Deletion":       [0, 0, 1]}
+varLabel_to_label = {
+    "Germline"      : [1, 0, 0, 0, 0],
+    "StrongLOH"     : [0, 1, 0, 0, 0],
+    "LikelyLOH"     : [0, 0, 1, 0, 0],
+    "StrongSomatic" : [0, 0, 0, 1, 0],
+    "LikelySomatic" : [0, 0, 0, 0, 1],
+}
 indels_label = {
                 "Deletion": [1, 0, 0], 
                 "Insertion":[0, 1, 0], 
@@ -24,165 +29,47 @@ indels_label = {
                 }
 snv_label = "SNV"
 
-FVC_INDEL_FEATURES = 25  + 1 
-FVC_SNV_FEATURES = FVC_INDEL_FEATURES - 5
-#SK2_FEATURES = 13
-SK2_FEATURES = 0
-
-def origional_format_data_item(jri, fisher):
-    data = list()
-    # key is chrom:pos like "chr1:131022:A:AT"
-    key = jri[2] + ":" + jri[3] + ":" + jri[5] + ":" + jri[6]
-    #data.append(jri[3]) #start position
-    #data.append(jri[4]) #end position   
-    #jri[5] == cri[5] #refallele      
-    #jri[6] == cri[6] #varallele      
-    data.append(len(jri[5])) #refallele len
-    data.append(len(jri[6])) #varallel len
-    data.append(jri[7]) #totalposcoverage
-    data.append(jri[8]) #positioncoverage
-    data.append(jri[9]) #refForwardcoverage
-    data.append(jri[10]) #refReversecoverage
-    data.append(jri[11]) #varsCountOnForward
-    data.append(jri[12]) #VarsCountOnReverse
-    #jri[13] == cri[13] #genotype
-    data.append(jri[14]) #frequency
-    #jri[15] == cri[15] #strandbiasflag
-    data.append(jri[16]) #meanPosition
-    data.append(jri[17]) #pstd
-    data.append(jri[18]) #meanQuality 
-    data.append(jri[19]) #qstd
-    index = 20
-    if fisher:
-        data.append(jri[index])  #pvalue
-        index += 1
-        data.append(jri[index])  #ratio
-        index += 1
-    
-    data.append(jri[index]) #mapq
-    index += 1
-    data.append(jri[index]) #qratio
-    index += 1
-    data.append(jri[index]) #higreq
-    index += 1
-    data.append(jri[index]) #extrafreq
-    index += 1
-    data.append(jri[index]) #shift3
-    index += 1
-    data.append(jri[index]) #msi
-    index += 1
-    data.append(jri[index]) #msint
-    index += 1
-    data.append(jri[index]) #nm
-    index += 1
-    data.append(jri[index]) #hicnt
-    index += 1
-    data.append(jri[index]) #hicov
-    index += 1
-    #jri[30] == cri[30] #leftSequence
-    #jri[31] == cri[31] #rightSequence
-    #jri[32] == cri[32] #region
-    #jri[33] == cri[33] #varType
-    #jri[34]            # duprate
-    if fisher:
-        data.extend(indels_label[jri[35]])
-    else:
-        data.extend(indels_label[jri[33]])
-
-    if len(data) != FVC_INDEL_FEATURES:
-        print("fvc data length error: \n", len(data), data, " ori\n", jri)
-        #print("origin data:" , jri)
-    return key, data
+FVC_INDEL_FEATURES =  49 #46+3
+FVC_SNV_FEATURES = 46 #41 + 5
 
 def format_indel_data_item(jri, fisher = True):
     #[FIXME] fisher should always be true, otherwish the map is wrong
     data = list()
     # key is chrom:pos like "chr1:131022:A:AT"
     key = jri[2] + ":" + jri[3] + ":" + jri[5] + ":" + jri[6]
-    data.append(len(jri[fe2i["RefAllel"]])) #refallele len
-    data.append(len(jri[fe2i["VarAllel"]])) #varallel len
+    data.append(len(jri[fe2i["Ref"]])) #refallele len
+    data.append(len(jri[fe2i["Var"]])) #varallel len
     for sf in fvc_sf:
         data.append(jri[fe2i[sf]])
-    
+     
     if fisher:
-        data.extend(indels_label[jri[fe2i["varType"]]])
+        data.extend(indels_label[jri[fe2i["VarLabel"]]])#varlabel
+        data.extend(indels_label[jri[fe2i["VarType" ]]]) #vartype
     else:
-        data.extend(indels_label[jri[fe2i["varType"]]])
+        print("not support to train if you not run rabbitvar without --fiser!!")
+        exit(-1)
+        data.extend(indels_label[jri[fe2i["VarLabel"]]])#varlabel
+        data.extend(indels_label[jri[fe2i["VarType"]]])
 
     if len(data) != FVC_INDEL_FEATURES:
         print("fvc data length error: \n", len(data), data, " ori\n", jri)
+        exit(-1)
+    #print("format:", key, data)
     return key, data
 
 def format_snv_data_item(jri, fisher = True):
+    if not fisher:
+        print("not support to train if you not run rabbitvar without --fiser!!")
+        exit(-1)
     data = list()
     # key is chrom:pos like "chr1:131022:A:T"
     key = jri[2] + ":" + jri[3] + ":" + jri[5] + ":" + jri[6]
     for sf in fvc_sf:
         data.append(jri[fe2i[sf]])
-
+    data.extend(indels_label[jri[fe2i["VarLabel"]]])#varlabel
     if len(data) != FVC_SNV_FEATURES:
         print("fvc data length error: \n", len(data), data, " ori\n", jri)
-    return key, data
-
-def read_strelka_data(items):
-    data = list()
-    #CHROM  POS     ID      REF     ALT     QUAL    FILTER  INFO    FORMAT  NA12878
-    #GT  : GQ : GQX : DP : DPF : AD  : ADF : ADR : SB  : FT              : PL
-    #0/1 : 3  : 0   : 1  : 0   : 0,1 : 0,0 : 0,1 : 0.0 : LowGQX;LowDepth : 28,3,0
-
-    #CIGAR=1M2D     ;RU=TG   ;REFREP=3    ;IDREP=2    ;MQ=35 
-    #CIGAR=1M2I,1M4I;RU=GT,GT;REFREP=12,12;IDREP=13,14;MQ=59
-    #GT  : GQ : GQX : DPI : AD     : ADF  : ADR  : FT   :PL 
-    #0/1 : 35 : 7   : 15  : 12,3   : 10,2 : 2,1  : PASS :32,0,240
-    #1/2 : 196: 19  : 44  : 0,18,14: 0,8,9:0,10,5: PASS :671,266,199,360,0,301
-    #key = items[0] + ":" + items[1]
-    #return key, [0] * SK2_FEATURES
-    ALTs = items[4].split(',')
-    key = items[0] + ":" + items[1] + ":" + items[3] + ":" + ALTs[0]
-    mult_alt = False
-    if len(ALTs) > 1:
-        mult_alt = True
-    data.append(0 if items[5] == '.' else items[5]) #QUAL
-    INFO = items[7]
-    FORMAT = items[8].split(':')
-    VALUES = items[9].split(':')
-    info_dict = {}
-    for i in range(len(FORMAT)):
-        info_dict[FORMAT[i].strip()] = VALUES[i].strip()
-    MQ = INFO.split(";")[-1] 
-    if MQ[0:3] == "MQ=":
-        data.append(MQ[3:]) #map quality
-    else:
-        print("error! invalide data(MQ)!", MQ)
         exit(-1)
-    is_indel = 0
-    if INFO.split(":")[0][:5] == "CIGAR":
-        is_indel = 1
-    data.append(is_indel) #if this var is indel
-    #genotype 1: 0/0, 2: 0/1, 3: 1/1, 0: .
-    #data.append(0 if info_dict['GT'] == '.'  else 1 + int(info_dict['GT'][0]) + int(info_dict['GT'][-1]))
-    data.append(0 if info_dict['GQ'] == '.' else info_dict['GQ']) #GQ
-    data.append(0 if info_dict['GQX'] == '.' else info_dict['GQX'])#GQX
-    #DP(SNV) or DPI(indels)
-    if is_indel:
-        data.append(info_dict['DPI'])
-    else:
-        data.append(info_dict['DP'])
-    #注：因为可能出现两个ALT的情况，这里为了测试暂时只取第一个ALT
-    data.extend([0, 0] if info_dict['AD'] == '.' else info_dict['AD'].split(',')[:2]) #AD 2
-    #data.extend([0, 0] if info_dict['ADF'] == '.' else info_dict['ADF'].split(',')[:2]) #ADF 2
-    #data.extend([0, 0] if info_dict['ADR'] == '.' else info_dict['ADR'].split(',')[:2]) #ADR 2
-    #filter: one-hot type, [1,0] if pass, else [0,1]
-    data.extend([1, 0]if info_dict['FT'] == "PASS" else [0, 1])
-    #PL 3
-    if len(info_dict['GT']) == 1:
-        data.extend([0, 0] if info_dict['PL'] == '.' else info_dict['PL'].split(',')[:2])
-        data.extend([0])
-    else:
-        data.extend([0, 0, 0] if info_dict['PL'] == '.' else info_dict['PL'].split(',')[:3])
-
-    if len(data) != SK2_FEATURES:
-        print("sk2 data length error: \n", len(data), data, "ori: \n", items)
     return key, data
 
 def get_data(fvc_result_path, vtype = 'SNV'):
@@ -202,14 +89,21 @@ def get_indel_data(fvc_result_path):
         for line in f:
             index += 1
             items = line.split("\t")
-            if items[fe2i['varType']] not in indels_label:
+            for i, it in enumerate(items):
+                print(i, "--", it)
+            if items[fe2i['VarType']] not in indels_label:
+                print(items[fe2i['VarType']])
                 continue
-            if len(items) == 36:
+            if len(items) == 55:
+                print('55')
                 k, d = format_indel_data_item(items, False)
                 fastvc_indel_dict[k] = [d, index]
-            elif len(items) == 38 :
+            elif len(items) == 61 :
+                print('61')
                 k, d = format_indel_data_item(items, True)
                 fastvc_indel_dict[k] = [d, index]
+            else:
+                print("your train file should be 55 or 61 items! but you have {} items".format(len(items)))
     print("get fastvc indels data done: ", len(fastvc_indel_dict))
     return fastvc_indel_dict
 
@@ -220,12 +114,12 @@ def get_snv_data(fvc_result_path):
         for line in f:
             index += 1
             items = line.split("\t")
-            if items[fe2i['varType']] != snv_label:
+            if items[fe2i['VarType']] != snv_label:
                 continue
-            if len(items) == 36:
+            if len(items) == 55:
                 k, d = format_snv_data_item(items, False)
                 fastvc_snv_dict[k] = [d, index]
-            elif len(items) == 38 :
+            elif len(items) == 61 :
                 k, d = format_snv_data_item(items, True)
                 fastvc_snv_dict[k] = [d, index]
     print("get fastvc SNV data done: ", len(fastvc_snv_dict))
@@ -255,36 +149,6 @@ def run_tools_and_get_data(fastvc_cmd, gen_cmd, strelka_cmd, base_path):
             elif len(items) == 38 :
                 k, d = format_data_item(items, True)
                 fastvc_dict[k] = d
-    #fastvc_data = numpy.asarray(fastvc_data)
-
-    #--- generate strelka2 workspace and run ---#
-    ret = subprocess.check_call(gen_cmd, shell = True)
-    if ret:
-        subprocess.check_call(strelka_cmd, shell = True)
-    else:
-        print("strelka gene workspace error!")
-        exit(0)
-    
-    #--- read strelka2 result and format ---#
-    sk2_relative_varpath = "tmpspace/strelka_space/results/results/variants/variants.vcf.gz"
-    tmp_res_sk2 = os.path.join(base_path, sk2_relative_varpath)
-    sk2_dict = list()
-    with open(tmp_res_sk2, 'r') as f:
-        for line in f:
-            k, d = read_strelka_data(line)
-            sk2_dict[k] = d 
-    #sk2_data = numpy.asarray(sk2_data)
-    #--- combine fastvc and sk2 result : all data merged into fastvc_dict---#
-    fastvc_empty = [0.0 for i in range(FVC_FEATURES)]
-    sk2_empty = [0.0 for i in range(SK2_FEATURES)]
-    for k, v in fastvc_dict.items:
-        if k not in sk2_dict:
-           fastvc_dict[k] += sk2_empty
-    for k, v in sk2_dict.items():
-        if k in fastvc_dict:
-            fastvc_dict[k] += v
-        else:
-            fastvc_dict[k] = fastvc_empty + v
 
     return fastvc_dict           
 
@@ -377,28 +241,33 @@ class FastvcTrainLoader(torch.utils.data.Dataset):
 class Dataset:
     def __init__(self, reload, re_exec, vartype, pama_list, base_path, truth_path):
         self.data = dict()
+        self.inputs = list()
+        self.labels = list()
+        self.raw_indexs = list()
+        self.re_exec = re_exec
+        self.prepare_data(reload, vartype, pama_list, base_path, truth_path)
+
+    def prepare_data(self, reload, vartype, pama_list, base_path, truth_path):
+        print('[debug]', pama_list, base_path, truth_path)
         if not reload:
             merged_data_dict = {}
-            if re_exec:
+            if self.re_exec:
                 region_file, fasta_file, bam_file = pama_list
                 fastvc_cmd, gen_cmd, sk2_cmd = prepare_cmds(fasta_file, region_file, bam_file, 40, base_path)
                 merged_data_dict = run_tools_and_get_data(fastvc_cmd, gen_cmd, sk2_cmd, base_path) 
             else:
-                fvc_res_path, sk2_res_path = pama_list
+                fvc_res_path = pama_list[0]
                 merged_data_dict = get_data(fvc_res_path, vtype = vartype) 
             assert(len(merged_data_dict) > 0)
 
             print("get merged data done, merged data dict size: ", len(merged_data_dict))
-            pos_num, neg_num, merged_label_dict = get_labels_dict(merged_data_dict, truth_path)
-            print("get label done, size: {}, pos_num: {}, neg_num: {}".format(len(merged_label_dict), pos_num, neg_num))
+            pos_num, neg_num, fastvc_label_dict = get_labels_dict(merged_data_dict, truth_path)
+            print("get label done, size: {}, pos_num: {}, neg_num: {}".format(len(fastvc_label_dict), pos_num, neg_num))
             keys = list()
-            self.inputs = list()
-            self.labels = list()
-            self.raw_indexs = list()
             for k, v in merged_data_dict.items():
                 keys.append(k)
                 self.inputs.append(v[0])
-                self.labels.append(merged_label_dict[k])
+                self.labels.append(fastvc_label_dict[k])
                 self.raw_indexs.append(v[1])
             #--- standlizaton ---#            
             '''
@@ -419,18 +288,12 @@ class Dataset:
             '''
             print("normalization done")
             print("FastvcDataset init over")
-            #self.df = DataFrame([self.keys, self.inputs, self.labels], columns=["keys", "inputs", "labels"])
+
     def split(self, test_size = 0.2, random_state = 0):
         print("spliting data...")
         x_train, x_test, y_train, y_test = train_test_split(self.inputs, self.labels, 
                                 test_size = test_size, random_state = random_state)
 
-        #x_train = x_train[0:600000] 
-        #y_train = y_train[0:600000] 
-        #x_test = x_test[0:60000] 
-        #y_test = y_test[0:60000] 
-        #print("train summary: toatl:{}, 0:{}, 1:{}".format(len(y_train), len(y_train) - sum(y_train), sum(y_train)) )
-        #print("test summary: toatl:{}, 0:{}, 1:{}".format(len(y_test), len(y_test) - sum(y_test), sum(y_test)) )
         self.data['train'] = [x_train, y_train]
         self.data['test'] = [x_test, y_test]
 

@@ -1,10 +1,12 @@
 import sys
 import os
 
-#fastvc_file = "/home/haoz/python/deepfiltered_out.indel.txt" 
+#fastvc_file = "/home/haoz/deepfilter/deepfiltered_out.indel.txt" 
+#fastvc_file = "/home/haoz/deepfilter/deepfiltered_out.indel.txt" 
+fastvc_file = "/home/haoz/data/test.txt" 
 #fastvc_file = "/home/haoz/data/out_fisher.txt" 
 #fastvc_file = "/home/haoz/data/chm1_chm13.txt" 
-fastvc_file = "/home/haoz/data/wgs_loose_goodvar.txt" 
+#fastvc_file = "/home/haoz/data/wgs_loose_goodvar.txt" 
 #truth_file = "/home/old_home/haoz/workspace/data/NA12878/vcfs/NA12878_S1.vcf"
 truth_file = "/home/haoz/data/HG001_GRCh38_GIAB_highconf_CG-IllFB-IllGATKHC-Ion-10X-SOLID_CHROM1-X_v.3.3.2_highconf_PGandRTGphasetransfer.vcf"
 #truth_file = "/home/haoz/data/full.37m.vcf"
@@ -20,7 +22,7 @@ with open(truth_file, 'r') as f:
                     site = chrom + ":" + pos + ":" + ref + ":" + alt_i
                     truth_indels[site] = list([ref, alt_i])
 
-#--- open fastvc vcf file ---#
+#--- open fastvc txt file ---#
 fastvc_snvs = dict()
 with open(fastvc_file, 'r') as f:
     for var in f:
