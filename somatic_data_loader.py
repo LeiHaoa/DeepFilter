@@ -16,11 +16,13 @@ type_to_label = {"SNV":           [1, 0, 0],
                 "Insertion":      [0, 1, 0], 
                 "Deletion":       [0, 0, 1]}
 varLabel_to_label = {
-    "Germline"      : [1, 0, 0, 0, 0],
-    "StrongLOH"     : [0, 1, 0, 0, 0],
-    "LikelyLOH"     : [0, 0, 1, 0, 0],
-    "StrongSomatic" : [0, 0, 0, 1, 0],
-    "LikelySomatic" : [0, 0, 0, 0, 1],
+    "Germline"      : [1, 0, 0, 0, 0, 0, 0],
+    "StrongLOH"     : [0, 1, 0, 0, 0, 0, 0],
+    "LikelyLOH"     : [0, 0, 1, 0, 0, 0, 0],
+    "StrongSomatic" : [0, 0, 0, 1, 0, 0, 0],
+    "LikelySomatic" : [0, 0, 0, 0, 1, 0, 0],
+    "AFDiff"        : [0, 0, 0, 0, 0, 1, 0],
+    "SampleSpecific": [0, 0, 0, 0, 0, 0, 1]
 }
 indels_label = {
                 "Deletion": [1, 0, 0], 
@@ -29,8 +31,8 @@ indels_label = {
                 }
 snv_label = "SNV"
 
-FVC_INDEL_FEATURES =  49 #46+3
-FVC_SNV_FEATURES = 46 #41 + 5
+SOM_INDEL_FEATURES =  53 #46+3
+SOM_SNV_FEATURES = 46 #41 + 5
 
 def format_indel_data_item(jri, fisher = True):
     #[FIXME] fisher should always be true, otherwish the map is wrong
@@ -38,12 +40,12 @@ def format_indel_data_item(jri, fisher = True):
     # key is chrom:pos like "chr1:131022:A:AT"
     key = jri[2] + ":" + jri[3] + ":" + jri[5] + ":" + jri[6]
     data.append(len(jri[fe2i["Ref"]])) #refallele len
-    data.append(len(jri[fe2i["Var"]])) #varallel len
+    data.append(len(jri[fe2i["Alt"]])) #varallel len
     for sf in fvc_sf:
         data.append(jri[fe2i[sf]])
      
     if fisher:
-        data.extend(indels_label[jri[fe2i["VarLabel"]]])#varlabel
+        data.extend(varLabel_to_label[jri[fe2i["VarLabel"]]])#varlabel
         data.extend(indels_label[jri[fe2i["VarType" ]]]) #vartype
     else:
         print("not support to train if you not run rabbitvar without --fiser!!")
@@ -51,7 +53,7 @@ def format_indel_data_item(jri, fisher = True):
         data.extend(indels_label[jri[fe2i["VarLabel"]]])#varlabel
         data.extend(indels_label[jri[fe2i["VarType"]]])
 
-    if len(data) != FVC_INDEL_FEATURES:
+    if len(data) != SOM_INDEL_FEATURES:
         print("fvc data length error: \n", len(data), data, " ori\n", jri)
         exit(-1)
     #print("format:", key, data)
@@ -88,18 +90,17 @@ def get_indel_data(fvc_result_path):
     with open(fvc_result_path, 'r') as f:
         for line in f:
             index += 1
-            items = line.split("\t")
-            for i, it in enumerate(items):
-                print(i, "--", it)
+            items = line.strip().split("\t")
+            #for i, it in enumerate(items):
+            #    print(i, "--", it)
+            #exit(0)
             if items[fe2i['VarType']] not in indels_label:
-                print(items[fe2i['VarType']])
+                #print(items[fe2i['VarType']])
                 continue
             if len(items) == 55:
-                print('55')
                 k, d = format_indel_data_item(items, False)
                 fastvc_indel_dict[k] = [d, index]
             elif len(items) == 61 :
-                print('61')
                 k, d = format_indel_data_item(items, True)
                 fastvc_indel_dict[k] = [d, index]
             else:

@@ -12,7 +12,7 @@ from torch.autograd import Variable
 from torchvision import transforms
 
 import somatic_data_loader as data_loader
-from somatic_data_loader import Dataset, FVC_INDEL_FEATURES, FVC_SNV_FEATURES, FastvcTrainLoader
+from somatic_data_loader import Dataset, SOM_INDEL_FEATURES, SOM_SNV_FEATURES, FastvcTrainLoader
 from MyLogger import Logger
 from nn_net import Net
 import math
@@ -158,28 +158,30 @@ def train_somatic(args, use_cuda = False):
     if use_cuda:
         net.cuda()
     #------------------------------------------------------------#
-    if args.pretrained_model != "": #if use pretrained model, load it
-        device = torch.device('cuda') if use_cuda else torch.device('cpu')
-        pretrained_dict = torch.load(args.pretrained_model, map_location = device)
-        #model_tag = pretrained_dict["tag"]
-        #epoch_num = pretrained_dict["epoch"]
-        pretrained_state_dict = pretrained_dict["state_dict"]
-        net.load_state_dict(pretrained_state_dict)
-        net.eval()
-    else: #else init the net
-        net.initialize_weights()
 
     n_epoch = 0
     #optimizer
     #optimizer = optim.SGD(net.parameters(), lr = 0.01, momentum = 0.9)
     #optimizer = optim.Adam(net.parameters(), lr = 0.01)
-    optimizer = torch.optim.Adadelta(net.parameters(), lr=0.1, rho=0.96, eps=1e-05, weight_decay=0)
+    optimizer = torch.optim.Adadelta(net.parameters(), lr=0.01, rho=0.96, eps=1e-05, weight_decay=0.01)
     weight = torch.Tensor([1, 10]) #[CHANGE]
     if(use_cuda):
         weight = weight.cuda()
     #loss_func = torch.nn.MSELoss()
     #loss_func = torch.nn.BCELoss()
     loss_func = torch.nn.CrossEntropyLoss(weight = weight)
+
+    if args.pretrained_model != None: #if use pretrained model, load it
+        device = torch.device('cuda') if use_cuda else torch.device('cpu')
+        pretrained_dict = torch.load(args.pretrained_model, map_location = device)
+        #model_tag = pretrained_dict["tag"]
+        n_epoch = pretrained_dict["epoch"]
+        pretrained_state_dict = pretrained_dict["state_dict"]
+        optimizer.load_state_dict(pretrained_dict["optimizer"])
+        net.load_state_dict(pretrained_state_dict)
+        net.eval()
+    else: #else init the net
+        net.initialize_weights()
     #------------------------------------------------------------#
     
     max_haoz_feature = 0
@@ -230,19 +232,21 @@ def train_somatic(args, use_cuda = False):
             max_haoz_feature = epoch_feature
             if not os.path.exists(out_dir):
                 os.mkdir(out_dir)
-            tag = "fastvc_{}".format(datetime.datetime.now().strftime("%y-%m-%d-%H-%M-%S"))
+            tag = "{}_{}".format(VarType, datetime.datetime.now().strftime("%y-%m-%d-%H-%M-%S"))
             torch.save({
                 "state_dict": net.state_dict(),
+                "optimizer": optimizer.state_dict(),
                 "tag": tag,
                 "epoch": n_epoch,
                 }, '{}/checkpoint_{}_ecpch{}.pth'.format(out_dir, tag, n_epoch))
     
     if not os.path.exists(out_dir):
         os.mkdir(out_dir)
-    tag = "fastvc_{}".format(datetime.datetime.now().strftime("%y-%m-%d-%H-%M-%S"))
+    tag = "{}_{}".format(VarType, datetime.datetime.now().strftime("%y-%m-%d-%H-%M-%S"))
     torch.save({
         "state_dict": net.state_dict(),
         "tag": tag,
+        "optimizer": optimizer.state_dict(),
         "epoch": n_epoch,
         }, '{}/checkpoint_{}_ecpch{}.pth'.format(out_dir, tag, n_epoch))
     print("training done!")
