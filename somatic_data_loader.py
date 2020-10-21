@@ -32,7 +32,7 @@ indels_label = {
 snv_label = "SNV"
 
 SOM_INDEL_FEATURES =  53 #46+3
-SOM_SNV_FEATURES = 46 #41 + 5
+SOM_SNV_FEATURES = 48 #41 + 5
 
 def format_indel_data_item(jri, fisher = True):
     #[FIXME] fisher should always be true, otherwish the map is wrong
@@ -50,7 +50,7 @@ def format_indel_data_item(jri, fisher = True):
     else:
         print("not support to train if you not run rabbitvar without --fiser!!")
         exit(-1)
-        data.extend(indels_label[jri[fe2i["VarLabel"]]])#varlabel
+        data.extend(varLabel_to_label[jri[fe2i["VarLabel"]]])#varlabel
         data.extend(indels_label[jri[fe2i["VarType"]]])
 
     if len(data) != SOM_INDEL_FEATURES:
@@ -68,8 +68,8 @@ def format_snv_data_item(jri, fisher = True):
     key = jri[2] + ":" + jri[3] + ":" + jri[5] + ":" + jri[6]
     for sf in fvc_sf:
         data.append(jri[fe2i[sf]])
-    data.extend(indels_label[jri[fe2i["VarLabel"]]])#varlabel
-    if len(data) != FVC_SNV_FEATURES:
+    data.extend(varLabel_to_label[jri[fe2i["VarLabel"]]])#varlabel
+    if len(data) != SOM_SNV_FEATURES:
         print("fvc data length error: \n", len(data), data, " ori\n", jri)
         exit(-1)
     return key, data
@@ -114,7 +114,7 @@ def get_snv_data(fvc_result_path):
     with open(fvc_result_path, 'r') as f:
         for line in f:
             index += 1
-            items = line.split("\t")
+            items = line.strip().split("\t")
             if items[fe2i['VarType']] != snv_label:
                 continue
             if len(items) == 55:

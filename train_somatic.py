@@ -18,7 +18,7 @@ from nn_net import Net
 import math
 import argparse
 
-log_tag = "train_snv_drop5_loose_1_100" #[CHANGE]
+log_tag = "train_snv_drop5_notloose" #[CHANGE]
 sys.stdout = Logger(filename = "./logs/{}_{}.txt".format(log_tag, datetime.datetime.now().strftime("%y-%m-%d-%H-%M-%S")))
 def train_epoch(train_loader, net, optimizer):
     epoch_loss = [] 
@@ -132,6 +132,8 @@ def train_somatic(args, use_cuda = False):
     VarType = args.var_type #SNV or INDEL
     batch_size = args.batch_size
     nthreads = args.nthreads
+    wstr = args.weight.split('_')
+    class_weight = list([int(wstr[0]), int(wstr[1])])
     #--------------------------------------------------------#
     
     reload_from_dupfile = False #load from file(True) or compute generate data again(Fasle)
@@ -148,7 +150,7 @@ def train_somatic(args, use_cuda = False):
         if os.path.exists(data_path):
             os.remove(data_path)
         dataset.split(random_state = None)
-        dataset.store(data_path)
+        #dataset.store(data_path)
     #------------------------network setting---------------------#
     max_epoch = 10 
     save_freq = 10 # save every xx save_freq
@@ -163,8 +165,8 @@ def train_somatic(args, use_cuda = False):
     #optimizer
     #optimizer = optim.SGD(net.parameters(), lr = 0.01, momentum = 0.9)
     #optimizer = optim.Adam(net.parameters(), lr = 0.01)
-    optimizer = torch.optim.Adadelta(net.parameters(), lr=0.01, rho=0.96, eps=1e-05, weight_decay=0.01)
-    weight = torch.Tensor([1, 10]) #[CHANGE]
+    optimizer = torch.optim.Adadelta(net.parameters(), lr=0.1, rho=0.96, eps=1e-05, weight_decay=1e-4)
+    weight = torch.Tensor(class_weight) #[CHANGE]
     if(use_cuda):
         weight = weight.cuda()
     #loss_func = torch.nn.MSELoss()
@@ -228,7 +230,6 @@ def train_somatic(args, use_cuda = False):
         print("mean loss of epoch %d is: %f" % (epoch, sum(epoch_loss) / len(epoch_loss)))
         epoch_feature = test_epoch(test_loader, net, optimizer)
         if n_epoch == - 1: # (save_freq - 1):
-        #if epoch_feature > max_haoz_feature:
             max_haoz_feature = epoch_feature
             if not os.path.exists(out_dir):
                 os.mkdir(out_dir)
@@ -238,7 +239,7 @@ def train_somatic(args, use_cuda = False):
                 "optimizer": optimizer.state_dict(),
                 "tag": tag,
                 "epoch": n_epoch,
-                }, '{}/checkpoint_{}_ecpch{}.pth'.format(out_dir, tag, n_epoch))
+                }, '{}/all_epoch/checkpoint_{}_ecpch{}.pth'.format(out_dir, tag, n_epoch))
     
     if not os.path.exists(out_dir):
         os.mkdir(out_dir)
@@ -248,9 +249,17 @@ def train_somatic(args, use_cuda = False):
         "tag": tag,
         "optimizer": optimizer.state_dict(),
         "epoch": n_epoch,
+        }, args.out_model_path)
+    '''
+    torch.save({
+        "state_dict": net.state_dict(),
+        "tag": tag,
+        "optimizer": optimizer.state_dict(),
+        "epoch": n_epoch,
         }, '{}/checkpoint_{}_ecpch{}.pth'.format(out_dir, tag, n_epoch))
+    '''
     print("training done!")
-    print("final model:", '{}/models/checkpoint_{}_ecpch{}.pth'.format(out_dir, tag, n_epoch))
+    print("final model:", '{}/checkpoint_{}_ecpch{}.pth'.format(out_dir, tag, n_epoch))
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(
@@ -268,6 +277,8 @@ if __name__ == "__main__":
     parser.add_argument('--batch_size', help = "batch size", type=int, default=128)
     parser.add_argument('--nthreads', help = "number of thread", type=int, default=20)
     parser.add_argument('--pretrained_model', help = "pretrained model", type=str, required = False)
+    parser.add_argument('--weight', help = "class weight", type=str, default = '1_10', required = False)
+    parser.add_argument('--out_model_path', help = "out model name (just for experiments)", type=str, required = True)
     args = parser.parse_args()
     use_cuda = torch.cuda.is_available()
     train_somatic(args, use_cuda)
