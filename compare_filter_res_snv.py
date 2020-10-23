@@ -19,7 +19,7 @@ with open(truth_file, 'r') as f:
             chrom, pos, id, ref, alt, _, filter = items[:7]         
             if len(chrom) < 6 :
                 for alt_i in alt.split(","):
-                    site = chrom + ":" + pos + ":" + ref + ":" + alt_i
+                    site = chrom + ":" + pos + ":" + ref.upper() + ":" + alt_i.upper()
                     truth_indels[site] = list([ref, alt_i])
 
 #--- open fastvc txt file ---#
@@ -45,9 +45,9 @@ for k, v in truth_indels.items():
     if k in fastvc_snvs:
         fvc_cnt += 1
 
-print("before: total:{}\ttp:{}\tfp:{}".format(848086, 891, 87195))
+print("before: total:{}\ttp:{}\tfp:{}".format(848068, 1722, 846346))
 print("after : total:{}\ttp:{}\tfp:{}".format(len(fastvc_snvs), fvc_cnt, len(fastvc_snvs) - fvc_cnt))
 #test_total_truth = 129557
-fvc_total_truth = 891
+fvc_total_truth = 1722
 print("truth indel num: {}, fastvc total output: {}\nfastvc find: {} recall: {}, prec: {}"\
     .format(len(truth_indels), len(fastvc_snvs), fvc_cnt, fvc_cnt / fvc_total_truth, fvc_cnt / len(fastvc_snvs)))

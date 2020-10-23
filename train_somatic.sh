@@ -3,7 +3,7 @@ set -e
 
 python train_somatic.py \
     --workspace /home/haoz/deepfilter/workspace \
-    --train_data /home/haoz/data/somatic/FD_10_18_data/train.txt \
+    --train_data /home/haoz/data/somatic/FD_10_18_data/train1.txt \
     --truth_file /home/haoz/data/somatic/FD_10_18_data/synthetic_snvs.vcf \
     --nthread 20 \
     --var_type "SNV" \

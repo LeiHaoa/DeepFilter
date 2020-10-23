@@ -1,0 +1,4561 @@
+-----------------weight info [ 1_4 ]----------------------
+-----------------weight info [ 1_1 ]----------------------
+[debug] ['/home/haoz/data/somatic/FD_10_18_data/train.txt'] /home/haoz/deepfilter/workspace /home/haoz/data/somatic/FD_10_18_data/synthetic_indels.leftAlign.vcf
+get fastvc indels data done:  1612545
+get merged data done, merged data dict size:  1612545
+totally 7472 truth site
+get label done, size: 1612545, pos_num: 5774, neg_num: 1606771
+start normalization...
+[info] inputs shape: (1612545, 53)
+normalization done
+FastvcDataset init over
+spliting data...
+[info] n_feature:  53
+initializeing net work
+Net(
+  (hidden0): Linear(in_features=53, out_features=140, bias=True)
+  (hidden1): Linear(in_features=140, out_features=160, bias=True)
+  (hidden2): Linear(in_features=160, out_features=170, bias=True)
+  (hidden3): Linear(in_features=170, out_features=100, bias=True)
+  (hidden4): Linear(in_features=100, out_features=10, bias=True)
+  (predict): Linear(in_features=10, out_features=2, bias=True)
+  (dropout): Dropout(p=0.5, inplace=False)
+)
+Linear(in_features=53, out_features=140, bias=True)
+Linear(in_features=140, out_features=160, bias=True)
+Linear(in_features=160, out_features=170, bias=True)
+Linear(in_features=170, out_features=100, bias=True)
+Linear(in_features=100, out_features=10, bias=True)
+Linear(in_features=10, out_features=2, bias=True)
+Dropout(p=0.5, inplace=False)
+epoch 0  processing....
+[ 1000] loss: 0.022
+[ 2000] loss: 0.010
+[ 3000] loss: 0.008
+[ 4000] loss: 0.007
+[ 5000] loss: 0.007
+[ 6000] loss: 0.006
+[ 7000] loss: 0.006
+[ 8000] loss: 0.006
+[ 9000] loss: 0.006
+[10000] loss: 0.005
+mean loss of epoch 0 is: 0.008273
+test info:
+ [total]:322509, [false]:757, [truth]:321752, error rate:0.0023472213178546957
+P\L	0	1
+0	321005	410
+1	347	747
+[01/(01+10)] TNR:	  0.5416116248348745
+[00/(10+00)] filtered False rate:	 0.9989201872090417
+[01/(01+11)] filtered Truth rate:	 0.3543647363872083
+[11/(10+11)] Precision:	 0.3171846435100548
+[11/(01+11)] Recall:	 0.6456352636127917
+haoz feature(bigger better):	  6.667727315767204
+epoch 1  processing....
+spliting data...
+[ 1000] loss: 0.006
+[ 2000] loss: 0.005
+[ 3000] loss: 0.005
+[ 4000] loss: 0.006
+[ 5000] loss: 0.005
+[ 6000] loss: 0.005
+[ 7000] loss: 0.005
+[ 8000] loss: 0.006
+[ 9000] loss: 0.005
+[10000] loss: 0.006
+mean loss of epoch 1 is: 0.005325
+test info:
+ [total]:322509, [false]:710, [truth]:321799, error rate:0.0022014889506959496
+P\L	0	1
+0	321043	380
+1	330	756
+[01/(01+10)] TNR:	  0.5352112676056338
+[00/(10+00)] filtered False rate:	 0.9989731558033811
+[01/(01+11)] filtered Truth rate:	 0.3345070422535211
+[11/(10+11)] Precision:	 0.30386740331491713
+[11/(01+11)] Recall:	 0.6654929577464789
+haoz feature(bigger better):	  6.743713200665577
+epoch 2  processing....
+spliting data...
+[ 1000] loss: 0.005
+[ 2000] loss: 0.005
+[ 3000] loss: 0.005
+[ 4000] loss: 0.005
+[ 5000] loss: 0.005
+[ 6000] loss: 0.005
+[ 7000] loss: 0.005
+[ 8000] loss: 0.005
+[ 9000] loss: 0.005
+[10000] loss: 0.005
+mean loss of epoch 2 is: 0.004971
+test info:
+ [total]:322509, [false]:714, [truth]:321795, error rate:0.0022138917053477576
+P\L	0	1
+0	321112	509
+1	205	683
+[01/(01+10)] TNR:	  0.7128851540616247
+[00/(10+00)] filtered False rate:	 0.9993620007655991
+[01/(01+11)] filtered Truth rate:	 0.42701342281879195
+[11/(10+11)] Precision:	 0.23085585585585586
+[11/(01+11)] Recall:	 0.572986577181208
+haoz feature(bigger better):	  6.451436902505286
+epoch 3  processing....
+spliting data...
+[ 1000] loss: 0.005
+[ 2000] loss: 0.005
+[ 3000] loss: 0.005
+[ 4000] loss: 0.005
+[ 5000] loss: 0.005
+[ 6000] loss: 0.005
+[ 7000] loss: 0.005
+[ 8000] loss: 0.004
+[ 9000] loss: 0.005
+[10000] loss: 0.005
+mean loss of epoch 3 is: 0.004846
+test info:
+ [total]:322509, [false]:641, [truth]:321868, error rate:0.001987541432952259
+P\L	0	1
+0	321082	403
+1	238	786
+[01/(01+10)] TNR:	  0.6287051482059283
+[00/(10+00)] filtered False rate:	 0.9992593053653679
+[01/(01+11)] filtered Truth rate:	 0.3389402859545837
+[11/(10+11)] Precision:	 0.232421875
+[11/(01+11)] Recall:	 0.6610597140454163
+haoz feature(bigger better):	  6.684948169289179
+epoch 4  processing....
+spliting data...
+[ 1000] loss: 0.005
+[ 2000] loss: 0.005
+[ 3000] loss: 0.004
+[ 4000] loss: 0.005
+[ 5000] loss: 0.005
+[ 6000] loss: 0.005
+[ 7000] loss: 0.005
+[ 8000] loss: 0.005
+[ 9000] loss: 0.004
+[10000] loss: 0.005
+mean loss of epoch 4 is: 0.004718
+test info:
+ [total]:322509, [false]:656, [truth]:321853, error rate:0.002034051762896539
+P\L	0	1
+0	321106	402
+1	254	747
+[01/(01+10)] TNR:	  0.6128048780487805
+[00/(10+00)] filtered False rate:	 0.9992096091610655
+[01/(01+11)] filtered Truth rate:	 0.34986945169712796
+[11/(10+11)] Precision:	 0.25374625374625376
+[11/(01+11)] Recall:	 0.6501305483028721
+haoz feature(bigger better):	  6.68743260134683
+epoch 5  processing....
+spliting data...
+[ 1000] loss: 0.005
+[ 2000] loss: 0.005
+[ 3000] loss: 0.005
+[ 4000] loss: 0.005
+[ 5000] loss: 0.005
+[ 6000] loss: 0.004
+[ 7000] loss: 0.004
+[ 8000] loss: 0.004
+[ 9000] loss: 0.005
+[10000] loss: 0.005
+mean loss of epoch 5 is: 0.004617
+test info:
+ [total]:322509, [false]:725, [truth]:321784, error rate:0.0022479992806402303
+P\L	0	1
+0	320973	406
+1	319	811
+[01/(01+10)] TNR:	  0.56
+[00/(10+00)] filtered False rate:	 0.9990071336976956
+[01/(01+11)] filtered Truth rate:	 0.33360723089564503
+[11/(10+11)] Precision:	 0.28230088495575223
+[11/(01+11)] Recall:	 0.666392769104355
+haoz feature(bigger better):	  6.677531376490892
+epoch 6  processing....
+spliting data...
+[ 1000] loss: 0.005
+[ 2000] loss: 0.005
+[ 3000] loss: 0.005
+[ 4000] loss: 0.005
+[ 5000] loss: 0.004
+[ 6000] loss: 0.004
+[ 7000] loss: 0.005
+[ 8000] loss: 0.004
+[ 9000] loss: 0.005
+[10000] loss: 0.005
+mean loss of epoch 6 is: 0.004595
+test info:
+ [total]:322509, [false]:649, [truth]:321860, error rate:0.002012346942255875
+P\L	0	1
+0	321087	357
+1	292	773
+[01/(01+10)] TNR:	  0.5500770416024653
+[00/(10+00)] filtered False rate:	 0.9990914154316244
+[01/(01+11)] filtered Truth rate:	 0.315929203539823
+[11/(10+11)] Precision:	 0.27417840375586855
+[11/(01+11)] Recall:	 0.684070796460177
+haoz feature(bigger better):	  6.806148722100159
+epoch 7  processing....
+spliting data...
+[ 1000] loss: 0.005
+[ 2000] loss: 0.004
+[ 3000] loss: 0.004
+[ 4000] loss: 0.005
+[ 5000] loss: 0.005
+[ 6000] loss: 0.004
+[ 7000] loss: 0.004
+[ 8000] loss: 0.004
+[ 9000] loss: 0.005
+[10000] loss: 0.005
+mean loss of epoch 7 is: 0.004619
+test info:
+ [total]:322509, [false]:690, [truth]:321819, error rate:0.0021394751774369085
+P\L	0	1
+0	321041	398
+1	292	778
+[01/(01+10)] TNR:	  0.5768115942028985
+[00/(10+00)] filtered False rate:	 0.999091285364404
+[01/(01+11)] filtered Truth rate:	 0.33843537414965985
+[11/(10+11)] Precision:	 0.27289719626168224
+[11/(01+11)] Recall:	 0.6615646258503401
+haoz feature(bigger better):	  6.69743258285404
+epoch 8  processing....
+spliting data...
+[ 1000] loss: 0.005
+[ 2000] loss: 0.004
+[ 3000] loss: 0.005
+[ 4000] loss: 0.004
+[ 5000] loss: 0.004
+[ 6000] loss: 0.005
+[ 7000] loss: 0.005
+[ 8000] loss: 0.005
+[ 9000] loss: 0.005
+[10000] loss: 0.005
+mean loss of epoch 8 is: 0.004556
+test info:
+ [total]:322509, [false]:718, [truth]:321791, error rate:0.002226294459999566
+P\L	0	1
+0	320907	338
+1	380	884
+[01/(01+10)] TNR:	  0.47075208913649025
+[00/(10+00)] filtered False rate:	 0.998817256845126
+[01/(01+11)] filtered Truth rate:	 0.2765957446808511
+[11/(10+11)] Precision:	 0.30063291139240506
+[11/(01+11)] Recall:	 0.723404255319149
+haoz feature(bigger better):	  6.860838302064199
+epoch 9  processing....
+spliting data...
+[ 1000] loss: 0.005
+[ 2000] loss: 0.004
+[ 3000] loss: 0.004
+[ 4000] loss: 0.005
+[ 5000] loss: 0.005
+[ 6000] loss: 0.005
+[ 7000] loss: 0.005
+[ 8000] loss: 0.005
+[ 9000] loss: 0.005
+[10000] loss: 0.004
+mean loss of epoch 9 is: 0.004589
+test info:
+ [total]:322509, [false]:701, [truth]:321808, error rate:0.0021735827527293813
+P\L	0	1
+0	320873	248
+1	453	935
+[01/(01+10)] TNR:	  0.3537803138373752
+[00/(10+00)] filtered False rate:	 0.9985902167891798
+[01/(01+11)] filtered Truth rate:	 0.20963651732882502
+[11/(10+11)] Precision:	 0.32636887608069165
+[11/(01+11)] Recall:	 0.790363482671175
+haoz feature(bigger better):	  7.170454749031426
+training done!
+final model: /home/haoz/deepfilter/workspace/./models/checkpoint_INDEL_20-10-21-19-56-35_ecpch10.pth
+[debug] ['/home/haoz/data/somatic/FD_10_18_data/test.txt', ''] /home/haoz/deepfilter/workspace /home/haoz/data/somatic/FD_10_18_data/synthetic_indels.leftAlign.vcf
+get fastvc indels data done:  179269
+get merged data done, merged data dict size:  179269
+totally 7472 truth site
+get label done, size: 179269, pos_num: 623, neg_num: 178646
+start normalization...
+[info] inputs shape: (179269, 53)
+normalization done
+FastvcDataset init over
+total length:  179269
+-----------------compare result------------------
+------- Indels compare result: --------
+fastvc truth snv num: 7472, fastvc total output: 856
+fastvc find: 562 , filtered: 61, recall: 0.9020866773675762, prec: 0.6565420560747663
+-------------------------------------------------
+-----------------weight info [ 1_2 ]----------------------
+[debug] ['/home/haoz/data/somatic/FD_10_18_data/train.txt'] /home/haoz/deepfilter/workspace /home/haoz/data/somatic/FD_10_18_data/synthetic_indels.leftAlign.vcf
+get fastvc indels data done:  1612545
+get merged data done, merged data dict size:  1612545
+totally 7472 truth site
+get label done, size: 1612545, pos_num: 5774, neg_num: 1606771
+start normalization...
+[info] inputs shape: (1612545, 53)
+normalization done
+FastvcDataset init over
+spliting data...
+[info] n_feature:  53
+initializeing net work
+Net(
+  (hidden0): Linear(in_features=53, out_features=140, bias=True)
+  (hidden1): Linear(in_features=140, out_features=160, bias=True)
+  (hidden2): Linear(in_features=160, out_features=170, bias=True)
+  (hidden3): Linear(in_features=170, out_features=100, bias=True)
+  (hidden4): Linear(in_features=100, out_features=10, bias=True)
+  (predict): Linear(in_features=10, out_features=2, bias=True)
+  (dropout): Dropout(p=0.5, inplace=False)
+)
+Linear(in_features=53, out_features=140, bias=True)
+Linear(in_features=140, out_features=160, bias=True)
+Linear(in_features=160, out_features=170, bias=True)
+Linear(in_features=170, out_features=100, bias=True)
+Linear(in_features=100, out_features=10, bias=True)
+Linear(in_features=10, out_features=2, bias=True)
+Dropout(p=0.5, inplace=False)
+epoch 0  processing....
+[ 1000] loss: 0.045
+[ 2000] loss: 0.016
+[ 3000] loss: 0.013
+[ 4000] loss: 0.010
+[ 5000] loss: 0.009
+[ 6000] loss: 0.009
+[ 7000] loss: 0.008
+[ 8000] loss: 0.010
+[ 9000] loss: 0.010
+[10000] loss: 0.008
+mean loss of epoch 0 is: 0.013837
+test info:
+ [total]:322509, [false]:874, [truth]:321635, error rate:0.0027100018914200845
+P\L	0	1
+0	320641	135
+1	739	994
+[01/(01+10)] TNR:	  0.15446224256292906
+[00/(10+00)] filtered False rate:	 0.9977005414151472
+[01/(01+11)] filtered Truth rate:	 0.1195748449955713
+[11/(10+11)] Precision:	 0.42642815926139643
+[11/(01+11)] Recall:	 0.8804251550044287
+haoz feature(bigger better):	  7.77860506931377
+epoch 1  processing....
+spliting data...
+[ 1000] loss: 0.008
+[ 2000] loss: 0.009
+[ 3000] loss: 0.008
+[ 4000] loss: 0.008
+[ 5000] loss: 0.008
+[ 6000] loss: 0.008
+[ 7000] loss: 0.007
+[ 8000] loss: 0.009
+[ 9000] loss: 0.008
+[10000] loss: 0.008
+mean loss of epoch 1 is: 0.008066
+test info:
+ [total]:322509, [false]:788, [truth]:321721, error rate:0.0024433426664062087
+P\L	0	1
+0	320700	153
+1	635	1021
+[01/(01+10)] TNR:	  0.19416243654822335
+[00/(10+00)] filtered False rate:	 0.9980238691708031
+[01/(01+11)] filtered Truth rate:	 0.1303236797274276
+[11/(10+11)] Precision:	 0.3834541062801932
+[11/(01+11)] Recall:	 0.8696763202725724
+haoz feature(bigger better):	  7.653443250099346
+epoch 2  processing....
+spliting data...
+[ 1000] loss: 0.007
+[ 2000] loss: 0.008
+[ 3000] loss: 0.007
+[ 4000] loss: 0.008
+[ 5000] loss: 0.008
+[ 6000] loss: 0.008
+[ 7000] loss: 0.007
+[ 8000] loss: 0.006
+[ 9000] loss: 0.008
+[10000] loss: 0.008
+mean loss of epoch 2 is: 0.007541
+test info:
+ [total]:322509, [false]:791, [truth]:321718, error rate:0.002452644732395065
+P\L	0	1
+0	320745	197
+1	594	973
+[01/(01+10)] TNR:	  0.24905183312262957
+[00/(10+00)] filtered False rate:	 0.9981514848804534
+[01/(01+11)] filtered Truth rate:	 0.1683760683760684
+[11/(10+11)] Precision:	 0.37906828334396936
+[11/(01+11)] Recall:	 0.8316239316239317
+haoz feature(bigger better):	  7.400678577846962
+epoch 3  processing....
+spliting data...
+[ 1000] loss: 0.007
+[ 2000] loss: 0.008
+[ 3000] loss: 0.008
+[ 4000] loss: 0.007
+[ 5000] loss: 0.008
+[ 6000] loss: 0.008
+[ 7000] loss: 0.007
+[ 8000] loss: 0.007
+[ 9000] loss: 0.007
+[10000] loss: 0.007
+mean loss of epoch 3 is: 0.007422
+test info:
+ [total]:322509, [false]:796, [truth]:321713, error rate:0.002468148175709825
+P\L	0	1
+0	320695	131
+1	665	1018
+[01/(01+10)] TNR:	  0.16457286432160803
+[00/(10+00)] filtered False rate:	 0.9979306696539706
+[01/(01+11)] filtered Truth rate:	 0.11401218450826806
+[11/(10+11)] Precision:	 0.39512774806892453
+[11/(01+11)] Recall:	 0.8859878154917319
+haoz feature(bigger better):	  7.8086829222867475
+epoch 4  processing....
+spliting data...
+[ 1000] loss: 0.007
+[ 2000] loss: 0.007
+[ 3000] loss: 0.007
+[ 4000] loss: 0.007
+[ 5000] loss: 0.008
+[ 6000] loss: 0.007
+[ 7000] loss: 0.007
+[ 8000] loss: 0.008
+[ 9000] loss: 0.008
+[10000] loss: 0.007
+mean loss of epoch 4 is: 0.007212
+test info:
+ [total]:322509, [false]:713, [truth]:321796, error rate:0.0022107910166848056
+P\L	0	1
+0	320818	170
+1	543	978
+[01/(01+10)] TNR:	  0.23842917251051893
+[00/(10+00)] filtered False rate:	 0.9983103114565862
+[01/(01+11)] filtered Truth rate:	 0.1480836236933798
+[11/(10+11)] Precision:	 0.35700197238658776
+[11/(01+11)] Recall:	 0.8519163763066202
+haoz feature(bigger better):	  7.5480836906462025
+epoch 5  processing....
+spliting data...
+[ 1000] loss: 0.008
+[ 2000] loss: 0.007
+[ 3000] loss: 0.007
+[ 4000] loss: 0.007
+[ 5000] loss: 0.007
+[ 6000] loss: 0.008
+[ 7000] loss: 0.007
+[ 8000] loss: 0.007
+[ 9000] loss: 0.006
+[10000] loss: 0.007
+mean loss of epoch 5 is: 0.007020
+test info:
+ [total]:322509, [false]:735, [truth]:321774, error rate:0.0022790061672697507
+P\L	0	1
+0	320781	171
+1	564	993
+[01/(01+10)] TNR:	  0.23265306122448978
+[00/(10+00)] filtered False rate:	 0.9982448770013537
+[01/(01+11)] filtered Truth rate:	 0.14690721649484537
+[11/(10+11)] Precision:	 0.3622350674373796
+[11/(01+11)] Recall:	 0.8530927835051546
+haoz feature(bigger better):	  7.542218467066279
+epoch 6  processing....
+spliting data...
+[ 1000] loss: 0.006
+[ 2000] loss: 0.007
+[ 3000] loss: 0.007
+[ 4000] loss: 0.007
+[ 5000] loss: 0.007
+[ 6000] loss: 0.007
+[ 7000] loss: 0.007
+[ 8000] loss: 0.007
+[ 9000] loss: 0.007
+[10000] loss: 0.006
+mean loss of epoch 6 is: 0.007058
+test info:
+ [total]:322509, [false]:744, [truth]:321765, error rate:0.002306912365236319
+P\L	0	1
+0	320758	122
+1	622	1007
+[01/(01+10)] TNR:	  0.1639784946236559
+[00/(10+00)] filtered False rate:	 0.9980645964279047
+[01/(01+11)] filtered Truth rate:	 0.10806023029229407
+[11/(10+11)] Precision:	 0.38182934315531003
+[11/(01+11)] Recall:	 0.8919397697077059
+haoz feature(bigger better):	  7.8798591787299985
+epoch 7  processing....
+spliting data...
+[ 1000] loss: 0.007
+[ 2000] loss: 0.007
+[ 3000] loss: 0.007
+[ 4000] loss: 0.007
+[ 5000] loss: 0.007
+[ 6000] loss: 0.007
+[ 7000] loss: 0.007
+[ 8000] loss: 0.007
+[ 9000] loss: 0.006
+[10000] loss: 0.007
+mean loss of epoch 7 is: 0.006897
+test info:
+ [total]:322509, [false]:715, [truth]:321794, error rate:0.0022169923940107096
+P\L	0	1
+0	320753	133
+1	582	1041
+[01/(01+10)] TNR:	  0.18601398601398603
+[00/(10+00)] filtered False rate:	 0.9981888060746573
+[01/(01+11)] filtered Truth rate:	 0.11328790459965929
+[11/(10+11)] Precision:	 0.3585951940850277
+[11/(01+11)] Recall:	 0.8867120954003407
+haoz feature(bigger better):	  7.793531817658163
+epoch 8  processing....
+spliting data...
+[ 1000] loss: 0.007
+[ 2000] loss: 0.006
+[ 3000] loss: 0.008
+[ 4000] loss: 0.007
+[ 5000] loss: 0.006
+[ 6000] loss: 0.007
+[ 7000] loss: 0.007
+[ 8000] loss: 0.007
+[ 9000] loss: 0.007
+[10000] loss: 0.006
+mean loss of epoch 8 is: 0.006933
+test info:
+ [total]:322509, [false]:767, [truth]:321742, error rate:0.002378228204484216
+P\L	0	1
+0	320705	122
+1	645	1037
+[01/(01+10)] TNR:	  0.1590612777053455
+[00/(10+00)] filtered False rate:	 0.997992842694881
+[01/(01+11)] filtered Truth rate:	 0.10526315789473684
+[11/(10+11)] Precision:	 0.38347205707491083
+[11/(01+11)] Recall:	 0.8947368421052632
+haoz feature(bigger better):	  7.879858990206576
+epoch 9  processing....
+spliting data...
+[ 1000] loss: 0.007
+[ 2000] loss: 0.007
+[ 3000] loss: 0.007
+[ 4000] loss: 0.007
+[ 5000] loss: 0.006
+[ 6000] loss: 0.007
+[ 7000] loss: 0.007
+[ 8000] loss: 0.007
+[ 9000] loss: 0.006
+[10000] loss: 0.007
+mean loss of epoch 9 is: 0.006761
+test info:
+ [total]:322509, [false]:668, [truth]:321841, error rate:0.002071260026851964
+P\L	0	1
+0	320850	191
+1	477	991
+[01/(01+10)] TNR:	  0.28592814371257486
+[00/(10+00)] filtered False rate:	 0.9985155309077669
+[01/(01+11)] filtered Truth rate:	 0.16159052453468697
+[11/(10+11)] Precision:	 0.3249318801089918
+[11/(01+11)] Recall:	 0.8384094754653131
+haoz feature(bigger better):	  7.431609396382603
+training done!
+final model: /home/haoz/deepfilter/workspace/./models/checkpoint_INDEL_20-10-21-20-03-56_ecpch10.pth
+[debug] ['/home/haoz/data/somatic/FD_10_18_data/test.txt', ''] /home/haoz/deepfilter/workspace /home/haoz/data/somatic/FD_10_18_data/synthetic_indels.leftAlign.vcf
+get fastvc indels data done:  179269
+get merged data done, merged data dict size:  179269
+totally 7472 truth site
+get label done, size: 179269, pos_num: 623, neg_num: 178646
+start normalization...
+[info] inputs shape: (179269, 53)
+normalization done
+FastvcDataset init over
+total length:  179269
+-----------------compare result------------------
+------- Indels compare result: --------
+fastvc truth snv num: 7472, fastvc total output: 932
+fastvc find: 576 , filtered: 47, recall: 0.9245585874799358, prec: 0.6180257510729614
+-------------------------------------------------
+-----------------weight info [ 1_4 ]----------------------
+[debug] ['/home/haoz/data/somatic/FD_10_18_data/train.txt'] /home/haoz/deepfilter/workspace /home/haoz/data/somatic/FD_10_18_data/synthetic_indels.leftAlign.vcf
+get fastvc indels data done:  1612545
+get merged data done, merged data dict size:  1612545
+totally 7472 truth site
+get label done, size: 1612545, pos_num: 5774, neg_num: 1606771
+start normalization...
+[info] inputs shape: (1612545, 53)
+normalization done
+FastvcDataset init over
+spliting data...
+[info] n_feature:  53
+initializeing net work
+Net(
+  (hidden0): Linear(in_features=53, out_features=140, bias=True)
+  (hidden1): Linear(in_features=140, out_features=160, bias=True)
+  (hidden2): Linear(in_features=160, out_features=170, bias=True)
+  (hidden3): Linear(in_features=170, out_features=100, bias=True)
+  (hidden4): Linear(in_features=100, out_features=10, bias=True)
+  (predict): Linear(in_features=10, out_features=2, bias=True)
+  (dropout): Dropout(p=0.5, inplace=False)
+)
+Linear(in_features=53, out_features=140, bias=True)
+Linear(in_features=140, out_features=160, bias=True)
+Linear(in_features=160, out_features=170, bias=True)
+Linear(in_features=170, out_features=100, bias=True)
+Linear(in_features=100, out_features=10, bias=True)
+Linear(in_features=10, out_features=2, bias=True)
+Dropout(p=0.5, inplace=False)
+epoch 0  processing....
+[ 1000] loss: 0.050
+[ 2000] loss: 0.020
+[ 3000] loss: 0.017
+[ 4000] loss: 0.015
+[ 5000] loss: 0.013
+[ 6000] loss: 0.015
+[ 7000] loss: 0.013
+[ 8000] loss: 0.012
+[ 9000] loss: 0.012
+[10000] loss: 0.012
+mean loss of epoch 0 is: 0.017818
+test info:
+ [total]:322509, [false]:1103, [truth]:321406, error rate:0.0034200595952361018
+P\L	0	1
+0	320377	109
+1	994	1029
+[01/(01+10)] TNR:	  0.09882139619220308
+[00/(10+00)] filtered False rate:	 0.9969070015651692
+[01/(01+11)] filtered Truth rate:	 0.09578207381370826
+[11/(10+11)] Precision:	 0.4913494809688581
+[11/(01+11)] Recall:	 0.9042179261862917
+haoz feature(bigger better):	  7.992528320361317
+epoch 1  processing....
+spliting data...
+[ 1000] loss: 0.012
+[ 2000] loss: 0.012
+[ 3000] loss: 0.013
+[ 4000] loss: 0.012
+[ 5000] loss: 0.012
+[ 6000] loss: 0.013
+[ 7000] loss: 0.013
+[ 8000] loss: 0.012
+[ 9000] loss: 0.011
+[10000] loss: 0.012
+mean loss of epoch 1 is: 0.012062
+test info:
+ [total]:322509, [false]:793, [truth]:321716, error rate:0.002458846109720969
+P\L	0	1
+0	320741	194
+1	599	975
+[01/(01+10)] TNR:	  0.244640605296343
+[00/(10+00)] filtered False rate:	 0.9981359307898177
+[01/(01+11)] filtered Truth rate:	 0.16595380667236956
+[11/(10+11)] Precision:	 0.380559085133418
+[11/(01+11)] Recall:	 0.8340461933276304
+haoz feature(bigger better):	  7.416024075121476
+epoch 2  processing....
+spliting data...
+[ 1000] loss: 0.013
+[ 2000] loss: 0.013
+[ 3000] loss: 0.011
+[ 4000] loss: 0.013
+[ 5000] loss: 0.012
+[ 6000] loss: 0.010
+[ 7000] loss: 0.012
+[ 8000] loss: 0.010
+[ 9000] loss: 0.012
+[10000] loss: 0.009
+mean loss of epoch 2 is: 0.011481
+test info:
+ [total]:322509, [false]:789, [truth]:321720, error rate:0.0024464433550691607
+P\L	0	1
+0	320719	162
+1	627	1001
+[01/(01+10)] TNR:	  0.20532319391634982
+[00/(10+00)] filtered False rate:	 0.9980488320999794
+[01/(01+11)] filtered Truth rate:	 0.13929492691315562
+[11/(10+11)] Precision:	 0.38513513513513514
+[11/(01+11)] Recall:	 0.8607050730868444
+haoz feature(bigger better):	  7.596285116214422
+epoch 3  processing....
+spliting data...
+[ 1000] loss: 0.012
+[ 2000] loss: 0.012
+[ 3000] loss: 0.011
+[ 4000] loss: 0.010
+[ 5000] loss: 0.011
+[ 6000] loss: 0.011
+[ 7000] loss: 0.011
+[ 8000] loss: 0.010
+[ 9000] loss: 0.011
+[10000] loss: 0.012
+mean loss of epoch 3 is: 0.010921
+test info:
+ [total]:322509, [false]:802, [truth]:321707, error rate:0.0024867523076875374
+P\L	0	1
+0	320631	129
+1	673	1076
+[01/(01+10)] TNR:	  0.16084788029925187
+[00/(10+00)] filtered False rate:	 0.9979054104524064
+[01/(01+11)] filtered Truth rate:	 0.10705394190871369
+[11/(10+11)] Precision:	 0.3847913093196112
+[11/(01+11)] Recall:	 0.8929460580912864
+haoz feature(bigger better):	  7.8240677004087065
+epoch 4  processing....
+spliting data...
+[ 1000] loss: 0.011
+[ 2000] loss: 0.011
+[ 3000] loss: 0.010
+[ 4000] loss: 0.011
+[ 5000] loss: 0.011
+[ 6000] loss: 0.012
+[ 7000] loss: 0.009
+[ 8000] loss: 0.010
+[ 9000] loss: 0.010
+[10000] loss: 0.012
+mean loss of epoch 4 is: 0.010786
+test info:
+ [total]:322509, [false]:961, [truth]:321548, error rate:0.002979761805096912
+P\L	0	1
+0	320538	98
+1	863	1010
+[01/(01+10)] TNR:	  0.10197710718002082
+[00/(10+00)] filtered False rate:	 0.997314880787552
+[01/(01+11)] filtered Truth rate:	 0.08844765342960288
+[11/(10+11)] Precision:	 0.4607581420181527
+[11/(01+11)] Recall:	 0.9115523465703971
+haoz feature(bigger better):	  8.098909037060375
+epoch 5  processing....
+spliting data...
+[ 1000] loss: 0.009
+[ 2000] loss: 0.012
+[ 3000] loss: 0.010
+[ 4000] loss: 0.012
+[ 5000] loss: 0.010
+[ 6000] loss: 0.009
+[ 7000] loss: 0.011
+[ 8000] loss: 0.009
+[ 9000] loss: 0.010
+[10000] loss: 0.012
+mean loss of epoch 5 is: 0.010483
+test info:
+ [total]:322509, [false]:783, [truth]:321726, error rate:0.0024278392230914487
+P\L	0	1
+0	320711	105
+1	678	1015
+[01/(01+10)] TNR:	  0.13409961685823754
+[00/(10+00)] filtered False rate:	 0.9978904069523226
+[01/(01+11)] filtered Truth rate:	 0.09375
+[11/(10+11)] Precision:	 0.4004725339633786
+[11/(01+11)] Recall:	 0.90625
+haoz feature(bigger better):	  8.02991851453274
+epoch 6  processing....
+spliting data...
+[ 1000] loss: 0.010
+[ 2000] loss: 0.009
+[ 3000] loss: 0.010
+[ 4000] loss: 0.011
+[ 5000] loss: 0.011
+[ 6000] loss: 0.010
+[ 7000] loss: 0.010
+[ 8000] loss: 0.010
+[ 9000] loss: 0.010
+[10000] loss: 0.012
+mean loss of epoch 6 is: 0.010323
+test info:
+ [total]:322509, [false]:883, [truth]:321626, error rate:0.002737908089386653
+P\L	0	1
+0	320525	94
+1	789	1101
+[01/(01+10)] TNR:	  0.10645526613816535
+[00/(10+00)] filtered False rate:	 0.9975444580690539
+[01/(01+11)] filtered Truth rate:	 0.07866108786610879
+[11/(10+11)] Precision:	 0.4174603174603175
+[11/(01+11)] Recall:	 0.9213389121338912
+haoz feature(bigger better):	  8.14058214596241
+epoch 7  processing....
+spliting data...
+[ 1000] loss: 0.011
+[ 2000] loss: 0.011
+[ 3000] loss: 0.009
+[ 4000] loss: 0.010
+[ 5000] loss: 0.009
+[ 6000] loss: 0.009
+[ 7000] loss: 0.010
+[ 8000] loss: 0.009
+[ 9000] loss: 0.011
+[10000] loss: 0.010
+mean loss of epoch 7 is: 0.009928
+test info:
+ [total]:322509, [false]:799, [truth]:321710, error rate:0.0024774502416986814
+P\L	0	1
+0	320644	97
+1	702	1066
+[01/(01+10)] TNR:	  0.1214017521902378
+[00/(10+00)] filtered False rate:	 0.9978154388105033
+[01/(01+11)] filtered Truth rate:	 0.08340498710232158
+[11/(10+11)] Precision:	 0.39705882352941174
+[11/(01+11)] Recall:	 0.9165950128976784
+haoz feature(bigger better):	  8.109167106222456
+epoch 8  processing....
+spliting data...
+[ 1000] loss: 0.010
+[ 2000] loss: 0.010
+[ 3000] loss: 0.010
+[ 4000] loss: 0.010
+[ 5000] loss: 0.009
+[ 6000] loss: 0.010
+[ 7000] loss: 0.011
+[ 8000] loss: 0.010
+[ 9000] loss: 0.009
+[10000] loss: 0.012
+mean loss of epoch 8 is: 0.010276
+test info:
+ [total]:322509, [false]:754, [truth]:321755, error rate:0.0023379192518658393
+P\L	0	1
+0	320723	138
+1	616	1032
+[01/(01+10)] TNR:	  0.1830238726790451
+[00/(10+00)] filtered False rate:	 0.9980830213575071
+[01/(01+11)] filtered Truth rate:	 0.11794871794871795
+[11/(10+11)] Precision:	 0.3737864077669903
+[11/(01+11)] Recall:	 0.882051282051282
+haoz feature(bigger better):	  7.756627172894921
+epoch 9  processing....
+spliting data...
+[ 1000] loss: 0.010
+[ 2000] loss: 0.011
+[ 3000] loss: 0.010
+[ 4000] loss: 0.010
+[ 5000] loss: 0.010
+[ 6000] loss: 0.010
+[ 7000] loss: 0.010
+[ 8000] loss: 0.010
+[ 9000] loss: 0.010
+[10000] loss: 0.010
+mean loss of epoch 9 is: 0.009996
+test info:
+ [total]:322509, [false]:782, [truth]:321727, error rate:0.0024247385344284967
+P\L	0	1
+0	320671	98
+1	684	1056
+[01/(01+10)] TNR:	  0.12531969309462915
+[00/(10+00)] filtered False rate:	 0.9978715128129327
+[01/(01+11)] filtered Truth rate:	 0.08492201039861352
+[11/(10+11)] Precision:	 0.3931034482758621
+[11/(01+11)] Recall:	 0.9150779896013865
+haoz feature(bigger better):	  8.098910863574744
+training done!
+final model: /home/haoz/deepfilter/workspace/./models/checkpoint_INDEL_20-10-21-20-11-17_ecpch10.pth
+[debug] ['/home/haoz/data/somatic/FD_10_18_data/test.txt', ''] /home/haoz/deepfilter/workspace /home/haoz/data/somatic/FD_10_18_data/synthetic_indels.leftAlign.vcf
+get fastvc indels data done:  179269
+get merged data done, merged data dict size:  179269
+totally 7472 truth site
+get label done, size: 179269, pos_num: 623, neg_num: 178646
+start normalization...
+[info] inputs shape: (179269, 53)
+normalization done
+FastvcDataset init over
+total length:  179269
+-----------------compare result------------------
+------- Indels compare result: --------
+fastvc truth snv num: 7472, fastvc total output: 1056
+fastvc find: 588 , filtered: 35, recall: 0.9438202247191011, prec: 0.5568181818181818
+-------------------------------------------------
+-----------------weight info [ 1_10 ]----------------------
+[debug] ['/home/haoz/data/somatic/FD_10_18_data/train.txt'] /home/haoz/deepfilter/workspace /home/haoz/data/somatic/FD_10_18_data/synthetic_indels.leftAlign.vcf
+get fastvc indels data done:  1612545
+get merged data done, merged data dict size:  1612545
+totally 7472 truth site
+get label done, size: 1612545, pos_num: 5774, neg_num: 1606771
+start normalization...
+[info] inputs shape: (1612545, 53)
+normalization done
+FastvcDataset init over
+spliting data...
+[info] n_feature:  53
+initializeing net work
+Net(
+  (hidden0): Linear(in_features=53, out_features=140, bias=True)
+  (hidden1): Linear(in_features=140, out_features=160, bias=True)
+  (hidden2): Linear(in_features=160, out_features=170, bias=True)
+  (hidden3): Linear(in_features=170, out_features=100, bias=True)
+  (hidden4): Linear(in_features=100, out_features=10, bias=True)
+  (predict): Linear(in_features=10, out_features=2, bias=True)
+  (dropout): Dropout(p=0.5, inplace=False)
+)
+Linear(in_features=53, out_features=140, bias=True)
+Linear(in_features=140, out_features=160, bias=True)
+Linear(in_features=160, out_features=170, bias=True)
+Linear(in_features=170, out_features=100, bias=True)
+Linear(in_features=100, out_features=10, bias=True)
+Linear(in_features=10, out_features=2, bias=True)
+Dropout(p=0.5, inplace=False)
+epoch 0  processing....
+[ 1000] loss: 0.073
+[ 2000] loss: 0.033
+[ 3000] loss: 0.026
+[ 4000] loss: 0.024
+[ 5000] loss: 0.020
+[ 6000] loss: 0.022
+[ 7000] loss: 0.018
+[ 8000] loss: 0.024
+[ 9000] loss: 0.022
+[10000] loss: 0.021
+mean loss of epoch 0 is: 0.028218
+test info:
+ [total]:322509, [false]:1505, [truth]:321004, error rate:0.004666536437742823
+P\L	0	1
+0	319891	80
+1	1425	1113
+[01/(01+10)] TNR:	  0.053156146179401995
+[00/(10+00)] filtered False rate:	 0.9955651134708511
+[01/(01+11)] filtered Truth rate:	 0.06705783738474434
+[11/(10+11)] Precision:	 0.5614657210401891
+[11/(01+11)] Recall:	 0.9329421626152556
+haoz feature(bigger better):	  8.301840874808388
+epoch 1  processing....
+spliting data...
+[ 1000] loss: 0.019
+[ 2000] loss: 0.019
+[ 3000] loss: 0.020
+[ 4000] loss: 0.021
+[ 5000] loss: 0.020
+[ 6000] loss: 0.020
+[ 7000] loss: 0.018
+[ 8000] loss: 0.018
+[ 9000] loss: 0.021
+[10000] loss: 0.018
+mean loss of epoch 1 is: 0.019345
+test info:
+ [total]:322509, [false]:1052, [truth]:321457, error rate:0.0032619244734255477
+P\L	0	1
+0	320440	108
+1	944	1017
+[01/(01+10)] TNR:	  0.10266159695817491
+[00/(10+00)] filtered False rate:	 0.9970627038060389
+[01/(01+11)] filtered Truth rate:	 0.096
+[11/(10+11)] Precision:	 0.4813870474247833
+[11/(01+11)] Recall:	 0.904
+haoz feature(bigger better):	  8.001745353987797
+epoch 2  processing....
+spliting data...
+[ 1000] loss: 0.018
+[ 2000] loss: 0.019
+[ 3000] loss: 0.019
+[ 4000] loss: 0.018
+[ 5000] loss: 0.019
+[ 6000] loss: 0.024
+[ 7000] loss: 0.018
+[ 8000] loss: 0.021
+[ 9000] loss: 0.020
+[10000] loss: 0.017
+mean loss of epoch 2 is: 0.019232
+test info:
+ [total]:322509, [false]:1028, [truth]:321481, error rate:0.0031875079455146987
+P\L	0	1
+0	320486	104
+1	924	995
+[01/(01+10)] TNR:	  0.10116731517509728
+[00/(10+00)] filtered False rate:	 0.9971251672318845
+[01/(01+11)] filtered Truth rate:	 0.09463148316651501
+[11/(10+11)] Precision:	 0.4815007816571131
+[11/(01+11)] Recall:	 0.905368516833485
+haoz feature(bigger better):	  8.039485538097411
+epoch 3  processing....
+spliting data...
+[ 1000] loss: 0.018
+[ 2000] loss: 0.017
+[ 3000] loss: 0.022
+[ 4000] loss: 0.018
+[ 5000] loss: 0.018
+[ 6000] loss: 0.025
+[ 7000] loss: 0.016
+[ 8000] loss: 0.022
+[ 9000] loss: 0.018
+[10000] loss: 0.017
+mean loss of epoch 3 is: 0.018921
+test info:
+ [total]:322509, [false]:956, [truth]:321553, error rate:0.002964258361782152
+P\L	0	1
+0	320583	147
+1	809	970
+[01/(01+10)] TNR:	  0.15376569037656904
+[00/(10+00)] filtered False rate:	 0.9974828247125006
+[01/(01+11)] filtered Truth rate:	 0.13160250671441362
+[11/(10+11)] Precision:	 0.4547498594716133
+[11/(01+11)] Recall:	 0.8683974932855864
+haoz feature(bigger better):	  7.693447231646366
+epoch 4  processing....
+spliting data...
+[ 1000] loss: 0.022
+[ 2000] loss: 0.019
+[ 3000] loss: 0.019
+[ 4000] loss: 0.019
+[ 5000] loss: 0.019
+[ 6000] loss: 0.018
+[ 7000] loss: 0.019
+[ 8000] loss: 0.020
+[ 9000] loss: 0.018
+[10000] loss: 0.020
+mean loss of epoch 4 is: 0.019289
+test info:
+ [total]:322509, [false]:1183, [truth]:321326, error rate:0.0036681146882722652
+P\L	0	1
+0	320238	77
+1	1106	1088
+[01/(01+10)] TNR:	  0.0650887573964497
+[00/(10+00)] filtered False rate:	 0.9965582055367457
+[01/(01+11)] filtered Truth rate:	 0.06609442060085836
+[11/(10+11)] Precision:	 0.504102096627165
+[11/(01+11)] Recall:	 0.9339055793991416
+haoz feature(bigger better):	  8.340065536433288
+epoch 5  processing....
+spliting data...
+[ 1000] loss: 0.017
+[ 2000] loss: 0.016
+[ 3000] loss: 0.017
+[ 4000] loss: 0.021
+[ 5000] loss: 0.018
+[ 6000] loss: 0.018
+[ 7000] loss: 0.016
+[ 8000] loss: 0.020
+[ 9000] loss: 0.019
+[10000] loss: 0.025
+mean loss of epoch 5 is: 0.018839
+test info:
+ [total]:322509, [false]:1373, [truth]:321136, error rate:0.004257245534233153
+P\L	0	1
+0	320067	65
+1	1308	1069
+[01/(01+10)] TNR:	  0.04734158776402039
+[00/(10+00)] filtered False rate:	 0.9959299883313886
+[01/(01+11)] filtered Truth rate:	 0.05731922398589065
+[11/(10+11)] Precision:	 0.5502734539335297
+[11/(01+11)] Recall:	 0.9426807760141094
+haoz feature(bigger better):	  8.509477929055844
+epoch 6  processing....
+spliting data...
+[ 1000] loss: 0.022
+[ 2000] loss: 0.021
+[ 3000] loss: 0.026
+[ 4000] loss: 0.018
+[ 5000] loss: 0.021
+[ 6000] loss: 0.020
+[ 7000] loss: 0.015
+[ 8000] loss: 0.023
+[ 9000] loss: 0.018
+[10000] loss: 0.024
+mean loss of epoch 6 is: 0.020780
+test info:
+ [total]:322509, [false]:1414, [truth]:321095, error rate:0.004384373769414187
+P\L	0	1
+0	319978	51
+1	1363	1117
+[01/(01+10)] TNR:	  0.03606789250353607
+[00/(10+00)] filtered False rate:	 0.9957583999551878
+[01/(01+11)] filtered Truth rate:	 0.04366438356164384
+[11/(10+11)] Precision:	 0.5495967741935484
+[11/(01+11)] Recall:	 0.9563356164383562
+haoz feature(bigger better):	  8.752032963975138
+epoch 7  processing....
+spliting data...
+[ 1000] loss: 0.017
+[ 2000] loss: 0.017
+[ 3000] loss: 0.022
+[ 4000] loss: 0.019
+[ 5000] loss: 0.019
+[ 6000] loss: 0.021
+[ 7000] loss: 0.020
+[ 8000] loss: 0.016
+[ 9000] loss: 0.023
+[10000] loss: 0.018
+mean loss of epoch 7 is: 0.019261
+test info:
+ [total]:322509, [false]:1224, [truth]:321285, error rate:0.003795242923453299
+P\L	0	1
+0	320218	71
+1	1153	1067
+[01/(01+10)] TNR:	  0.05800653594771242
+[00/(10+00)] filtered False rate:	 0.9964122462823342
+[01/(01+11)] filtered Truth rate:	 0.06239015817223199
+[11/(10+11)] Precision:	 0.5193693693693694
+[11/(01+11)] Recall:	 0.937609841827768
+haoz feature(bigger better):	  8.421189205475978
+epoch 8  processing....
+spliting data...
+[ 1000] loss: 0.016
+[ 2000] loss: 0.016
+[ 3000] loss: 0.020
+[ 4000] loss: 0.020
+[ 5000] loss: 0.014
+[ 6000] loss: 0.018
+[ 7000] loss: 0.025
+[ 8000] loss: 0.019
+[ 9000] loss: 0.021
+[10000] loss: 0.018
+mean loss of epoch 8 is: 0.018629
+test info:
+ [total]:322509, [false]:1018, [truth]:321491, error rate:0.0031565010588851783
+P\L	0	1
+0	320461	106
+1	912	1030
+[01/(01+10)] TNR:	  0.10412573673870335
+[00/(10+00)] filtered False rate:	 0.997162176038435
+[01/(01+11)] filtered Truth rate:	 0.09330985915492958
+[11/(10+11)] Precision:	 0.46961894953656025
+[11/(01+11)] Recall:	 0.9066901408450704
+haoz feature(bigger better):	  8.02043762396578
+epoch 9  processing....
+spliting data...
+[ 1000] loss: 0.020
+[ 2000] loss: 0.017
+[ 3000] loss: 0.015
+[ 4000] loss: 0.016
+[ 5000] loss: 0.018
+[ 6000] loss: 0.017
+[ 7000] loss: 0.019
+[ 8000] loss: 0.020
+[ 9000] loss: 0.016
+[10000] loss: 0.019
+mean loss of epoch 9 is: 0.017658
+test info:
+ [total]:322509, [false]:1425, [truth]:321084, error rate:0.004418481344706659
+P\L	0	1
+0	319956	47
+1	1378	1128
+[01/(01+10)] TNR:	  0.03298245614035088
+[00/(10+00)] filtered False rate:	 0.9957116271543005
+[01/(01+11)] filtered Truth rate:	 0.04
+[11/(10+11)] Precision:	 0.5498802873104549
+[11/(01+11)] Recall:	 0.96
+haoz feature(bigger better):	  8.833708401405937
+training done!
+final model: /home/haoz/deepfilter/workspace/./models/checkpoint_INDEL_20-10-21-20-18-39_ecpch10.pth
+[debug] ['/home/haoz/data/somatic/FD_10_18_data/test.txt', ''] /home/haoz/deepfilter/workspace /home/haoz/data/somatic/FD_10_18_data/synthetic_indels.leftAlign.vcf
+get fastvc indels data done:  179269
+get merged data done, merged data dict size:  179269
+totally 7472 truth site
+get label done, size: 179269, pos_num: 623, neg_num: 178646
+start normalization...
+[info] inputs shape: (179269, 53)
+normalization done
+FastvcDataset init over
+total length:  179269
+-----------------compare result------------------
+------- Indels compare result: --------
+fastvc truth snv num: 7472, fastvc total output: 1778
+fastvc find: 612 , filtered: 11, recall: 0.9823434991974318, prec: 0.344206974128234
+-------------------------------------------------
+-----------------weight info [ 1_20 ]----------------------
+[debug] ['/home/haoz/data/somatic/FD_10_18_data/train.txt'] /home/haoz/deepfilter/workspace /home/haoz/data/somatic/FD_10_18_data/synthetic_indels.leftAlign.vcf
+get fastvc indels data done:  1612545
+get merged data done, merged data dict size:  1612545
+totally 7472 truth site
+get label done, size: 1612545, pos_num: 5774, neg_num: 1606771
+start normalization...
+[info] inputs shape: (1612545, 53)
+normalization done
+FastvcDataset init over
+spliting data...
+[info] n_feature:  53
+initializeing net work
+Net(
+  (hidden0): Linear(in_features=53, out_features=140, bias=True)
+  (hidden1): Linear(in_features=140, out_features=160, bias=True)
+  (hidden2): Linear(in_features=160, out_features=170, bias=True)
+  (hidden3): Linear(in_features=170, out_features=100, bias=True)
+  (hidden4): Linear(in_features=100, out_features=10, bias=True)
+  (predict): Linear(in_features=10, out_features=2, bias=True)
+  (dropout): Dropout(p=0.5, inplace=False)
+)
+Linear(in_features=53, out_features=140, bias=True)
+Linear(in_features=140, out_features=160, bias=True)
+Linear(in_features=160, out_features=170, bias=True)
+Linear(in_features=170, out_features=100, bias=True)
+Linear(in_features=100, out_features=10, bias=True)
+Linear(in_features=10, out_features=2, bias=True)
+Dropout(p=0.5, inplace=False)
+epoch 0  processing....
+[ 1000] loss: 0.115
+[ 2000] loss: 0.039
+[ 3000] loss: 0.031
+[ 4000] loss: 0.030
+[ 5000] loss: 0.029
+[ 6000] loss: 0.030
+[ 7000] loss: 0.025
+[ 8000] loss: 0.023
+[ 9000] loss: 0.032
+[10000] loss: 0.027
+mean loss of epoch 0 is: 0.037962
+test info:
+ [total]:322509, [false]:1213, [truth]:321296, error rate:0.0037611353481608266
+P\L	0	1
+0	320264	86
+1	1127	1032
+[01/(01+10)] TNR:	  0.07089859851607584
+[00/(10+00)] filtered False rate:	 0.9964933678914468
+[01/(01+11)] filtered Truth rate:	 0.07692307692307693
+[11/(10+11)] Precision:	 0.5220009263547939
+[11/(01+11)] Recall:	 0.9230769230769231
+haoz feature(bigger better):	  8.229524921000115
+epoch 1  processing....
+spliting data...
+[ 1000] loss: 0.026
+[ 2000] loss: 0.030
+[ 3000] loss: 0.030
+[ 4000] loss: 0.024
+[ 5000] loss: 0.030
+[ 6000] loss: 0.032
+[ 7000] loss: 0.026
+[ 8000] loss: 0.030
+[ 9000] loss: 0.022
+[10000] loss: 0.026
+mean loss of epoch 1 is: 0.027848
+test info:
+ [total]:322509, [false]:1275, [truth]:321234, error rate:0.003953378045263853
+P\L	0	1
+0	320179	75
+1	1200	1055
+[01/(01+10)] TNR:	  0.058823529411764705
+[00/(10+00)] filtered False rate:	 0.9962660908148946
+[01/(01+11)] filtered Truth rate:	 0.06637168141592921
+[11/(10+11)] Precision:	 0.532150776053215
+[11/(01+11)] Recall:	 0.9336283185840708
+haoz feature(bigger better):	  8.366381208413504
+epoch 2  processing....
+spliting data...
+[ 1000] loss: 0.030
+[ 2000] loss: 0.021
+[ 3000] loss: 0.026
+[ 4000] loss: 0.030
+[ 5000] loss: 0.030
+[ 6000] loss: 0.029
+[ 7000] loss: 0.030
+[ 8000] loss: 0.026
+[ 9000] loss: 0.028
+[10000] loss: 0.024
+mean loss of epoch 2 is: 0.027344
+test info:
+ [total]:322509, [false]:1246, [truth]:321263, error rate:0.003863458074038244
+P\L	0	1
+0	320190	68
+1	1178	1073
+[01/(01+10)] TNR:	  0.05457463884430177
+[00/(10+00)] filtered False rate:	 0.9963344203529909
+[01/(01+11)] filtered Truth rate:	 0.05959684487291849
+[11/(10+11)] Precision:	 0.5233229675699689
+[11/(01+11)] Recall:	 0.9404031551270815
+haoz feature(bigger better):	  8.46436029326767
+epoch 3  processing....
+spliting data...
+[ 1000] loss: 0.028
+[ 2000] loss: 0.028
+[ 3000] loss: 0.028
+[ 4000] loss: 0.027
+[ 5000] loss: 0.032
+[ 6000] loss: 0.022
+[ 7000] loss: 0.026
+[ 8000] loss: 0.027
+[ 9000] loss: 0.031
+[10000] loss: 0.024
+mean loss of epoch 3 is: 0.027231
+test info:
+ [total]:322509, [false]:1269, [truth]:321240, error rate:0.003934773913286141
+P\L	0	1
+0	320162	69
+1	1200	1078
+[01/(01+10)] TNR:	  0.054373522458628844
+[00/(10+00)] filtered False rate:	 0.9962658932916773
+[01/(01+11)] filtered Truth rate:	 0.06015693112467306
+[11/(10+11)] Precision:	 0.5267778753292361
+[11/(01+11)] Recall:	 0.939843068875327
+haoz feature(bigger better):	  8.449761426072827
+epoch 4  processing....
+spliting data...
+[ 1000] loss: 0.028
+[ 2000] loss: 0.032
+[ 3000] loss: 0.023
+[ 4000] loss: 0.025
+[ 5000] loss: 0.025
+[ 6000] loss: 0.026
+[ 7000] loss: 0.029
+[ 8000] loss: 0.031
+[ 9000] loss: 0.025
+[10000] loss: 0.028
+mean loss of epoch 4 is: 0.027210
+test info:
+ [total]:322509, [false]:1482, [truth]:321027, error rate:0.004595220598494926
+P\L	0	1
+0	319903	64
+1	1418	1124
+[01/(01+10)] TNR:	  0.043184885290148446
+[00/(10+00)] filtered False rate:	 0.9955869675495844
+[01/(01+11)] filtered Truth rate:	 0.05387205387205387
+[11/(10+11)] Precision:	 0.5578284815106216
+[11/(01+11)] Recall:	 0.9461279461279462
+haoz feature(bigger better):	  8.524980082463745
+epoch 5  processing....
+spliting data...
+[ 1000] loss: 0.032
+[ 2000] loss: 0.025
+[ 3000] loss: 0.022
+[ 4000] loss: 0.025
+[ 5000] loss: 0.028
+[ 6000] loss: 0.025
+[ 7000] loss: 0.024
+[ 8000] loss: 0.042
+[ 9000] loss: 0.035
+[10000] loss: 0.030
+mean loss of epoch 5 is: 0.028849
+test info:
+ [total]:322509, [false]:1511, [truth]:320998, error rate:0.004685140569720535
+P\L	0	1
+0	319944	47
+1	1464	1054
+[01/(01+10)] TNR:	  0.031105228325612178
+[00/(10+00)] filtered False rate:	 0.9954450418160096
+[01/(01+11)] filtered Truth rate:	 0.04268846503178928
+[11/(10+11)] Precision:	 0.5814138204924544
+[11/(01+11)] Recall:	 0.9573115349682108
+haoz feature(bigger better):	  8.833706571675853
+epoch 6  processing....
+spliting data...
+[ 1000] loss: 0.031
+[ 2000] loss: 0.026
+[ 3000] loss: 0.030
+[ 4000] loss: 0.021
+[ 5000] loss: 0.022
+[ 6000] loss: 0.027
+[ 7000] loss: 0.027
+[ 8000] loss: 0.036
+[ 9000] loss: 0.026
+[10000] loss: 0.028
+mean loss of epoch 6 is: 0.027296
+test info:
+ [total]:322509, [false]:1700, [truth]:320809, error rate:0.005271170727018471
+P\L	0	1
+0	319712	40
+1	1660	1097
+[01/(01+10)] TNR:	  0.023529411764705882
+[00/(10+00)] filtered False rate:	 0.9948346464533313
+[01/(01+11)] filtered Truth rate:	 0.03518029903254178
+[11/(10+11)] Precision:	 0.6021037359448677
+[11/(01+11)] Recall:	 0.9648197009674582
+haoz feature(bigger better):	  8.994964368594479
+epoch 7  processing....
+spliting data...
+[ 1000] loss: 0.032
+[ 2000] loss: 0.019
+[ 3000] loss: 0.035
+[ 4000] loss: 0.029
+[ 5000] loss: 0.033
+[ 6000] loss: 0.025
+[ 7000] loss: 0.022
+[ 8000] loss: 0.029
+[ 9000] loss: 0.025
+[10000] loss: 0.022
+mean loss of epoch 7 is: 0.027023
+test info:
+ [total]:322509, [false]:1168, [truth]:321341, error rate:0.0036216043583279845
+P\L	0	1
+0	320281	85
+1	1083	1060
+[01/(01+10)] TNR:	  0.07277397260273973
+[00/(10+00)] filtered False rate:	 0.9966299896690357
+[01/(01+11)] filtered Truth rate:	 0.07423580786026202
+[11/(10+11)] Precision:	 0.5053663089127391
+[11/(01+11)] Recall:	 0.925764192139738
+haoz feature(bigger better):	  8.241221324232939
+epoch 8  processing....
+spliting data...
+[ 1000] loss: 0.026
+[ 2000] loss: 0.026
+[ 3000] loss: 0.025
+[ 4000] loss: 0.026
+[ 5000] loss: 0.029
+[ 6000] loss: 0.023
+[ 7000] loss: 0.022
+[ 8000] loss: 0.025
+[ 9000] loss: 0.022
+[10000] loss: 0.031
+mean loss of epoch 8 is: 0.025512
+test info:
+ [total]:322509, [false]:1542, [truth]:320967, error rate:0.004781261918272048
+P\L	0	1
+0	319870	51
+1	1491	1097
+[01/(01+10)] TNR:	  0.033073929961089495
+[00/(10+00)] filtered False rate:	 0.995360357977477
+[01/(01+11)] filtered Truth rate:	 0.04442508710801394
+[11/(10+11)] Precision:	 0.5761205564142194
+[11/(01+11)] Recall:	 0.955574912891986
+haoz feature(bigger better):	  8.75203045424395
+epoch 9  processing....
+spliting data...
+[ 1000] loss: 0.023
+[ 2000] loss: 0.037
+[ 3000] loss: 0.028
+[ 4000] loss: 0.028
+[ 5000] loss: 0.027
+[ 6000] loss: 0.025
+[ 7000] loss: 0.031
+[ 8000] loss: 0.033
+[ 9000] loss: 0.028
+[10000] loss: 0.034
+mean loss of epoch 9 is: 0.029513
+test info:
+ [total]:322509, [false]:1240, [truth]:321269, error rate:0.0038448539420605317
+P\L	0	1
+0	320268	68
+1	1172	1001
+[01/(01+10)] TNR:	  0.054838709677419356
+[00/(10+00)] filtered False rate:	 0.9963539074166252
+[01/(01+11)] filtered Truth rate:	 0.06361085126286249
+[11/(10+11)] Precision:	 0.5393465255407272
+[11/(01+11)] Recall:	 0.9363891487371375
+haoz feature(bigger better):	  8.464360381501352
+training done!
+final model: /home/haoz/deepfilter/workspace/./models/checkpoint_INDEL_20-10-21-20-26-01_ecpch10.pth
+[debug] ['/home/haoz/data/somatic/FD_10_18_data/test.txt', ''] /home/haoz/deepfilter/workspace /home/haoz/data/somatic/FD_10_18_data/synthetic_indels.leftAlign.vcf
+get fastvc indels data done:  179269
+get merged data done, merged data dict size:  179269
+totally 7472 truth site
+get label done, size: 179269, pos_num: 623, neg_num: 178646
+start normalization...
+[info] inputs shape: (179269, 53)
+normalization done
+FastvcDataset init over
+total length:  179269
+-----------------compare result------------------
+------- Indels compare result: --------
+fastvc truth snv num: 7472, fastvc total output: 1647
+fastvc find: 608 , filtered: 15, recall: 0.9759229534510433, prec: 0.3691560412871888
+-------------------------------------------------
+-----------------weight info [ 1_30 ]----------------------
+[debug] ['/home/haoz/data/somatic/FD_10_18_data/train.txt'] /home/haoz/deepfilter/workspace /home/haoz/data/somatic/FD_10_18_data/synthetic_indels.leftAlign.vcf
+get fastvc indels data done:  1612545
+get merged data done, merged data dict size:  1612545
+totally 7472 truth site
+get label done, size: 1612545, pos_num: 5774, neg_num: 1606771
+start normalization...
+[info] inputs shape: (1612545, 53)
+normalization done
+FastvcDataset init over
+spliting data...
+[info] n_feature:  53
+initializeing net work
+Net(
+  (hidden0): Linear(in_features=53, out_features=140, bias=True)
+  (hidden1): Linear(in_features=140, out_features=160, bias=True)
+  (hidden2): Linear(in_features=160, out_features=170, bias=True)
+  (hidden3): Linear(in_features=170, out_features=100, bias=True)
+  (hidden4): Linear(in_features=100, out_features=10, bias=True)
+  (predict): Linear(in_features=10, out_features=2, bias=True)
+  (dropout): Dropout(p=0.5, inplace=False)
+)
+Linear(in_features=53, out_features=140, bias=True)
+Linear(in_features=140, out_features=160, bias=True)
+Linear(in_features=160, out_features=170, bias=True)
+Linear(in_features=170, out_features=100, bias=True)
+Linear(in_features=100, out_features=10, bias=True)
+Linear(in_features=10, out_features=2, bias=True)
+Dropout(p=0.5, inplace=False)
+epoch 0  processing....
+[ 1000] loss: 0.131
+[ 2000] loss: 0.050
+[ 3000] loss: 0.042
+[ 4000] loss: 0.043
+[ 5000] loss: 0.033
+[ 6000] loss: 0.029
+[ 7000] loss: 0.040
+[ 8000] loss: 0.031
+[ 9000] loss: 0.037
+[10000] loss: 0.033
+mean loss of epoch 0 is: 0.046976
+test info:
+ [total]:322509, [false]:1521, [truth]:320988, error rate:0.004716147456350055
+P\L	0	1
+0	319873	57
+1	1464	1115
+[01/(01+10)] TNR:	  0.03747534516765286
+[00/(10+00)] filtered False rate:	 0.9954440353896377
+[01/(01+11)] filtered Truth rate:	 0.04863481228668942
+[11/(10+11)] Precision:	 0.5676618844513377
+[11/(01+11)] Recall:	 0.9513651877133106
+haoz feature(bigger better):	  8.640808370116257
+epoch 1  processing....
+spliting data...
+[ 1000] loss: 0.030
+[ 2000] loss: 0.029
+[ 3000] loss: 0.032
+[ 4000] loss: 0.030
+[ 5000] loss: 0.060
+[ 6000] loss: 0.031
+[ 7000] loss: 0.032
+[ 8000] loss: 0.032
+[ 9000] loss: 0.024
+[10000] loss: 0.026
+mean loss of epoch 1 is: 0.032536
+test info:
+ [total]:322509, [false]:1163, [truth]:321346, error rate:0.0036061009150132246
+P\L	0	1
+0	320292	86
+1	1077	1054
+[01/(01+10)] TNR:	  0.07394668959587274
+[00/(10+00)] filtered False rate:	 0.9966487122279996
+[01/(01+11)] filtered Truth rate:	 0.07543859649122807
+[11/(10+11)] Precision:	 0.5053965274519006
+[11/(01+11)] Recall:	 0.9245614035087719
+haoz feature(bigger better):	  8.229525502387434
+epoch 2  processing....
+spliting data...
+[ 1000] loss: 0.030
+[ 2000] loss: 0.030
+[ 3000] loss: 0.036
+[ 4000] loss: 0.031
+[ 5000] loss: 0.041
+[ 6000] loss: 0.028
+[ 7000] loss: 0.028
+[ 8000] loss: 0.025
+[ 9000] loss: 0.031
+[10000] loss: 0.037
+mean loss of epoch 2 is: 0.031725
+test info:
+ [total]:322509, [false]:1771, [truth]:320738, error rate:0.005491319622088066
+P\L	0	1
+0	319697	39
+1	1732	1041
+[01/(01+10)] TNR:	  0.0220214568040655
+[00/(10+00)] filtered False rate:	 0.9946115627401386
+[01/(01+11)] filtered Truth rate:	 0.03611111111111111
+[11/(10+11)] Precision:	 0.6245943021997836
+[11/(01+11)] Recall:	 0.9638888888888889
+haoz feature(bigger better):	  9.020279266450274
+epoch 3  processing....
+spliting data...
+[ 1000] loss: 0.030
+[ 2000] loss: 0.032
+[ 3000] loss: 0.032
+[ 4000] loss: 0.028
+[ 5000] loss: 0.030
+[ 6000] loss: 0.029
+[ 7000] loss: 0.022
+[ 8000] loss: 0.026
+[ 9000] loss: 0.038
+[10000] loss: 0.036
+mean loss of epoch 3 is: 0.030208
+test info:
+ [total]:322509, [false]:1716, [truth]:320793, error rate:0.005320781745625704
+P\L	0	1
+0	319709	49
+1	1667	1084
+[01/(01+10)] TNR:	  0.028554778554778556
+[00/(10+00)] filtered False rate:	 0.9948129294035647
+[01/(01+11)] filtered Truth rate:	 0.04324801412180053
+[11/(10+11)] Precision:	 0.6059614685568884
+[11/(01+11)] Recall:	 0.9567519858781994
+haoz feature(bigger better):	  8.792031003899726
+epoch 4  processing....
+spliting data...
+[ 1000] loss: 0.030
+[ 2000] loss: 0.029
+[ 3000] loss: 0.033
+[ 4000] loss: 0.037
+[ 5000] loss: 0.042
+[ 6000] loss: 0.030
+[ 7000] loss: 0.031
+[ 8000] loss: 0.027
+[ 9000] loss: 0.024
+[10000] loss: 0.032
+mean loss of epoch 4 is: 0.031584
+test info:
+ [total]:322509, [false]:1475, [truth]:321034, error rate:0.004573515777854261
+P\L	0	1
+0	319951	47
+1	1428	1083
+[01/(01+10)] TNR:	  0.031864406779661014
+[00/(10+00)] filtered False rate:	 0.9955566480697245
+[01/(01+11)] filtered Truth rate:	 0.0415929203539823
+[11/(10+11)] Precision:	 0.5686977299880526
+[11/(01+11)] Recall:	 0.9584070796460177
+haoz feature(bigger better):	  8.833707337608969
+epoch 5  processing....
+spliting data...
+[ 1000] loss: 0.030
+[ 2000] loss: 0.033
+[ 3000] loss: 0.036
+[ 4000] loss: 0.034
+[ 5000] loss: 0.031
+[ 6000] loss: 0.032
+[ 7000] loss: 0.034
+[ 8000] loss: 0.034
+[ 9000] loss: 0.034
+[10000] loss: 0.033
+mean loss of epoch 5 is: 0.033172
+test info:
+ [total]:322509, [false]:1364, [truth]:321145, error rate:0.004229339336266584
+P\L	0	1
+0	319994	73
+1	1291	1151
+[01/(01+10)] TNR:	  0.053519061583577714
+[00/(10+00)] filtered False rate:	 0.9959817607420203
+[01/(01+11)] filtered Truth rate:	 0.059640522875817
+[11/(10+11)] Precision:	 0.5286650286650286
+[11/(01+11)] Recall:	 0.940359477124183
+haoz feature(bigger better):	  8.39340819589998
+epoch 6  processing....
+spliting data...
+[ 1000] loss: 0.036
+[ 2000] loss: 0.033
+[ 3000] loss: 0.028
+[ 4000] loss: 0.033
+[ 5000] loss: 0.026
+[ 6000] loss: 0.038
+[ 7000] loss: 0.036
+[ 8000] loss: 0.028
+[ 9000] loss: 0.034
+[10000] loss: 0.036
+mean loss of epoch 6 is: 0.032691
+test info:
+ [total]:322509, [false]:1458, [truth]:321051, error rate:0.004520804070584077
+P\L	0	1
+0	319953	53
+1	1405	1098
+[01/(01+10)] TNR:	  0.03635116598079561
+[00/(10+00)] filtered False rate:	 0.9956279289764064
+[01/(01+11)] filtered Truth rate:	 0.046046915725456126
+[11/(10+11)] Precision:	 0.561326408310028
+[11/(01+11)] Recall:	 0.9539530842745438
+haoz feature(bigger better):	  8.713566899197609
+epoch 7  processing....
+spliting data...
+[ 1000] loss: 0.041
+[ 2000] loss: 0.038
+[ 3000] loss: 0.038
+[ 4000] loss: 0.029
+[ 5000] loss: 0.041
+[ 6000] loss: 0.033
+[ 7000] loss: 0.037
+[ 8000] loss: 0.031
+[ 9000] loss: 0.027
+[10000] loss: 0.026
+mean loss of epoch 7 is: 0.033904
+test info:
+ [total]:322509, [false]:1611, [truth]:320898, error rate:0.004995209436015739
+P\L	0	1
+0	319806	56
+1	1555	1092
+[01/(01+10)] TNR:	  0.03476101800124146
+[00/(10+00)] filtered False rate:	 0.9951612049999844
+[01/(01+11)] filtered Truth rate:	 0.04878048780487805
+[11/(10+11)] Precision:	 0.5874574990555346
+[11/(01+11)] Recall:	 0.9512195121951219
+haoz feature(bigger better):	  8.65850586362681
+epoch 8  processing....
+spliting data...
+[ 1000] loss: 0.042
+[ 2000] loss: 0.040
+[ 3000] loss: 0.034
+[ 4000] loss: 0.044
+[ 5000] loss: 0.033
+[ 6000] loss: 0.027
+[ 7000] loss: 0.031
+[ 8000] loss: 0.035
+[ 9000] loss: 0.031
+[10000] loss: 0.026
+mean loss of epoch 8 is: 0.034155
+test info:
+ [total]:322509, [false]:1647, [truth]:320862, error rate:0.005106834227882013
+P\L	0	1
+0	319749	54
+1	1593	1113
+[01/(01+10)] TNR:	  0.03278688524590164
+[00/(10+00)] filtered False rate:	 0.9950426648243927
+[01/(01+11)] filtered Truth rate:	 0.04627249357326478
+[11/(10+11)] Precision:	 0.5886917960088692
+[11/(01+11)] Recall:	 0.9537275064267352
+haoz feature(bigger better):	  8.694871775706156
+epoch 9  processing....
+spliting data...
+[ 1000] loss: 0.033
+[ 2000] loss: 0.030
+[ 3000] loss: 0.026
+[ 4000] loss: 0.027
+[ 5000] loss: 0.048
+[ 6000] loss: 0.034
+[ 7000] loss: 0.037
+[ 8000] loss: 0.033
+[ 9000] loss: 0.034
+[10000] loss: 0.035
+mean loss of epoch 9 is: 0.033665
+test info:
+ [total]:322509, [false]:1737, [truth]:320772, error rate:0.005385896207547696
+P\L	0	1
+0	319688	52
+1	1685	1084
+[01/(01+10)] TNR:	  0.029936672423719057
+[00/(10+00)] filtered False rate:	 0.9947568712990824
+[01/(01+11)] filtered Truth rate:	 0.045774647887323945
+[11/(10+11)] Precision:	 0.6085229324665944
+[11/(01+11)] Recall:	 0.954225352112676
+haoz feature(bigger better):	  8.73260919993563
+training done!
+final model: /home/haoz/deepfilter/workspace/./models/checkpoint_INDEL_20-10-21-20-33-27_ecpch10.pth
+[debug] ['/home/haoz/data/somatic/FD_10_18_data/test.txt', ''] /home/haoz/deepfilter/workspace /home/haoz/data/somatic/FD_10_18_data/synthetic_indels.leftAlign.vcf
+get fastvc indels data done:  179269
+get merged data done, merged data dict size:  179269
+totally 7472 truth site
+get label done, size: 179269, pos_num: 623, neg_num: 178646
+start normalization...
+[info] inputs shape: (179269, 53)
+normalization done
+FastvcDataset init over
+total length:  179269
+-----------------compare result------------------
+------- Indels compare result: --------
+fastvc truth snv num: 7472, fastvc total output: 1990
+fastvc find: 614 , filtered: 9, recall: 0.985553772070626, prec: 0.3085427135678392
+-------------------------------------------------
+-----------------weight info [ 1_40 ]----------------------
+[debug] ['/home/haoz/data/somatic/FD_10_18_data/train.txt'] /home/haoz/deepfilter/workspace /home/haoz/data/somatic/FD_10_18_data/synthetic_indels.leftAlign.vcf
+get fastvc indels data done:  1612545
+get merged data done, merged data dict size:  1612545
+totally 7472 truth site
+get label done, size: 1612545, pos_num: 5774, neg_num: 1606771
+start normalization...
+[info] inputs shape: (1612545, 53)
+normalization done
+FastvcDataset init over
+spliting data...
+[info] n_feature:  53
+initializeing net work
+Net(
+  (hidden0): Linear(in_features=53, out_features=140, bias=True)
+  (hidden1): Linear(in_features=140, out_features=160, bias=True)
+  (hidden2): Linear(in_features=160, out_features=170, bias=True)
+  (hidden3): Linear(in_features=170, out_features=100, bias=True)
+  (hidden4): Linear(in_features=100, out_features=10, bias=True)
+  (predict): Linear(in_features=10, out_features=2, bias=True)
+  (dropout): Dropout(p=0.5, inplace=False)
+)
+Linear(in_features=53, out_features=140, bias=True)
+Linear(in_features=140, out_features=160, bias=True)
+Linear(in_features=160, out_features=170, bias=True)
+Linear(in_features=170, out_features=100, bias=True)
+Linear(in_features=100, out_features=10, bias=True)
+Linear(in_features=10, out_features=2, bias=True)
+Dropout(p=0.5, inplace=False)
+epoch 0  processing....
+[ 1000] loss: 0.158
+[ 2000] loss: 0.061
+[ 3000] loss: 0.045
+[ 4000] loss: 0.043
+[ 5000] loss: 0.039
+[ 6000] loss: 0.032
+[ 7000] loss: 0.036
+[ 8000] loss: 0.038
+[ 9000] loss: 0.037
+[10000] loss: 0.035
+mean loss of epoch 0 is: 0.052084
+test info:
+ [total]:322509, [false]:1380, [truth]:321129, error rate:0.004278950354873817
+P\L	0	1
+0	320063	68
+1	1312	1066
+[01/(01+10)] TNR:	  0.04927536231884058
+[00/(10+00)] filtered False rate:	 0.9959175418125243
+[01/(01+11)] filtered Truth rate:	 0.059964726631393295
+[11/(10+11)] Precision:	 0.5517241379310345
+[11/(01+11)] Recall:	 0.9400352733686067
+haoz feature(bigger better):	  8.464358322717485
+epoch 1  processing....
+spliting data...
+[ 1000] loss: 0.029
+[ 2000] loss: 0.037
+[ 3000] loss: 0.030
+[ 4000] loss: 0.032
+[ 5000] loss: 0.035
+[ 6000] loss: 0.046
+[ 7000] loss: 0.038
+[ 8000] loss: 0.035
+[ 9000] loss: 0.027
+[10000] loss: 0.033
+mean loss of epoch 1 is: 0.034295
+test info:
+ [total]:322509, [false]:1834, [truth]:320675, error rate:0.0056866630078540445
+P\L	0	1
+0	319589	59
+1	1775	1086
+[01/(01+10)] TNR:	  0.0321701199563795
+[00/(10+00)] filtered False rate:	 0.9944766682017898
+[01/(01+11)] filtered Truth rate:	 0.05152838427947598
+[11/(10+11)] Precision:	 0.6204124432016778
+[11/(01+11)] Recall:	 0.948471615720524
+haoz feature(bigger better):	  8.606317793636954
+epoch 2  processing....
+spliting data...
+[ 1000] loss: 0.031
+[ 2000] loss: 0.033
+[ 3000] loss: 0.030
+[ 4000] loss: 0.044
+[ 5000] loss: 0.034
+[ 6000] loss: 0.026
+[ 7000] loss: 0.035
+[ 8000] loss: 0.032
+[ 9000] loss: 0.045
+[10000] loss: 0.036
+mean loss of epoch 2 is: 0.034535
+test info:
+ [total]:322509, [false]:1573, [truth]:320936, error rate:0.004877383266823561
+P\L	0	1
+0	319862	59
+1	1514	1074
+[01/(01+10)] TNR:	  0.03750794659885569
+[00/(10+00)] filtered False rate:	 0.9952890072687444
+[01/(01+11)] filtered Truth rate:	 0.05207413945278023
+[11/(10+11)] Precision:	 0.5850077279752705
+[11/(01+11)] Recall:	 0.9479258605472197
+haoz feature(bigger better):	  8.606322217238047
+epoch 3  processing....
+spliting data...
+[ 1000] loss: 0.031
+[ 2000] loss: 0.035
+[ 3000] loss: 0.041
+[ 4000] loss: 0.034
+[ 5000] loss: 0.036
+[ 6000] loss: 0.029
+[ 7000] loss: 0.037
+[ 8000] loss: 0.033
+[ 9000] loss: 0.033
+[10000] loss: 0.031
+mean loss of epoch 3 is: 0.033977
+test info:
+ [total]:322509, [false]:1469, [truth]:321040, error rate:0.004554911645876549
+P\L	0	1
+0	319972	83
+1	1386	1068
+[01/(01+10)] TNR:	  0.05650102110279102
+[00/(10+00)] filtered False rate:	 0.9956870530685403
+[01/(01+11)] filtered Truth rate:	 0.07211120764552563
+[11/(10+11)] Precision:	 0.5647921760391198
+[11/(01+11)] Recall:	 0.9278887923544744
+haoz feature(bigger better):	  8.26502801537016
+epoch 4  processing....
+spliting data...
+[ 1000] loss: 0.037
+[ 2000] loss: 0.034
+[ 3000] loss: 0.033
+[ 4000] loss: 0.040
+[ 5000] loss: 0.030
+[ 6000] loss: 0.033
+[ 7000] loss: 0.041
+[ 8000] loss: 0.030
+[ 9000] loss: 0.037
+[10000] loss: 0.033
+mean loss of epoch 4 is: 0.035260
+test info:
+ [total]:322509, [false]:1627, [truth]:320882, error rate:0.005044820454622971
+P\L	0	1
+0	319869	49
+1	1578	1013
+[01/(01+10)] TNR:	  0.03011677934849416
+[00/(10+00)] filtered False rate:	 0.9950909481189745
+[01/(01+11)] filtered Truth rate:	 0.046139359698681735
+[11/(10+11)] Precision:	 0.6090312620609803
+[11/(01+11)] Recall:	 0.9538606403013182
+haoz feature(bigger better):	  8.7920328201643
+epoch 5  processing....
+spliting data...
+[ 1000] loss: 0.030
+[ 2000] loss: 0.032
+[ 3000] loss: 0.040
+[ 4000] loss: 0.037
+[ 5000] loss: 0.035
+[ 6000] loss: 0.036
+[ 7000] loss: 0.032
+[ 8000] loss: 0.030
+[ 9000] loss: 0.036
+[10000] loss: 0.039
+mean loss of epoch 5 is: 0.034569
+test info:
+ [total]:322509, [false]:1722, [truth]:320787, error rate:0.005339385877603416
+P\L	0	1
+0	319690	51
+1	1671	1097
+[01/(01+10)] TNR:	  0.029616724738675958
+[00/(10+00)] filtered False rate:	 0.9948002402282791
+[01/(01+11)] filtered Truth rate:	 0.04442508710801394
+[11/(10+11)] Precision:	 0.6036849710982659
+[11/(01+11)] Recall:	 0.955574912891986
+haoz feature(bigger better):	  8.752026924945122
+epoch 6  processing....
+spliting data...
+[ 1000] loss: 0.028
+[ 2000] loss: 0.026
+[ 3000] loss: 0.036
+[ 4000] loss: 0.036
+[ 5000] loss: 0.035
+[ 6000] loss: 0.046
+[ 7000] loss: 0.047
+[ 8000] loss: 0.031
+[ 9000] loss: 0.034
+[10000] loss: 0.033
+mean loss of epoch 6 is: 0.034889
+test info:
+ [total]:322509, [false]:1217, [truth]:321292, error rate:0.0037735381028126346
+P\L	0	1
+0	320231	63
+1	1154	1061
+[01/(01+10)] TNR:	  0.051766639276910435
+[00/(10+00)] filtered False rate:	 0.9964092910372295
+[01/(01+11)] filtered Truth rate:	 0.05604982206405694
+[11/(10+11)] Precision:	 0.5209932279909707
+[11/(01+11)] Recall:	 0.943950177935943
+haoz feature(bigger better):	  8.540732278140046
+epoch 7  processing....
+spliting data...
+[ 1000] loss: 0.040
+[ 2000] loss: 0.037
+[ 3000] loss: 0.036
+[ 4000] loss: 0.039
+[ 5000] loss: 0.027
+[ 6000] loss: 0.033
+[ 7000] loss: 0.046
+[ 8000] loss: 0.034
+[ 9000] loss: 0.031
+[10000] loss: 0.028
+mean loss of epoch 7 is: 0.034923
+test info:
+ [total]:322509, [false]:1389, [truth]:321120, error rate:0.004306856552840386
+P\L	0	1
+0	320025	56
+1	1333	1095
+[01/(01+10)] TNR:	  0.040316774658027354
+[00/(10+00)] filtered False rate:	 0.995851978167651
+[01/(01+11)] filtered Truth rate:	 0.04865334491746308
+[11/(10+11)] Precision:	 0.5490115321252059
+[11/(01+11)] Recall:	 0.9513466550825369
+haoz feature(bigger better):	  8.658509827806341
+epoch 8  processing....
+spliting data...
+[ 1000] loss: 0.037
+[ 2000] loss: 0.035
+[ 3000] loss: 0.043
+[ 4000] loss: 0.037
+[ 5000] loss: 0.033
+[ 6000] loss: 0.041
+[ 7000] loss: 0.026
+[ 8000] loss: 0.035
+[ 9000] loss: 0.041
+[10000] loss: 0.033
+mean loss of epoch 8 is: 0.036047
+test info:
+ [total]:322509, [false]:2150, [truth]:320359, error rate:0.0066664806253468895
+P\L	0	1
+0	319287	34
+1	2116	1072
+[01/(01+10)] TNR:	  0.01581395348837209
+[00/(10+00)] filtered False rate:	 0.9934163651241588
+[01/(01+11)] filtered Truth rate:	 0.03074141048824593
+[11/(10+11)] Precision:	 0.6637390213299874
+[11/(01+11)] Recall:	 0.969258589511754
+haoz feature(bigger better):	  9.157462563894304
+epoch 9  processing....
+spliting data...
+[ 1000] loss: 0.032
+[ 2000] loss: 0.027
+[ 3000] loss: 0.037
+[ 4000] loss: 0.036
+[ 5000] loss: 0.043
+[ 6000] loss: 0.025
+[ 7000] loss: 0.038
+[ 8000] loss: 0.035
+[ 9000] loss: 0.029
+[10000] loss: 0.037
+mean loss of epoch 9 is: 0.034097
+test info:
+ [total]:322509, [false]:1609, [truth]:320900, error rate:0.004989008058689835
+P\L	0	1
+0	319780	43
+1	1566	1120
+[01/(01+10)] TNR:	  0.026724673710379118
+[00/(10+00)] filtered False rate:	 0.9951267481157382
+[01/(01+11)] filtered Truth rate:	 0.03697334479793637
+[11/(10+11)] Precision:	 0.5830230826507818
+[11/(01+11)] Recall:	 0.9630266552020637
+haoz feature(bigger better):	  8.92264878820716
+training done!
+final model: /home/haoz/deepfilter/workspace/./models/checkpoint_INDEL_20-10-21-20-40-50_ecpch10.pth
+[debug] ['/home/haoz/data/somatic/FD_10_18_data/test.txt', ''] /home/haoz/deepfilter/workspace /home/haoz/data/somatic/FD_10_18_data/synthetic_indels.leftAlign.vcf
+get fastvc indels data done:  179269
+get merged data done, merged data dict size:  179269
+totally 7472 truth site
+get label done, size: 179269, pos_num: 623, neg_num: 178646
+start normalization...
+[info] inputs shape: (179269, 53)
+normalization done
+FastvcDataset init over
+total length:  179269
+-----------------compare result------------------
+------- Indels compare result: --------
+fastvc truth snv num: 7472, fastvc total output: 1985
+fastvc find: 614 , filtered: 9, recall: 0.985553772070626, prec: 0.3093198992443325
+-------------------------------------------------
+-----------------weight info [ 1_50 ]----------------------
+[debug] ['/home/haoz/data/somatic/FD_10_18_data/train.txt'] /home/haoz/deepfilter/workspace /home/haoz/data/somatic/FD_10_18_data/synthetic_indels.leftAlign.vcf
+get fastvc indels data done:  1612545
+get merged data done, merged data dict size:  1612545
+totally 7472 truth site
+get label done, size: 1612545, pos_num: 5774, neg_num: 1606771
+start normalization...
+[info] inputs shape: (1612545, 53)
+normalization done
+FastvcDataset init over
+spliting data...
+[info] n_feature:  53
+initializeing net work
+Net(
+  (hidden0): Linear(in_features=53, out_features=140, bias=True)
+  (hidden1): Linear(in_features=140, out_features=160, bias=True)
+  (hidden2): Linear(in_features=160, out_features=170, bias=True)
+  (hidden3): Linear(in_features=170, out_features=100, bias=True)
+  (hidden4): Linear(in_features=100, out_features=10, bias=True)
+  (predict): Linear(in_features=10, out_features=2, bias=True)
+  (dropout): Dropout(p=0.5, inplace=False)
+)
+Linear(in_features=53, out_features=140, bias=True)
+Linear(in_features=140, out_features=160, bias=True)
+Linear(in_features=160, out_features=170, bias=True)
+Linear(in_features=170, out_features=100, bias=True)
+Linear(in_features=100, out_features=10, bias=True)
+Linear(in_features=10, out_features=2, bias=True)
+Dropout(p=0.5, inplace=False)
+epoch 0  processing....
+[ 1000] loss: 0.162
+[ 2000] loss: 0.070
+[ 3000] loss: 0.051
+[ 4000] loss: 0.054
+[ 5000] loss: 0.041
+[ 6000] loss: 0.037
+[ 7000] loss: 0.044
+[ 8000] loss: 0.041
+[ 9000] loss: 0.038
+[10000] loss: 0.033
+mean loss of epoch 0 is: 0.057108
+test info:
+ [total]:322509, [false]:1603, [truth]:320906, error rate:0.004970403926712123
+P\L	0	1
+0	319823	51
+1	1552	1083
+[01/(01+10)] TNR:	  0.031815346225826574
+[00/(10+00)] filtered False rate:	 0.995170750680669
+[01/(01+11)] filtered Truth rate:	 0.04497354497354497
+[11/(10+11)] Precision:	 0.5889943074003795
+[11/(01+11)] Recall:	 0.955026455026455
+haoz feature(bigger better):	  8.752029258202397
+epoch 1  processing....
+spliting data...
+[ 1000] loss: 0.043
+[ 2000] loss: 0.038
+[ 3000] loss: 0.043
+[ 4000] loss: 0.034
+[ 5000] loss: 0.041
+[ 6000] loss: 0.034
+[ 7000] loss: 0.041
+[ 8000] loss: 0.049
+[ 9000] loss: 0.048
+[10000] loss: 0.037
+mean loss of epoch 1 is: 0.040650
+test info:
+ [total]:322509, [false]:1524, [truth]:320985, error rate:0.004725449522338911
+P\L	0	1
+0	319896	73
+1	1451	1089
+[01/(01+10)] TNR:	  0.047900262467191604
+[00/(10+00)] filtered False rate:	 0.9954846318776899
+[01/(01+11)] filtered Truth rate:	 0.06282271944922548
+[11/(10+11)] Precision:	 0.5712598425196851
+[11/(01+11)] Recall:	 0.9371772805507745
+haoz feature(bigger better):	  8.393406004162511
+epoch 2  processing....
+spliting data...
+[ 1000] loss: 0.046
+[ 2000] loss: 0.035
+[ 3000] loss: 0.039
+[ 4000] loss: 0.040
+[ 5000] loss: 0.036
+[ 6000] loss: 0.033
+[ 7000] loss: 0.042
+[ 8000] loss: 0.039
+[ 9000] loss: 0.032
+[10000] loss: 0.051
+mean loss of epoch 2 is: 0.038973
+test info:
+ [total]:322509, [false]:1734, [truth]:320775, error rate:0.00537659414155884
+P\L	0	1
+0	319661	48
+1	1686	1114
+[01/(01+10)] TNR:	  0.02768166089965398
+[00/(10+00)] filtered False rate:	 0.9947533351797279
+[01/(01+11)] filtered Truth rate:	 0.04130808950086059
+[11/(10+11)] Precision:	 0.6021428571428571
+[11/(01+11)] Recall:	 0.9586919104991394
+haoz feature(bigger better):	  8.812649186549917
+epoch 3  processing....
+spliting data...
+[ 1000] loss: 0.042
+[ 2000] loss: 0.038
+[ 3000] loss: 0.045
+[ 4000] loss: 0.029
+[ 5000] loss: 0.040
+[ 6000] loss: 0.043
+[ 7000] loss: 0.032
+[ 8000] loss: 0.037
+[ 9000] loss: 0.031
+[10000] loss: 0.030
+mean loss of epoch 3 is: 0.036735
+test info:
+ [total]:322509, [false]:1895, [truth]:320614, error rate:0.005875805016294119
+P\L	0	1
+0	319522	56
+1	1839	1092
+[01/(01+10)] TNR:	  0.02955145118733509
+[00/(10+00)] filtered False rate:	 0.994277463662361
+[01/(01+11)] filtered Truth rate:	 0.04878048780487805
+[11/(10+11)] Precision:	 0.6274309109518935
+[11/(01+11)] Recall:	 0.9512195121951219
+haoz feature(bigger better):	  8.658500792356989
+epoch 4  processing....
+spliting data...
+[ 1000] loss: 0.033
+[ 2000] loss: 0.040
+[ 3000] loss: 0.045
+[ 4000] loss: 0.040
+[ 5000] loss: 0.035
+[ 6000] loss: 0.037
+[ 7000] loss: 0.047
+[ 8000] loss: 0.036
+[ 9000] loss: 0.035
+[10000] loss: 0.032
+mean loss of epoch 4 is: 0.037676
+test info:
+ [total]:322509, [false]:1273, [truth]:321236, error rate:0.003947176667937949
+P\L	0	1
+0	320216	73
+1	1200	1020
+[01/(01+10)] TNR:	  0.05734485467399843
+[00/(10+00)] filtered False rate:	 0.9962665206461409
+[01/(01+11)] filtered Truth rate:	 0.06678865507776761
+[11/(10+11)] Precision:	 0.5405405405405406
+[11/(01+11)] Recall:	 0.9332113449222323
+haoz feature(bigger better):	  8.393409442452807
+epoch 5  processing....
+spliting data...
+[ 1000] loss: 0.039
+[ 2000] loss: 0.038
+[ 3000] loss: 0.048
+[ 4000] loss: 0.038
+[ 5000] loss: 0.038
+[ 6000] loss: 0.028
+[ 7000] loss: 0.038
+[ 8000] loss: 0.038
+[ 9000] loss: 0.041
+[10000] loss: 0.028
+mean loss of epoch 5 is: 0.037230
+test info:
+ [total]:322509, [false]:1479, [truth]:321030, error rate:0.004585918532506069
+P\L	0	1
+0	319919	50
+1	1429	1111
+[01/(01+10)] TNR:	  0.03380662609871535
+[00/(10+00)] filtered False rate:	 0.9955531075345109
+[01/(01+11)] filtered Truth rate:	 0.04306632213608958
+[11/(10+11)] Precision:	 0.5625984251968504
+[11/(01+11)] Recall:	 0.9569336778639104
+haoz feature(bigger better):	  8.77183373681465
+epoch 6  processing....
+spliting data...
+[ 1000] loss: 0.038
+[ 2000] loss: 0.039
+[ 3000] loss: 0.037
+[ 4000] loss: 0.051
+[ 5000] loss: 0.035
+[ 6000] loss: 0.033
+[ 7000] loss: 0.033
+[ 8000] loss: 0.042
+[ 9000] loss: 0.038
+[10000] loss: 0.034
+mean loss of epoch 6 is: 0.038347
+test info:
+ [total]:322509, [false]:1771, [truth]:320738, error rate:0.005491319622088066
+P\L	0	1
+0	319604	47
+1	1724	1134
+[01/(01+10)] TNR:	  0.026538678712591756
+[00/(10+00)] filtered False rate:	 0.9946347657222526
+[01/(01+11)] filtered Truth rate:	 0.03979678238780694
+[11/(10+11)] Precision:	 0.6032190342897131
+[11/(01+11)] Recall:	 0.9602032176121931
+haoz feature(bigger better):	  8.833701039954098
+epoch 7  processing....
+spliting data...
+[ 1000] loss: 0.043
+[ 2000] loss: 0.043
+[ 3000] loss: 0.032
+[ 4000] loss: 0.053
+[ 5000] loss: 0.037
+[ 6000] loss: 0.041
+[ 7000] loss: 0.044
+[ 8000] loss: 0.046
+[ 9000] loss: 0.028
+[10000] loss: 0.037
+mean loss of epoch 7 is: 0.040113
+test info:
+ [total]:322509, [false]:1235, [truth]:321274, error rate:0.0038293504987457713
+P\L	0	1
+0	320158	46
+1	1189	1116
+[01/(01+10)] TNR:	  0.03724696356275304
+[00/(10+00)] filtered False rate:	 0.9962999498983964
+[01/(01+11)] filtered Truth rate:	 0.039586919104991396
+[11/(10+11)] Precision:	 0.5158351409978308
+[11/(01+11)] Recall:	 0.9604130808950087
+haoz feature(bigger better):	  8.85521807785053
+epoch 8  processing....
+spliting data...
+[ 1000] loss: 0.062
+[ 2000] loss: 0.063
+[ 3000] loss: 0.059
+[ 4000] loss: 0.048
+[ 5000] loss: 0.033
+[ 6000] loss: 0.050
+[ 7000] loss: 0.049
+[ 8000] loss: 0.031
+[ 9000] loss: 0.040
+[10000] loss: 0.037
+mean loss of epoch 8 is: 0.046908
+test info:
+ [total]:322509, [false]:1618, [truth]:320891, error rate:0.0050169142566564035
+P\L	0	1
+0	319776	49
+1	1569	1115
+[01/(01+10)] TNR:	  0.030284301606922127
+[00/(10+00)] filtered False rate:	 0.9951173971899361
+[01/(01+11)] filtered Truth rate:	 0.04209621993127148
+[11/(10+11)] Precision:	 0.584575260804769
+[11/(01+11)] Recall:	 0.9579037800687286
+haoz feature(bigger better):	  8.792033003831687
+epoch 9  processing....
+spliting data...
+[ 1000] loss: 0.045
+[ 2000] loss: 0.078
+[ 3000] loss: 0.032
+[ 4000] loss: 0.037
+[ 5000] loss: 0.046
+[ 6000] loss: 0.043
+[ 7000] loss: 0.050
+[ 8000] loss: 0.066
+[ 9000] loss: 0.053
+[10000] loss: 0.036
+mean loss of epoch 9 is: 0.048582
+test info:
+ [total]:322509, [false]:1659, [truth]:320850, error rate:0.005144042491837437
+P\L	0	1
+0	319759	43
+1	1616	1091
+[01/(01+10)] TNR:	  0.02591922845087402
+[00/(10+00)] filtered False rate:	 0.994971606378841
+[01/(01+11)] filtered Truth rate:	 0.03791887125220458
+[11/(10+11)] Precision:	 0.596970816401921
+[11/(01+11)] Recall:	 0.9620811287477954
+haoz feature(bigger better):	  8.922647625460648
+training done!
+final model: /home/haoz/deepfilter/workspace/./models/checkpoint_INDEL_20-10-21-20-48-16_ecpch10.pth
+[debug] ['/home/haoz/data/somatic/FD_10_18_data/test.txt', ''] /home/haoz/deepfilter/workspace /home/haoz/data/somatic/FD_10_18_data/synthetic_indels.leftAlign.vcf
+get fastvc indels data done:  179269
+get merged data done, merged data dict size:  179269
+totally 7472 truth site
+get label done, size: 179269, pos_num: 623, neg_num: 178646
+start normalization...
+[info] inputs shape: (179269, 53)
+normalization done
+FastvcDataset init over
+total length:  179269
+-----------------compare result------------------
+------- Indels compare result: --------
+fastvc truth snv num: 7472, fastvc total output: 1982
+fastvc find: 614 , filtered: 9, recall: 0.985553772070626, prec: 0.30978809283551967
+-------------------------------------------------
+-----------------weight info [ 1_60 ]----------------------
+[debug] ['/home/haoz/data/somatic/FD_10_18_data/train.txt'] /home/haoz/deepfilter/workspace /home/haoz/data/somatic/FD_10_18_data/synthetic_indels.leftAlign.vcf
+get fastvc indels data done:  1612545
+get merged data done, merged data dict size:  1612545
+totally 7472 truth site
+get label done, size: 1612545, pos_num: 5774, neg_num: 1606771
+start normalization...
+[info] inputs shape: (1612545, 53)
+normalization done
+FastvcDataset init over
+spliting data...
+[info] n_feature:  53
+initializeing net work
+Net(
+  (hidden0): Linear(in_features=53, out_features=140, bias=True)
+  (hidden1): Linear(in_features=140, out_features=160, bias=True)
+  (hidden2): Linear(in_features=160, out_features=170, bias=True)
+  (hidden3): Linear(in_features=170, out_features=100, bias=True)
+  (hidden4): Linear(in_features=100, out_features=10, bias=True)
+  (predict): Linear(in_features=10, out_features=2, bias=True)
+  (dropout): Dropout(p=0.5, inplace=False)
+)
+Linear(in_features=53, out_features=140, bias=True)
+Linear(in_features=140, out_features=160, bias=True)
+Linear(in_features=160, out_features=170, bias=True)
+Linear(in_features=170, out_features=100, bias=True)
+Linear(in_features=100, out_features=10, bias=True)
+Linear(in_features=10, out_features=2, bias=True)
+Dropout(p=0.5, inplace=False)
+epoch 0  processing....
+[ 1000] loss: 0.171
+[ 2000] loss: 0.069
+[ 3000] loss: 0.062
+[ 4000] loss: 0.047
+[ 5000] loss: 0.050
+[ 6000] loss: 0.045
+[ 7000] loss: 0.039
+[ 8000] loss: 0.044
+[ 9000] loss: 0.041
+[10000] loss: 0.036
+mean loss of epoch 0 is: 0.060371
+test info:
+ [total]:322509, [false]:1312, [truth]:321197, error rate:0.004068103525793078
+P\L	0	1
+0	320142	83
+1	1229	1055
+[01/(01+10)] TNR:	  0.06326219512195122
+[00/(10+00)] filtered False rate:	 0.9961757594804759
+[01/(01+11)] filtered Truth rate:	 0.07293497363796134
+[11/(10+11)] Precision:	 0.5380910683012259
+[11/(01+11)] Recall:	 0.9270650263620387
+haoz feature(bigger better):	  8.265029906904735
+epoch 1  processing....
+spliting data...
+[ 1000] loss: 0.062
+[ 2000] loss: 0.038
+[ 3000] loss: 0.044
+[ 4000] loss: 0.050
+[ 5000] loss: 0.042
+[ 6000] loss: 0.033
+[ 7000] loss: 0.043
+[ 8000] loss: 0.039
+[ 9000] loss: 0.040
+[10000] loss: 0.042
+mean loss of epoch 1 is: 0.043063
+test info:
+ [total]:322509, [false]:1585, [truth]:320924, error rate:0.004914591530778986
+P\L	0	1
+0	319848	56
+1	1529	1076
+[01/(01+10)] TNR:	  0.03533123028391167
+[00/(10+00)] filtered False rate:	 0.9952423477722425
+[01/(01+11)] filtered Truth rate:	 0.04946996466431095
+[11/(10+11)] Precision:	 0.5869481765834933
+[11/(01+11)] Recall:	 0.950530035335689
+haoz feature(bigger better):	  8.658506327899277
+epoch 2  processing....
+spliting data...
+[ 1000] loss: 0.043
+[ 2000] loss: 0.030
+[ 3000] loss: 0.060
+[ 4000] loss: 0.031
+[ 5000] loss: 0.029
+[ 6000] loss: 0.046
+[ 7000] loss: 0.035
+[ 8000] loss: 0.034
+[ 9000] loss: 0.040
+[10000] loss: 0.035
+mean loss of epoch 2 is: 0.038047
+test info:
+ [total]:322509, [false]:1748, [truth]:320761, error rate:0.005420003782840169
+P\L	0	1
+0	319608	40
+1	1708	1153
+[01/(01+10)] TNR:	  0.02288329519450801
+[00/(10+00)] filtered False rate:	 0.9946843605671675
+[01/(01+11)] filtered Truth rate:	 0.03352891869237217
+[11/(10+11)] Precision:	 0.5969940580216707
+[11/(01+11)] Recall:	 0.9664710813076278
+haoz feature(bigger better):	  8.994963168646196
+epoch 3  processing....
+spliting data...
+[ 1000] loss: 0.041
+[ 2000] loss: 0.039
+[ 3000] loss: 0.035
+[ 4000] loss: 0.033
+[ 5000] loss: 0.037
+[ 6000] loss: 0.040
+[ 7000] loss: 0.036
+[ 8000] loss: 0.041
+[ 9000] loss: 0.036
+[10000] loss: 0.047
+mean loss of epoch 3 is: 0.038562
+test info:
+ [total]:322509, [false]:1416, [truth]:321093, error rate:0.004390575146740091
+P\L	0	1
+0	320051	46
+1	1370	1042
+[01/(01+10)] TNR:	  0.03248587570621469
+[00/(10+00)] filtered False rate:	 0.9957376773764004
+[01/(01+11)] filtered Truth rate:	 0.042279411764705885
+[11/(10+11)] Precision:	 0.5679933665008292
+[11/(01+11)] Recall:	 0.9577205882352942
+haoz feature(bigger better):	  8.8552141431813
+epoch 4  processing....
+spliting data...
+[ 1000] loss: 0.040
+[ 2000] loss: 0.032
+[ 3000] loss: 0.046
+[ 4000] loss: 0.037
+[ 5000] loss: 0.047
+[ 6000] loss: 0.055
+[ 7000] loss: 0.035
+[ 8000] loss: 0.048
+[ 9000] loss: 0.027
+[10000] loss: 0.041
+mean loss of epoch 4 is: 0.040591
+test info:
+ [total]:322509, [false]:1652, [truth]:320857, error rate:0.005122337671196773
+P\L	0	1
+0	319800	57
+1	1595	1057
+[01/(01+10)] TNR:	  0.03450363196125908
+[00/(10+00)] filtered False rate:	 0.9950372594470978
+[01/(01+11)] filtered Truth rate:	 0.05116696588868941
+[11/(10+11)] Precision:	 0.6014328808446455
+[11/(01+11)] Recall:	 0.9488330341113106
+haoz feature(bigger better):	  8.640806071934609
+epoch 5  processing....
+spliting data...
+[ 1000] loss: 0.032
+[ 2000] loss: 0.038
+[ 3000] loss: 0.041
+[ 4000] loss: 0.053
+[ 5000] loss: 0.048
+[ 6000] loss: 0.040
+[ 7000] loss: 0.059
+[ 8000] loss: 0.030
+[ 9000] loss: 0.041
+[10000] loss: 0.035
+mean loss of epoch 5 is: 0.041682
+test info:
+ [total]:322509, [false]:1668, [truth]:320841, error rate:0.005171948689804006
+P\L	0	1
+0	319756	62
+1	1606	1085
+[01/(01+10)] TNR:	  0.03717026378896882
+[00/(10+00)] filtered False rate:	 0.9950025205220281
+[01/(01+11)] filtered Truth rate:	 0.05405405405405406
+[11/(10+11)] Precision:	 0.5968041620215533
+[11/(01+11)] Recall:	 0.9459459459459459
+haoz feature(bigger better):	  8.556725033896303
+epoch 6  processing....
+spliting data...
+[ 1000] loss: 0.050
+[ 2000] loss: 0.038
+[ 3000] loss: 0.055
+[ 4000] loss: 0.036
+[ 5000] loss: 0.046
+[ 6000] loss: 0.042
+[ 7000] loss: 0.049
+[ 8000] loss: 0.039
+[ 9000] loss: 0.034
+[10000] loss: 0.036
+mean loss of epoch 6 is: 0.042549
+test info:
+ [total]:322509, [false]:2234, [truth]:320275, error rate:0.006926938473034861
+P\L	0	1
+0	319185	32
+1	2202	1090
+[01/(01+10)] TNR:	  0.01432408236347359
+[00/(10+00)] filtered False rate:	 0.9931484471991711
+[01/(01+11)] filtered Truth rate:	 0.0285204991087344
+[11/(10+11)] Precision:	 0.6688942891859052
+[11/(01+11)] Recall:	 0.9714795008912656
+haoz feature(bigger better):	  9.218080608942369
+epoch 7  processing....
+spliting data...
+[ 1000] loss: 0.031
+[ 2000] loss: 0.052
+[ 3000] loss: 0.044
+[ 4000] loss: 0.033
+[ 5000] loss: 0.048
+[ 6000] loss: 0.046
+[ 7000] loss: 0.051
+[ 8000] loss: 0.036
+[ 9000] loss: 0.036
+[10000] loss: 0.034
+mean loss of epoch 7 is: 0.041023
+test info:
+ [total]:322509, [false]:2442, [truth]:320067, error rate:0.007571881714928886
+P\L	0	1
+0	318951	37
+1	2405	1116
+[01/(01+10)] TNR:	  0.015151515151515152
+[00/(10+00)] filtered False rate:	 0.9925160880767747
+[01/(01+11)] filtered Truth rate:	 0.032090199479618386
+[11/(10+11)] Precision:	 0.6830445896052257
+[11/(01+11)] Recall:	 0.9679098005203816
+haoz feature(bigger better):	  9.072902411338996
+epoch 8  processing....
+spliting data...
+[ 1000] loss: 0.037
+[ 2000] loss: 0.040
+[ 3000] loss: 0.028
+[ 4000] loss: 0.045
+[ 5000] loss: 0.045
+[ 6000] loss: 0.049
+[ 7000] loss: 0.034
+[ 8000] loss: 0.045
+[ 9000] loss: 0.037
+[10000] loss: 0.043
+mean loss of epoch 8 is: 0.040279
+test info:
+ [total]:322509, [false]:1983, [truth]:320526, error rate:0.006148665618633899
+P\L	0	1
+0	319413	31
+1	1952	1113
+[01/(01+10)] TNR:	  0.015632879475542108
+[00/(10+00)] filtered False rate:	 0.9939259097910476
+[01/(01+11)] filtered Truth rate:	 0.027097902097902096
+[11/(10+11)] Precision:	 0.6368678629690049
+[11/(01+11)] Recall:	 0.9729020979020979
+haoz feature(bigger better):	  9.249835151624083
+epoch 9  processing....
+spliting data...
+[ 1000] loss: 0.046
+[ 2000] loss: 0.039
+[ 3000] loss: 0.033
+[ 4000] loss: 0.036
+[ 5000] loss: 0.041
+[ 6000] loss: 0.033
+[ 7000] loss: 0.044
+[ 8000] loss: 0.040
+[ 9000] loss: 0.067
+[10000] loss: 0.037
+mean loss of epoch 9 is: 0.042003
+test info:
+ [total]:322509, [false]:1429, [truth]:321080, error rate:0.004430884099358467
+P\L	0	1
+0	319980	52
+1	1377	1100
+[01/(01+10)] TNR:	  0.0363890832750175
+[00/(10+00)] filtered False rate:	 0.9957150458835501
+[01/(01+11)] filtered Truth rate:	 0.04513888888888889
+[11/(10+11)] Precision:	 0.5559144125958821
+[11/(01+11)] Recall:	 0.9548611111111112
+haoz feature(bigger better):	  8.732615122832247
+training done!
+final model: /home/haoz/deepfilter/workspace/./models/checkpoint_INDEL_20-10-21-20-55-40_ecpch10.pth
+[debug] ['/home/haoz/data/somatic/FD_10_18_data/test.txt', ''] /home/haoz/deepfilter/workspace /home/haoz/data/somatic/FD_10_18_data/synthetic_indels.leftAlign.vcf
+get fastvc indels data done:  179269
+get merged data done, merged data dict size:  179269
+totally 7472 truth site
+get label done, size: 179269, pos_num: 623, neg_num: 178646
+start normalization...
+[info] inputs shape: (179269, 53)
+normalization done
+FastvcDataset init over
+total length:  179269
+-----------------compare result------------------
+------- Indels compare result: --------
+fastvc truth snv num: 7472, fastvc total output: 1813
+fastvc find: 611 , filtered: 12, recall: 0.9807383627608347, prec: 0.3370104798676227
+-------------------------------------------------
+-----------------weight info [ 1_70 ]----------------------
+[debug] ['/home/haoz/data/somatic/FD_10_18_data/train.txt'] /home/haoz/deepfilter/workspace /home/haoz/data/somatic/FD_10_18_data/synthetic_indels.leftAlign.vcf
+get fastvc indels data done:  1612545
+get merged data done, merged data dict size:  1612545
+totally 7472 truth site
+get label done, size: 1612545, pos_num: 5774, neg_num: 1606771
+start normalization...
+[info] inputs shape: (1612545, 53)
+normalization done
+FastvcDataset init over
+spliting data...
+[info] n_feature:  53
+initializeing net work
+Net(
+  (hidden0): Linear(in_features=53, out_features=140, bias=True)
+  (hidden1): Linear(in_features=140, out_features=160, bias=True)
+  (hidden2): Linear(in_features=160, out_features=170, bias=True)
+  (hidden3): Linear(in_features=170, out_features=100, bias=True)
+  (hidden4): Linear(in_features=100, out_features=10, bias=True)
+  (predict): Linear(in_features=10, out_features=2, bias=True)
+  (dropout): Dropout(p=0.5, inplace=False)
+)
+Linear(in_features=53, out_features=140, bias=True)
+Linear(in_features=140, out_features=160, bias=True)
+Linear(in_features=160, out_features=170, bias=True)
+Linear(in_features=170, out_features=100, bias=True)
+Linear(in_features=100, out_features=10, bias=True)
+Linear(in_features=10, out_features=2, bias=True)
+Dropout(p=0.5, inplace=False)
+epoch 0  processing....
+[ 1000] loss: 0.160
+[ 2000] loss: 0.067
+[ 3000] loss: 0.056
+[ 4000] loss: 0.050
+[ 5000] loss: 0.048
+[ 6000] loss: 0.042
+[ 7000] loss: 0.045
+[ 8000] loss: 0.041
+[ 9000] loss: 0.042
+[10000] loss: 0.038
+mean loss of epoch 0 is: 0.058884
+test info:
+ [total]:322509, [false]:1633, [truth]:320876, error rate:0.005063424586600684
+P\L	0	1
+0	319770	54
+1	1579	1106
+[01/(01+10)] TNR:	  0.03306797305572566
+[00/(10+00)] filtered False rate:	 0.9950863391515143
+[01/(01+11)] filtered Truth rate:	 0.04655172413793104
+[11/(10+11)] Precision:	 0.5880819366852886
+[11/(01+11)] Recall:	 0.9534482758620689
+haoz feature(bigger better):	  8.694872034957543
+epoch 1  processing....
+spliting data...
+[ 1000] loss: 0.038
+[ 2000] loss: 0.040
+[ 3000] loss: 0.039
+[ 4000] loss: 0.050
+[ 5000] loss: 0.045
+[ 6000] loss: 0.055
+[ 7000] loss: 0.035
+[ 8000] loss: 0.041
+[ 9000] loss: 0.039
+[10000] loss: 0.042
+mean loss of epoch 1 is: 0.042156
+test info:
+ [total]:322509, [false]:1227, [truth]:321282, error rate:0.003804544989442155
+P\L	0	1
+0	320217	92
+1	1135	1065
+[01/(01+10)] TNR:	  0.07497962510187449
+[00/(10+00)] filtered False rate:	 0.9964680474993154
+[01/(01+11)] filtered Truth rate:	 0.07951598962834917
+[11/(10+11)] Precision:	 0.5159090909090909
+[11/(01+11)] Recall:	 0.9204840103716508
+haoz feature(bigger better):	  8.16208440788869
+epoch 2  processing....
+spliting data...
+[ 1000] loss: 0.034
+[ 2000] loss: 0.040
+[ 3000] loss: 0.043
+[ 4000] loss: 0.039
+[ 5000] loss: 0.043
+[ 6000] loss: 0.041
+[ 7000] loss: 0.046
+[ 8000] loss: 0.034
+[ 9000] loss: 0.036
+[10000] loss: 0.031
+mean loss of epoch 2 is: 0.038769
+test info:
+ [total]:322509, [false]:1845, [truth]:320664, error rate:0.005720770583146517
+P\L	0	1
+0	319504	56
+1	1789	1160
+[01/(01+10)] TNR:	  0.03035230352303523
+[00/(10+00)] filtered False rate:	 0.9944318737102894
+[01/(01+11)] filtered Truth rate:	 0.046052631578947366
+[11/(10+11)] Precision:	 0.6066463207867073
+[11/(01+11)] Recall:	 0.9539473684210527
+haoz feature(bigger better):	  8.658501685184318
+epoch 3  processing....
+spliting data...
+[ 1000] loss: 0.044
+[ 2000] loss: 0.040
+[ 3000] loss: 0.050
+[ 4000] loss: 0.036
+[ 5000] loss: 0.031
+[ 6000] loss: 0.043
+[ 7000] loss: 0.039
+[ 8000] loss: 0.035
+[ 9000] loss: 0.050
+[10000] loss: 0.045
+mean loss of epoch 3 is: 0.041401
+test info:
+ [total]:322509, [false]:1710, [truth]:320799, error rate:0.005302177613647991
+P\L	0	1
+0	319663	47
+1	1663	1136
+[01/(01+10)] TNR:	  0.027485380116959064
+[00/(10+00)] filtered False rate:	 0.9948245706852231
+[01/(01+11)] filtered Truth rate:	 0.039729501267962805
+[11/(10+11)] Precision:	 0.594140764558771
+[11/(01+11)] Recall:	 0.9602704987320372
+haoz feature(bigger better):	  8.833702337778378
+epoch 4  processing....
+spliting data...
+[ 1000] loss: 0.051
+[ 2000] loss: 0.049
+[ 3000] loss: 0.032
+[ 4000] loss: 0.037
+[ 5000] loss: 0.043
+[ 6000] loss: 0.055
+[ 7000] loss: 0.040
+[ 8000] loss: 0.052
+[ 9000] loss: 0.040
+[10000] loss: 0.033
+mean loss of epoch 4 is: 0.043761
+test info:
+ [total]:322509, [false]:1469, [truth]:321040, error rate:0.004554911645876549
+P\L	0	1
+0	319911	56
+1	1413	1129
+[01/(01+10)] TNR:	  0.0381211708645337
+[00/(10+00)] filtered False rate:	 0.9956025693692347
+[01/(01+11)] filtered Truth rate:	 0.04725738396624472
+[11/(10+11)] Precision:	 0.5558615263571991
+[11/(01+11)] Recall:	 0.9527426160337553
+haoz feature(bigger better):	  8.658508399271366
+epoch 5  processing....
+spliting data...
+[ 1000] loss: 0.046
+[ 2000] loss: 0.038
+[ 3000] loss: 0.044
+[ 4000] loss: 0.038
+[ 5000] loss: 0.050
+[ 6000] loss: 0.036
+[ 7000] loss: 0.043
+[ 8000] loss: 0.047
+[ 9000] loss: 0.036
+[10000] loss: 0.051
+mean loss of epoch 5 is: 0.042581
+test info:
+ [total]:322509, [false]:1441, [truth]:321068, error rate:0.004468092363313892
+P\L	0	1
+0	320010	78
+1	1363	1058
+[01/(01+10)] TNR:	  0.05412907702984039
+[00/(10+00)] filtered False rate:	 0.9957588223030559
+[01/(01+11)] filtered Truth rate:	 0.06866197183098592
+[11/(10+11)] Precision:	 0.5629904997934738
+[11/(01+11)] Recall:	 0.9313380281690141
+haoz feature(bigger better):	  8.327159020927398
+epoch 6  processing....
+spliting data...
+[ 1000] loss: 0.046
+[ 2000] loss: 0.050
+[ 3000] loss: 0.052
+[ 4000] loss: 0.050
+[ 5000] loss: 0.042
+[ 6000] loss: 0.045
+[ 7000] loss: 0.049
+[ 8000] loss: 0.055
+[ 9000] loss: 0.035
+[10000] loss: 0.045
+mean loss of epoch 6 is: 0.046890
+test info:
+ [total]:322509, [false]:1774, [truth]:320735, error rate:0.005500621688076922
+P\L	0	1
+0	319608	57
+1	1717	1127
+[01/(01+10)] TNR:	  0.032130777903043965
+[00/(10+00)] filtered False rate:	 0.9946565004279156
+[01/(01+11)] filtered Truth rate:	 0.04814189189189189
+[11/(10+11)] Precision:	 0.6037271448663853
+[11/(01+11)] Recall:	 0.9518581081081081
+haoz feature(bigger better):	  8.640803931648053
+epoch 7  processing....
+spliting data...
+[ 1000] loss: 0.045
+[ 2000] loss: 0.072
+[ 3000] loss: 0.034
+[ 4000] loss: 0.055
+[ 5000] loss: 0.047
+[ 6000] loss: 0.053
+[ 7000] loss: 0.046
+[ 8000] loss: 0.055
+[ 9000] loss: 0.029
+[10000] loss: 0.039
+mean loss of epoch 7 is: 0.047444
+test info:
+ [total]:322509, [false]:1925, [truth]:320584, error rate:0.00596882567618268
+P\L	0	1
+0	319494	37
+1	1888	1090
+[01/(01+10)] TNR:	  0.01922077922077922
+[00/(10+00)] filtered False rate:	 0.9941253710537615
+[01/(01+11)] filtered Truth rate:	 0.032830523513753325
+[11/(10+11)] Precision:	 0.6339825386165212
+[11/(01+11)] Recall:	 0.9671694764862466
+haoz feature(bigger better):	  9.072916383487422
+epoch 8  processing....
+spliting data...
+[ 1000] loss: 0.037
+[ 2000] loss: 0.049
+[ 3000] loss: 0.041
+[ 4000] loss: 0.043
+[ 5000] loss: 0.051
+[ 6000] loss: 0.042
+[ 7000] loss: 0.045
+[ 8000] loss: 0.045
+[ 9000] loss: 0.045
+[10000] loss: 0.046
+mean loss of epoch 8 is: 0.044175
+test info:
+ [total]:322509, [false]:1470, [truth]:321039, error rate:0.004558012334539501
+P\L	0	1
+0	319940	44
+1	1426	1099
+[01/(01+10)] TNR:	  0.029931972789115645
+[00/(10+00)] filtered False rate:	 0.9955626917595514
+[01/(01+11)] filtered Truth rate:	 0.03849518810148731
+[11/(10+11)] Precision:	 0.5647524752475247
+[11/(01+11)] Recall:	 0.9615048118985127
+haoz feature(bigger better):	  8.899663279354217
+epoch 9  processing....
+spliting data...
+[ 1000] loss: 0.045
+[ 2000] loss: 0.040
+[ 3000] loss: 0.052
+[ 4000] loss: 0.035
+[ 5000] loss: 0.041
+[ 6000] loss: 0.042
+[ 7000] loss: 0.052
+[ 8000] loss: 0.055
+[ 9000] loss: 0.045
+[10000] loss: 0.037
+mean loss of epoch 9 is: 0.044322
+test info:
+ [total]:322509, [false]:1810, [truth]:320699, error rate:0.005612246479943195
+P\L	0	1
+0	319573	47
+1	1763	1126
+[01/(01+10)] TNR:	  0.025966850828729283
+[00/(10+00)] filtered False rate:	 0.9945135310080414
+[01/(01+11)] filtered Truth rate:	 0.040068201193520885
+[11/(10+11)] Precision:	 0.6102457597784701
+[11/(01+11)] Recall:	 0.9599317988064792
+haoz feature(bigger better):	  8.833700210198476
+training done!
+final model: /home/haoz/deepfilter/workspace/./models/checkpoint_INDEL_20-10-21-21-03-05_ecpch10.pth
+[debug] ['/home/haoz/data/somatic/FD_10_18_data/test.txt', ''] /home/haoz/deepfilter/workspace /home/haoz/data/somatic/FD_10_18_data/synthetic_indels.leftAlign.vcf
+get fastvc indels data done:  179269
+get merged data done, merged data dict size:  179269
+totally 7472 truth site
+get label done, size: 179269, pos_num: 623, neg_num: 178646
+start normalization...
+[info] inputs shape: (179269, 53)
+normalization done
+FastvcDataset init over
+total length:  179269
+-----------------compare result------------------
+------- Indels compare result: --------
+fastvc truth snv num: 7472, fastvc total output: 2159
+fastvc find: 616 , filtered: 7, recall: 0.9887640449438202, prec: 0.28531727651690597
+-------------------------------------------------
+-----------------weight info [ 1_80 ]----------------------
+[debug] ['/home/haoz/data/somatic/FD_10_18_data/train.txt'] /home/haoz/deepfilter/workspace /home/haoz/data/somatic/FD_10_18_data/synthetic_indels.leftAlign.vcf
+get fastvc indels data done:  1612545
+get merged data done, merged data dict size:  1612545
+totally 7472 truth site
+get label done, size: 1612545, pos_num: 5774, neg_num: 1606771
+start normalization...
+[info] inputs shape: (1612545, 53)
+normalization done
+FastvcDataset init over
+spliting data...
+[info] n_feature:  53
+initializeing net work
+Net(
+  (hidden0): Linear(in_features=53, out_features=140, bias=True)
+  (hidden1): Linear(in_features=140, out_features=160, bias=True)
+  (hidden2): Linear(in_features=160, out_features=170, bias=True)
+  (hidden3): Linear(in_features=170, out_features=100, bias=True)
+  (hidden4): Linear(in_features=100, out_features=10, bias=True)
+  (predict): Linear(in_features=10, out_features=2, bias=True)
+  (dropout): Dropout(p=0.5, inplace=False)
+)
+Linear(in_features=53, out_features=140, bias=True)
+Linear(in_features=140, out_features=160, bias=True)
+Linear(in_features=160, out_features=170, bias=True)
+Linear(in_features=170, out_features=100, bias=True)
+Linear(in_features=100, out_features=10, bias=True)
+Linear(in_features=10, out_features=2, bias=True)
+Dropout(p=0.5, inplace=False)
+epoch 0  processing....
+[ 1000] loss: 0.184
+[ 2000] loss: 0.066
+[ 3000] loss: 0.062
+[ 4000] loss: 0.053
+[ 5000] loss: 0.041
+[ 6000] loss: 0.051
+[ 7000] loss: 0.053
+[ 8000] loss: 0.044
+[ 9000] loss: 0.056
+[10000] loss: 0.049
+mean loss of epoch 0 is: 0.065773
+test info:
+ [total]:322509, [false]:2337, [truth]:320172, error rate:0.007246309405318921
+P\L	0	1
+0	319034	25
+1	2312	1138
+[01/(01+10)] TNR:	  0.01069747539580659
+[00/(10+00)] filtered False rate:	 0.9928052628630821
+[01/(01+11)] filtered Truth rate:	 0.021496130696474634
+[11/(10+11)] Precision:	 0.6701449275362319
+[11/(01+11)] Recall:	 0.9785038693035254
+haoz feature(bigger better):	  9.464917021306098
+epoch 1  processing....
+spliting data...
+[ 1000] loss: 0.041
+[ 2000] loss: 0.047
+[ 3000] loss: 0.045
+[ 4000] loss: 0.050
+[ 5000] loss: 0.045
+[ 6000] loss: 0.052
+[ 7000] loss: 0.035
+[ 8000] loss: 0.042
+[ 9000] loss: 0.039
+[10000] loss: 0.061
+mean loss of epoch 1 is: 0.045418
+test info:
+ [total]:322509, [false]:2065, [truth]:320444, error rate:0.006402922088995966
+P\L	0	1
+0	319343	39
+1	2026	1101
+[01/(01+10)] TNR:	  0.018886198547215495
+[00/(10+00)] filtered False rate:	 0.993695720495754
+[01/(01+11)] filtered Truth rate:	 0.034210526315789476
+[11/(10+11)] Precision:	 0.6479053405820275
+[11/(01+11)] Recall:	 0.9657894736842105
+haoz feature(bigger better):	  9.020271728359456
+epoch 2  processing....
+spliting data...
+[ 1000] loss: 0.040
+[ 2000] loss: 0.048
+[ 3000] loss: 0.047
+[ 4000] loss: 0.038
+[ 5000] loss: 0.034
+[ 6000] loss: 0.045
+[ 7000] loss: 0.061
+[ 8000] loss: 0.048
+[ 9000] loss: 0.029
+[10000] loss: 0.066
+mean loss of epoch 2 is: 0.045510
+test info:
+ [total]:322509, [false]:1759, [truth]:320750, error rate:0.005454111358132641
+P\L	0	1
+0	319651	67
+1	1692	1099
+[01/(01+10)] TNR:	  0.03808982376350199
+[00/(10+00)] filtered False rate:	 0.9947345982330407
+[01/(01+11)] filtered Truth rate:	 0.057461406518010294
+[11/(10+11)] Precision:	 0.6062343246148334
+[11/(01+11)] Recall:	 0.9425385934819898
+haoz feature(bigger better):	  8.47916744902763
+epoch 3  processing....
+spliting data...
+[ 1000] loss: 0.052
+[ 2000] loss: 0.039
+[ 3000] loss: 0.036
+[ 4000] loss: 0.051
+[ 5000] loss: 0.050
+[ 6000] loss: 0.053
+[ 7000] loss: 0.029
+[ 8000] loss: 0.050
+[ 9000] loss: 0.049
+[10000] loss: 0.038
+mean loss of epoch 3 is: 0.044710
+test info:
+ [total]:322509, [false]:2270, [truth]:320239, error rate:0.007038563264901134
+P\L	0	1
+0	319119	36
+1	2234	1120
+[01/(01+10)] TNR:	  0.015859030837004406
+[00/(10+00)] filtered False rate:	 0.9930481433190292
+[01/(01+11)] filtered Truth rate:	 0.031141868512110725
+[11/(10+11)] Precision:	 0.6660703637447823
+[11/(01+11)] Recall:	 0.9688581314878892
+haoz feature(bigger better):	  9.100304329781569
+epoch 4  processing....
+spliting data...
+[ 1000] loss: 0.050
+[ 2000] loss: 0.040
+[ 3000] loss: 0.055
+[ 4000] loss: 0.052
+[ 5000] loss: 0.050
+[ 6000] loss: 0.039
+[ 7000] loss: 0.052
+[ 8000] loss: 0.048
+[ 9000] loss: 0.043
+[10000] loss: 0.037
+mean loss of epoch 4 is: 0.046763
+test info:
+ [total]:322509, [false]:2257, [truth]:320252, error rate:0.006998254312282758
+P\L	0	1
+0	319143	29
+1	2228	1109
+[01/(01+10)] TNR:	  0.01284891448825875
+[00/(10+00)] filtered False rate:	 0.9930672027034175
+[01/(01+11)] filtered Truth rate:	 0.025483304042179262
+[11/(10+11)] Precision:	 0.6676655678753372
+[11/(01+11)] Recall:	 0.9745166959578208
+haoz feature(bigger better):	  9.316512667261044
+epoch 5  processing....
+spliting data...
+[ 1000] loss: 0.034
+[ 2000] loss: 0.042
+[ 3000] loss: 0.047
+[ 4000] loss: 0.037
+[ 5000] loss: 0.049
+[ 6000] loss: 0.034
+[ 7000] loss: 0.051
+[ 8000] loss: 0.038
+[ 9000] loss: 0.054
+[10000] loss: 0.040
+mean loss of epoch 5 is: 0.042569
+test info:
+ [total]:322509, [false]:1931, [truth]:320578, error rate:0.005987429808160393
+P\L	0	1
+0	319484	37
+1	1894	1094
+[01/(01+10)] TNR:	  0.019161056447436563
+[00/(10+00)] filtered False rate:	 0.9941066283317465
+[01/(01+11)] filtered Truth rate:	 0.032714412024756855
+[11/(10+11)] Precision:	 0.6338688085676037
+[11/(01+11)] Recall:	 0.9672855879752431
+haoz feature(bigger better):	  9.07291622133371
+epoch 6  processing....
+spliting data...
+[ 1000] loss: 0.039
+[ 2000] loss: 0.048
+[ 3000] loss: 0.046
+[ 4000] loss: 0.059
+[ 5000] loss: 0.054
+[ 6000] loss: 0.050
+[ 7000] loss: 0.048
+[ 8000] loss: 0.034
+[ 9000] loss: 0.041
+[10000] loss: 0.060
+mean loss of epoch 6 is: 0.048855
+test info:
+ [total]:322509, [false]:3172, [truth]:319337, error rate:0.009835384438883876
+P\L	0	1
+0	318222	30
+1	3142	1115
+[01/(01+10)] TNR:	  0.009457755359394703
+[00/(10+00)] filtered False rate:	 0.990222924783112
+[01/(01+11)] filtered Truth rate:	 0.026200873362445413
+[11/(10+11)] Precision:	 0.7380784590086915
+[11/(01+11)] Recall:	 0.9737991266375546
+haoz feature(bigger better):	  9.282583212399203
+epoch 7  processing....
+spliting data...
+[ 1000] loss: 0.031
+[ 2000] loss: 0.047
+[ 3000] loss: 0.045
+[ 4000] loss: 0.037
+[ 5000] loss: 0.057
+[ 6000] loss: 0.057
+[ 7000] loss: 0.043
+[ 8000] loss: 0.051
+[ 9000] loss: 0.049
+[10000] loss: 0.038
+mean loss of epoch 7 is: 0.046295
+test info:
+ [total]:322509, [false]:1831, [truth]:320678, error rate:0.0056773609418651885
+P\L	0	1
+0	319488	33
+1	1798	1190
+[01/(01+10)] TNR:	  0.018022938285090113
+[00/(10+00)] filtered False rate:	 0.9944037399699955
+[01/(01+11)] filtered Truth rate:	 0.02698282910874898
+[11/(10+11)] Precision:	 0.6017402945113789
+[11/(01+11)] Recall:	 0.9730171708912511
+haoz feature(bigger better):	  9.187323277029579
+epoch 8  processing....
+spliting data...
+[ 1000] loss: 0.058
+[ 2000] loss: 0.040
+[ 3000] loss: 0.052
+[ 4000] loss: 0.041
+[ 5000] loss: 0.044
+[ 6000] loss: 0.044
+[ 7000] loss: 0.043
+[ 8000] loss: 0.037
+[ 9000] loss: 0.047
+[10000] loss: 0.074
+mean loss of epoch 8 is: 0.047771
+test info:
+ [total]:322509, [false]:1432, [truth]:321077, error rate:0.004440186165347324
+P\L	0	1
+0	319995	58
+1	1374	1082
+[01/(01+10)] TNR:	  0.040502793296089384
+[00/(10+00)] filtered False rate:	 0.9957245409482558
+[01/(01+11)] filtered Truth rate:	 0.05087719298245614
+[11/(10+11)] Precision:	 0.5594462540716613
+[11/(01+11)] Recall:	 0.9491228070175438
+haoz feature(bigger better):	  8.62341862190851
+epoch 9  processing....
+spliting data...
+[ 1000] loss: 0.050
+[ 2000] loss: 0.042
+[ 3000] loss: 0.040
+[ 4000] loss: 0.058
+[ 5000] loss: 0.037
+[ 6000] loss: 0.045
+[ 7000] loss: 0.047
+[ 8000] loss: 0.043
+[ 9000] loss: 0.046
+[10000] loss: 0.043
+mean loss of epoch 9 is: 0.044977
+test info:
+ [total]:322509, [false]:1513, [truth]:320996, error rate:0.004691341947046439
+P\L	0	1
+0	319885	56
+1	1457	1111
+[01/(01+10)] TNR:	  0.037012557832121616
+[00/(10+00)] filtered False rate:	 0.9954658899241307
+[01/(01+11)] filtered Truth rate:	 0.04798628963153385
+[11/(10+11)] Precision:	 0.567367601246106
+[11/(01+11)] Recall:	 0.9520137103684662
+haoz feature(bigger better):	  8.658507613578
+training done!
+final model: /home/haoz/deepfilter/workspace/./models/checkpoint_INDEL_20-10-21-21-10-29_ecpch10.pth
+[debug] ['/home/haoz/data/somatic/FD_10_18_data/test.txt', ''] /home/haoz/deepfilter/workspace /home/haoz/data/somatic/FD_10_18_data/synthetic_indels.leftAlign.vcf
+get fastvc indels data done:  179269
+get merged data done, merged data dict size:  179269
+totally 7472 truth site
+get label done, size: 179269, pos_num: 623, neg_num: 178646
+start normalization...
+[info] inputs shape: (179269, 53)
+normalization done
+FastvcDataset init over
+total length:  179269
+-----------------compare result------------------
+------- Indels compare result: --------
+fastvc truth snv num: 7472, fastvc total output: 1878
+fastvc find: 613 , filtered: 10, recall: 0.9839486356340289, prec: 0.32641107561235355
+-------------------------------------------------
+-----------------weight info [ 1_100 ]----------------------
+[debug] ['/home/haoz/data/somatic/FD_10_18_data/train.txt'] /home/haoz/deepfilter/workspace /home/haoz/data/somatic/FD_10_18_data/synthetic_indels.leftAlign.vcf
+get fastvc indels data done:  1612545
+get merged data done, merged data dict size:  1612545
+totally 7472 truth site
+get label done, size: 1612545, pos_num: 5774, neg_num: 1606771
+start normalization...
+[info] inputs shape: (1612545, 53)
+normalization done
+FastvcDataset init over
+spliting data...
+[info] n_feature:  53
+initializeing net work
+Net(
+  (hidden0): Linear(in_features=53, out_features=140, bias=True)
+  (hidden1): Linear(in_features=140, out_features=160, bias=True)
+  (hidden2): Linear(in_features=160, out_features=170, bias=True)
+  (hidden3): Linear(in_features=170, out_features=100, bias=True)
+  (hidden4): Linear(in_features=100, out_features=10, bias=True)
+  (predict): Linear(in_features=10, out_features=2, bias=True)
+  (dropout): Dropout(p=0.5, inplace=False)
+)
+Linear(in_features=53, out_features=140, bias=True)
+Linear(in_features=140, out_features=160, bias=True)
+Linear(in_features=160, out_features=170, bias=True)
+Linear(in_features=170, out_features=100, bias=True)
+Linear(in_features=100, out_features=10, bias=True)
+Linear(in_features=10, out_features=2, bias=True)
+Dropout(p=0.5, inplace=False)
+epoch 0  processing....
+[ 1000] loss: 0.202
+[ 2000] loss: 0.070
+[ 3000] loss: 0.078
+[ 4000] loss: 0.049
+[ 5000] loss: 0.044
+[ 6000] loss: 0.041
+[ 7000] loss: 0.050
+[ 8000] loss: 0.046
+[ 9000] loss: 0.043
+[10000] loss: 0.045
+mean loss of epoch 0 is: 0.066645
+test info:
+ [total]:322509, [false]:1567, [truth]:320942, error rate:0.0048587791348458495
+P\L	0	1
+0	319871	73
+1	1494	1071
+[01/(01+10)] TNR:	  0.04658583280153159
+[00/(10+00)] filtered False rate:	 0.9953510805470416
+[01/(01+11)] filtered Truth rate:	 0.06381118881118882
+[11/(10+11)] Precision:	 0.5824561403508772
+[11/(01+11)] Recall:	 0.9361888111888111
+haoz feature(bigger better):	  8.393405415133886
+epoch 1  processing....
+spliting data...
+[ 1000] loss: 0.055
+[ 2000] loss: 0.050
+[ 3000] loss: 0.042
+[ 4000] loss: 0.037
+[ 5000] loss: 0.037
+[ 6000] loss: 0.045
+[ 7000] loss: 0.051
+[ 8000] loss: 0.042
+[ 9000] loss: 0.044
+[10000] loss: 0.048
+mean loss of epoch 1 is: 0.045098
+test info:
+ [total]:322509, [false]:1832, [truth]:320677, error rate:0.0056804616305281405
+P\L	0	1
+0	319539	47
+1	1785	1138
+[01/(01+10)] TNR:	  0.025655021834061136
+[00/(10+00)] filtered False rate:	 0.9944448593942563
+[01/(01+11)] filtered Truth rate:	 0.039662447257383965
+[11/(10+11)] Precision:	 0.6106739651043448
+[11/(01+11)] Recall:	 0.960337552742616
+haoz feature(bigger better):	  8.833699742131504
+epoch 2  processing....
+spliting data...
+[ 1000] loss: 0.036
+[ 2000] loss: 0.047
+[ 3000] loss: 0.049
+[ 4000] loss: 0.047
+[ 5000] loss: 0.036
+[ 6000] loss: 0.060
+[ 7000] loss: 0.032
+[ 8000] loss: 0.060
+[ 9000] loss: 0.041
+[10000] loss: 0.063
+mean loss of epoch 2 is: 0.046871
+test info:
+ [total]:322509, [false]:1937, [truth]:320572, error rate:0.0060060339401381046
+P\L	0	1
+0	319483	42
+1	1895	1089
+[01/(01+10)] TNR:	  0.021683014971605574
+[00/(10+00)] filtered False rate:	 0.9941035167310768
+[01/(01+11)] filtered Truth rate:	 0.03713527851458886
+[11/(10+11)] Precision:	 0.635053619302949
+[11/(01+11)] Recall:	 0.9628647214854111
+haoz feature(bigger better):	  8.946170585537779
+epoch 3  processing....
+spliting data...
+[ 1000] loss: 0.041
+[ 2000] loss: 0.050
+[ 3000] loss: 0.042
+[ 4000] loss: 0.045
+[ 5000] loss: 0.047
+[ 6000] loss: 0.035
+[ 7000] loss: 0.047
+[ 8000] loss: 0.035
+[ 9000] loss: 0.030
+[10000] loss: 0.043
+mean loss of epoch 3 is: 0.041278
+test info:
+ [total]:322509, [false]:1470, [truth]:321039, error rate:0.004558012334539501
+P\L	0	1
+0	319945	66
+1	1404	1094
+[01/(01+10)] TNR:	  0.044897959183673466
+[00/(10+00)] filtered False rate:	 0.9956309184095796
+[01/(01+11)] filtered Truth rate:	 0.056896551724137934
+[11/(10+11)] Precision:	 0.5620496397117695
+[11/(01+11)] Recall:	 0.9431034482758621
+haoz feature(bigger better):	  8.494209307299652
+epoch 4  processing....
+spliting data...
+[ 1000] loss: 0.048
+[ 2000] loss: 0.042
+[ 3000] loss: 0.050
+[ 4000] loss: 0.046
+[ 5000] loss: 0.056
+[ 6000] loss: 0.041
+[ 7000] loss: 0.045
+[ 8000] loss: 0.036
+[ 9000] loss: 0.034
+[10000] loss: 0.069
+mean loss of epoch 4 is: 0.046560
+test info:
+ [total]:322509, [false]:1928, [truth]:320581, error rate:0.005978127742171537
+P\L	0	1
+0	319450	41
+1	1887	1131
+[01/(01+10)] TNR:	  0.021265560165975105
+[00/(10+00)] filtered False rate:	 0.9941276603690207
+[01/(01+11)] filtered Truth rate:	 0.03498293515358362
+[11/(10+11)] Precision:	 0.6252485089463221
+[11/(01+11)] Recall:	 0.9650170648464164
+haoz feature(bigger better):	  8.970267231816376
+epoch 5  processing....
+spliting data...
+[ 1000] loss: 0.056
+[ 2000] loss: 0.052
+[ 3000] loss: 0.067
+[ 4000] loss: 0.047
+[ 5000] loss: 0.040
+[ 6000] loss: 0.041
+[ 7000] loss: 0.040
+[ 8000] loss: 0.049
+[ 9000] loss: 0.051
+[10000] loss: 0.046
+mean loss of epoch 5 is: 0.048634
+test info:
+ [total]:322509, [false]:1672, [truth]:320837, error rate:0.0051843514444558135
+P\L	0	1
+0	319760	51
+1	1621	1077
+[01/(01+10)] TNR:	  0.030502392344497607
+[00/(10+00)] filtered False rate:	 0.9949561423979638
+[01/(01+11)] filtered Truth rate:	 0.04521276595744681
+[11/(10+11)] Precision:	 0.600815418828762
+[11/(01+11)] Recall:	 0.9547872340425532
+haoz feature(bigger better):	  8.752027905304658
+epoch 6  processing....
+spliting data...
+[ 1000] loss: 0.057
+[ 2000] loss: 0.047
+[ 3000] loss: 0.063
+[ 4000] loss: 0.050
+[ 5000] loss: 0.048
+[ 6000] loss: 0.049
+[ 7000] loss: 0.042
+[ 8000] loss: 0.042
+[ 9000] loss: 0.051
+[10000] loss: 0.046
+mean loss of epoch 6 is: 0.049829
+test info:
+ [total]:322509, [false]:3199, [truth]:319310, error rate:0.009919103032783582
+P\L	0	1
+0	318109	9
+1	3190	1201
+[01/(01+10)] TNR:	  0.002813379180994061
+[00/(10+00)] filtered False rate:	 0.99007155328837
+[01/(01+11)] filtered Truth rate:	 0.00743801652892562
+[11/(10+11)] Precision:	 0.7264859940787975
+[11/(01+11)] Recall:	 0.9925619834710744
+haoz feature(bigger better):	  10.486306363180063
+epoch 7  processing....
+spliting data...
+[ 1000] loss: 0.045
+[ 2000] loss: 0.038
+[ 3000] loss: 0.042
+[ 4000] loss: 0.045
+[ 5000] loss: 0.040
+[ 6000] loss: 0.059
+[ 7000] loss: 0.083
+[ 8000] loss: 0.041
+[ 9000] loss: 0.035
+[10000] loss: 0.044
+mean loss of epoch 7 is: 0.047150
+test info:
+ [total]:322509, [false]:2557, [truth]:319952, error rate:0.00792846091116837
+P\L	0	1
+0	318820	32
+1	2525	1132
+[01/(01+10)] TNR:	  0.012514665623777864
+[00/(10+00)] filtered False rate:	 0.9921424014688264
+[01/(01+11)] filtered Truth rate:	 0.027491408934707903
+[11/(10+11)] Precision:	 0.6904566584632212
+[11/(01+11)] Recall:	 0.9725085910652921
+haoz feature(bigger better):	  9.218070515947923
+epoch 8  processing....
+spliting data...
+[ 1000] loss: 0.037
+[ 2000] loss: 0.051
+[ 3000] loss: 0.045
+[ 4000] loss: 0.048
+[ 5000] loss: 0.044
+[ 6000] loss: 0.049
+[ 7000] loss: 0.071
+[ 8000] loss: 0.050
+[ 9000] loss: 0.044
+[10000] loss: 0.042
+mean loss of epoch 8 is: 0.048380
+test info:
+ [total]:322509, [false]:2581, [truth]:319928, error rate:0.00800287743907922
+P\L	0	1
+0	318802	40
+1	2541	1126
+[01/(01+10)] TNR:	  0.015497869043006587
+[00/(10+00)] filtered False rate:	 0.9920925615308254
+[01/(01+11)] filtered Truth rate:	 0.03430531732418525
+[11/(10+11)] Precision:	 0.6929370057267521
+[11/(01+11)] Recall:	 0.9656946826758147
+haoz feature(bigger better):	  8.994942344773028
+epoch 9  processing....
+spliting data...
+[ 1000] loss: 0.055
+[ 2000] loss: 0.034
+[ 3000] loss: 0.063
+[ 4000] loss: 0.039
+[ 5000] loss: 0.038
+[ 6000] loss: 0.056
+[ 7000] loss: 0.049
+[ 8000] loss: 0.049
+[ 9000] loss: 0.045
+[10000] loss: 0.066
+mean loss of epoch 9 is: 0.049070
+test info:
+ [total]:322509, [false]:1841, [truth]:320668, error rate:0.005708367828494708
+P\L	0	1
+0	319534	29
+1	1812	1134
+[01/(01+10)] TNR:	  0.015752308527973928
+[00/(10+00)] filtered False rate:	 0.9943612181262564
+[01/(01+11)] filtered Truth rate:	 0.024935511607910577
+[11/(10+11)] Precision:	 0.615071283095723
+[11/(01+11)] Recall:	 0.9750644883920895
+haoz feature(bigger better):	  9.316527011075166
+training done!
+final model: /home/haoz/deepfilter/workspace/./models/checkpoint_INDEL_20-10-21-21-17-53_ecpch10.pth
+[debug] ['/home/haoz/data/somatic/FD_10_18_data/test.txt', ''] /home/haoz/deepfilter/workspace /home/haoz/data/somatic/FD_10_18_data/synthetic_indels.leftAlign.vcf
+get fastvc indels data done:  179269
+get merged data done, merged data dict size:  179269
+totally 7472 truth site
+get label done, size: 179269, pos_num: 623, neg_num: 178646
+start normalization...
+[info] inputs shape: (179269, 53)
+normalization done
+FastvcDataset init over
+total length:  179269
+-----------------compare result------------------
+------- Indels compare result: --------
+fastvc truth snv num: 7472, fastvc total output: 2275
+fastvc find: 618 , filtered: 5, recall: 0.9919743178170144, prec: 0.27164835164835166
+-------------------------------------------------
+-----------------weight info [ 1_120 ]----------------------
+[debug] ['/home/haoz/data/somatic/FD_10_18_data/train.txt'] /home/haoz/deepfilter/workspace /home/haoz/data/somatic/FD_10_18_data/synthetic_indels.leftAlign.vcf
+get fastvc indels data done:  1612545
+get merged data done, merged data dict size:  1612545
+totally 7472 truth site
+get label done, size: 1612545, pos_num: 5774, neg_num: 1606771
+start normalization...
+[info] inputs shape: (1612545, 53)
+normalization done
+FastvcDataset init over
+spliting data...
+[info] n_feature:  53
+initializeing net work
+Net(
+  (hidden0): Linear(in_features=53, out_features=140, bias=True)
+  (hidden1): Linear(in_features=140, out_features=160, bias=True)
+  (hidden2): Linear(in_features=160, out_features=170, bias=True)
+  (hidden3): Linear(in_features=170, out_features=100, bias=True)
+  (hidden4): Linear(in_features=100, out_features=10, bias=True)
+  (predict): Linear(in_features=10, out_features=2, bias=True)
+  (dropout): Dropout(p=0.5, inplace=False)
+)
+Linear(in_features=53, out_features=140, bias=True)
+Linear(in_features=140, out_features=160, bias=True)
+Linear(in_features=160, out_features=170, bias=True)
+Linear(in_features=170, out_features=100, bias=True)
+Linear(in_features=100, out_features=10, bias=True)
+Linear(in_features=10, out_features=2, bias=True)
+Dropout(p=0.5, inplace=False)
+epoch 0  processing....
+[ 1000] loss: 0.191
+[ 2000] loss: 0.093
+[ 3000] loss: 0.068
+[ 4000] loss: 0.073
+[ 5000] loss: 0.076
+[ 6000] loss: 0.060
+[ 7000] loss: 0.054
+[ 8000] loss: 0.042
+[ 9000] loss: 0.048
+[10000] loss: 0.045
+mean loss of epoch 0 is: 0.074532
+test info:
+ [total]:322509, [false]:1814, [truth]:320695, error rate:0.005624649234595004
+P\L	0	1
+0	319613	64
+1	1750	1082
+[01/(01+10)] TNR:	  0.03528114663726571
+[00/(10+00)] filtered False rate:	 0.9945544446622666
+[01/(01+11)] filtered Truth rate:	 0.055846422338568937
+[11/(10+11)] Precision:	 0.6179378531073446
+[11/(01+11)] Recall:	 0.944153577661431
+haoz feature(bigger better):	  8.524974895097321
+epoch 1  processing....
+spliting data...
+[ 1000] loss: 0.053
+[ 2000] loss: 0.051
+[ 3000] loss: 0.046
+[ 4000] loss: 0.053
+[ 5000] loss: 0.043
+[ 6000] loss: 0.046
+[ 7000] loss: 0.059
+[ 8000] loss: 0.048
+[ 9000] loss: 0.039
+[10000] loss: 0.047
+mean loss of epoch 1 is: 0.048227
+test info:
+ [total]:322509, [false]:1692, [truth]:320817, error rate:0.005246365217714854
+P\L	0	1
+0	319683	40
+1	1652	1134
+[01/(01+10)] TNR:	  0.02364066193853428
+[00/(10+00)] filtered False rate:	 0.9948589478270341
+[01/(01+11)] filtered Truth rate:	 0.034071550255536626
+[11/(10+11)] Precision:	 0.592964824120603
+[11/(01+11)] Recall:	 0.9659284497444633
+haoz feature(bigger better):	  8.994964568586
+epoch 2  processing....
+spliting data...
+[ 1000] loss: 0.040
+[ 2000] loss: 0.048
+[ 3000] loss: 0.058
+[ 4000] loss: 0.040
+[ 5000] loss: 0.046
+[ 6000] loss: 0.055
+[ 7000] loss: 0.080
+[ 8000] loss: 0.039
+[ 9000] loss: 0.036
+[10000] loss: 0.046
+mean loss of epoch 2 is: 0.048863
+test info:
+ [total]:322509, [false]:2181, [truth]:320328, error rate:0.006762601973898403
+P\L	0	1
+0	319227	49
+1	2132	1101
+[01/(01+10)] TNR:	  0.02246675836772123
+[00/(10+00)] filtered False rate:	 0.9933656751483544
+[01/(01+11)] filtered Truth rate:	 0.042608695652173914
+[11/(10+11)] Precision:	 0.6594494277760594
+[11/(01+11)] Recall:	 0.957391304347826
+haoz feature(bigger better):	  8.792021514481158
+epoch 3  processing....
+spliting data...
+[ 1000] loss: 0.039
+[ 2000] loss: 0.050
+[ 3000] loss: 0.038
+[ 4000] loss: 0.064
+[ 5000] loss: 0.038
+[ 6000] loss: 0.042
+[ 7000] loss: 0.042
+[ 8000] loss: 0.042
+[ 9000] loss: 0.052
+[10000] loss: 0.044
+mean loss of epoch 3 is: 0.044934
+test info:
+ [total]:322509, [false]:1869, [truth]:320640, error rate:0.005795187111057366
+P\L	0	1
+0	319518	39
+1	1830	1122
+[01/(01+10)] TNR:	  0.02086677367576244
+[00/(10+00)] filtered False rate:	 0.9943052391799544
+[01/(01+11)] filtered Truth rate:	 0.03359173126614987
+[11/(10+11)] Precision:	 0.6199186991869918
+[11/(01+11)] Recall:	 0.9664082687338501
+haoz feature(bigger better):	  9.020276753747021
+epoch 4  processing....
+spliting data...
+[ 1000] loss: 0.048
+[ 2000] loss: 0.038
+[ 3000] loss: 0.051
+[ 4000] loss: 0.035
+[ 5000] loss: 0.048
+[ 6000] loss: 0.054
+[ 7000] loss: 0.043
+[ 8000] loss: 0.040
+[ 9000] loss: 0.043
+[10000] loss: 0.063
+mean loss of epoch 4 is: 0.046432
+test info:
+ [total]:322509, [false]:2187, [truth]:320322, error rate:0.006781206105876115
+P\L	0	1
+0	319164	42
+1	2145	1158
+[01/(01+10)] TNR:	  0.019204389574759947
+[00/(10+00)] filtered False rate:	 0.9933241832628404
+[01/(01+11)] filtered Truth rate:	 0.035
+[11/(10+11)] Precision:	 0.6494096276112625
+[11/(01+11)] Recall:	 0.965
+haoz feature(bigger better):	  8.946164633449046
+epoch 5  processing....
+spliting data...
+[ 1000] loss: 0.054
+[ 2000] loss: 0.043
+[ 3000] loss: 0.045
+[ 4000] loss: 0.042
+[ 5000] loss: 0.059
+[ 6000] loss: 0.031
+[ 7000] loss: 0.041
+[ 8000] loss: 0.051
+[ 9000] loss: 0.057
+[10000] loss: 0.055
+mean loss of epoch 5 is: 0.047634
+test info:
+ [total]:322509, [false]:2454, [truth]:320055, error rate:0.00760908997888431
+P\L	0	1
+0	318924	34
+1	2420	1131
+[01/(01+10)] TNR:	  0.013854930725346373
+[00/(10+00)] filtered False rate:	 0.9924691296554471
+[01/(01+11)] filtered Truth rate:	 0.029184549356223177
+[11/(10+11)] Precision:	 0.68149816952971
+[11/(01+11)] Recall:	 0.9708154506437768
+haoz feature(bigger better):	  9.157453623323162
+epoch 6  processing....
+spliting data...
+[ 1000] loss: 0.060
+[ 2000] loss: 0.056
+[ 3000] loss: 0.044
+[ 4000] loss: 0.045
+[ 5000] loss: 0.067
+[ 6000] loss: 0.041
+[ 7000] loss: 0.060
+[ 8000] loss: 0.050
+[ 9000] loss: 0.105
+[10000] loss: 0.050
+mean loss of epoch 6 is: 0.057470
+test info:
+ [total]:322509, [false]:1851, [truth]:320658, error rate:0.005739374715124229
+P\L	0	1
+0	319521	35
+1	1816	1137
+[01/(01+10)] TNR:	  0.0189086980010805
+[00/(10+00)] filtered False rate:	 0.9943486122046326
+[01/(01+11)] filtered Truth rate:	 0.029863481228668942
+[11/(10+11)] Precision:	 0.614967829326109
+[11/(01+11)] Recall:	 0.9701365187713311
+haoz feature(bigger better):	  9.128485376000016
+epoch 7  processing....
+spliting data...
+[ 1000] loss: 0.084
+[ 2000] loss: 0.043
+[ 3000] loss: 0.062
+[ 4000] loss: 0.054
+[ 5000] loss: 0.052
+[ 6000] loss: 0.046
+[ 7000] loss: 0.057
+[ 8000] loss: 0.076
+[ 9000] loss: 0.038
+[10000] loss: 0.048
+mean loss of epoch 7 is: 0.055672
+test info:
+ [total]:322509, [false]:1232, [truth]:321277, error rate:0.0038200484327569153
+P\L	0	1
+0	320184	73
+1	1159	1093
+[01/(01+10)] TNR:	  0.05925324675324675
+[00/(10+00)] filtered False rate:	 0.9963932620284245
+[01/(01+11)] filtered Truth rate:	 0.06260720411663807
+[11/(10+11)] Precision:	 0.5146536412078153
+[11/(01+11)] Recall:	 0.9373927958833619
+haoz feature(bigger better):	  8.393410004087006
+epoch 8  processing....
+spliting data...
+[ 1000] loss: 0.050
+[ 2000] loss: 0.083
+[ 3000] loss: 0.059
+[ 4000] loss: 0.074
+[ 5000] loss: 0.042
+[ 6000] loss: 0.061
+[ 7000] loss: 0.074
+[ 8000] loss: 0.041
+[ 9000] loss: 0.075
+[10000] loss: 0.069
+mean loss of epoch 8 is: 0.062301
+test info:
+ [total]:322509, [false]:1402, [truth]:321107, error rate:0.004347165505458763
+P\L	0	1
+0	319929	54
+1	1348	1178
+[01/(01+10)] TNR:	  0.03851640513552068
+[00/(10+00)] filtered False rate:	 0.9958042436900245
+[01/(01+11)] filtered Truth rate:	 0.04383116883116883
+[11/(10+11)] Precision:	 0.5336500395882818
+[11/(01+11)] Recall:	 0.9561688311688312
+haoz feature(bigger better):	  8.694876312615111
+epoch 9  processing....
+spliting data...
+[ 1000] loss: 0.052
+[ 2000] loss: 0.067
+[ 3000] loss: 0.039
+[ 4000] loss: 0.045
+[ 5000] loss: 0.060
+[ 6000] loss: 0.060
+[ 7000] loss: 0.045
+[ 8000] loss: 0.051
+[ 9000] loss: 0.063
+[10000] loss: 0.040
+mean loss of epoch 9 is: 0.052174
+test info:
+ [total]:322509, [false]:2114, [truth]:320395, error rate:0.006554855833480616
+P\L	0	1
+0	319224	37
+1	2077	1171
+[01/(01+10)] TNR:	  0.01750236518448439
+[00/(10+00)] filtered False rate:	 0.9935356565961513
+[01/(01+11)] filtered Truth rate:	 0.030629139072847682
+[11/(10+11)] Precision:	 0.6394704433497537
+[11/(01+11)] Recall:	 0.9693708609271523
+haoz feature(bigger better):	  9.072911275658106
+training done!
+final model: /home/haoz/deepfilter/workspace/./models/checkpoint_INDEL_20-10-21-21-25-18_ecpch10.pth
+[debug] ['/home/haoz/data/somatic/FD_10_18_data/test.txt', ''] /home/haoz/deepfilter/workspace /home/haoz/data/somatic/FD_10_18_data/synthetic_indels.leftAlign.vcf
+get fastvc indels data done:  179269
+get merged data done, merged data dict size:  179269
+totally 7472 truth site
+get label done, size: 179269, pos_num: 623, neg_num: 178646
+start normalization...
+[info] inputs shape: (179269, 53)
+normalization done
+FastvcDataset init over
+total length:  179269
+-----------------compare result------------------
+------- Indels compare result: --------
+fastvc truth snv num: 7472, fastvc total output: 2421
+fastvc find: 618 , filtered: 5, recall: 0.9919743178170144, prec: 0.2552664188351921
+-------------------------------------------------
+-----------------weight info [ 1_140 ]----------------------
+[debug] ['/home/haoz/data/somatic/FD_10_18_data/train.txt'] /home/haoz/deepfilter/workspace /home/haoz/data/somatic/FD_10_18_data/synthetic_indels.leftAlign.vcf
+get fastvc indels data done:  1612545
+get merged data done, merged data dict size:  1612545
+totally 7472 truth site
+get label done, size: 1612545, pos_num: 5774, neg_num: 1606771
+start normalization...
+[info] inputs shape: (1612545, 53)
+normalization done
+FastvcDataset init over
+spliting data...
+[info] n_feature:  53
+initializeing net work
+Net(
+  (hidden0): Linear(in_features=53, out_features=140, bias=True)
+  (hidden1): Linear(in_features=140, out_features=160, bias=True)
+  (hidden2): Linear(in_features=160, out_features=170, bias=True)
+  (hidden3): Linear(in_features=170, out_features=100, bias=True)
+  (hidden4): Linear(in_features=100, out_features=10, bias=True)
+  (predict): Linear(in_features=10, out_features=2, bias=True)
+  (dropout): Dropout(p=0.5, inplace=False)
+)
+Linear(in_features=53, out_features=140, bias=True)
+Linear(in_features=140, out_features=160, bias=True)
+Linear(in_features=160, out_features=170, bias=True)
+Linear(in_features=170, out_features=100, bias=True)
+Linear(in_features=100, out_features=10, bias=True)
+Linear(in_features=10, out_features=2, bias=True)
+Dropout(p=0.5, inplace=False)
+epoch 0  processing....
+[ 1000] loss: 0.255
+[ 2000] loss: 0.099
+[ 3000] loss: 0.075
+[ 4000] loss: 0.069
+[ 5000] loss: 0.054
+[ 6000] loss: 0.053
+[ 7000] loss: 0.049
+[ 8000] loss: 0.051
+[ 9000] loss: 0.059
+[10000] loss: 0.057
+mean loss of epoch 0 is: 0.081517
+test info:
+ [total]:322509, [false]:1377, [truth]:321132, error rate:0.004269648288884961
+P\L	0	1
+0	320074	58
+1	1319	1058
+[01/(01+10)] TNR:	  0.04212055192447349
+[00/(10+00)] filtered False rate:	 0.9958959902673674
+[01/(01+11)] filtered Truth rate:	 0.05197132616487455
+[11/(10+11)] Precision:	 0.55490113588557
+[11/(01+11)] Recall:	 0.9480286738351255
+haoz feature(bigger better):	  8.623419570161408
+epoch 1  processing....
+spliting data...
+[ 1000] loss: 0.060
+[ 2000] loss: 0.055
+[ 3000] loss: 0.057
+[ 4000] loss: 0.055
+[ 5000] loss: 0.045
+[ 6000] loss: 0.047
+[ 7000] loss: 0.058
+[ 8000] loss: 0.046
+[ 9000] loss: 0.041
+[10000] loss: 0.043
+mean loss of epoch 1 is: 0.050477
+test info:
+ [total]:322509, [false]:1664, [truth]:320845, error rate:0.005159545935152198
+P\L	0	1
+0	319726	50
+1	1614	1119
+[01/(01+10)] TNR:	  0.030048076923076924
+[00/(10+00)] filtered False rate:	 0.9949772826289911
+[01/(01+11)] filtered Truth rate:	 0.0427715996578272
+[11/(10+11)] Precision:	 0.5905598243688255
+[11/(01+11)] Recall:	 0.9572284003421728
+haoz feature(bigger better):	  8.771830036930936
+epoch 2  processing....
+spliting data...
+[ 1000] loss: 0.040
+[ 2000] loss: 0.044
+[ 3000] loss: 0.055
+[ 4000] loss: 0.036
+[ 5000] loss: 0.042
+[ 6000] loss: 0.060
+[ 7000] loss: 0.049
+[ 8000] loss: 0.054
+[ 9000] loss: 0.040
+[10000] loss: 0.044
+mean loss of epoch 2 is: 0.046248
+test info:
+ [total]:322509, [false]:2076, [truth]:320433, error rate:0.006437029664288439
+P\L	0	1
+0	319329	27
+1	2049	1104
+[01/(01+10)] TNR:	  0.01300578034682081
+[00/(10+00)] filtered False rate:	 0.9936243302279558
+[01/(01+11)] filtered Truth rate:	 0.023872679045092837
+[11/(10+11)] Precision:	 0.6498572787821123
+[11/(01+11)] Recall:	 0.9761273209549072
+haoz feature(bigger better):	  9.387972569867896
+epoch 3  processing....
+spliting data...
+[ 1000] loss: 0.067
+[ 2000] loss: 0.055
+[ 3000] loss: 0.046
+[ 4000] loss: 0.051
+[ 5000] loss: 0.046
+[ 6000] loss: 0.047
+[ 7000] loss: 0.046
+[ 8000] loss: 0.031
+[ 9000] loss: 0.043
+[10000] loss: 0.048
+mean loss of epoch 3 is: 0.047906
+test info:
+ [total]:322509, [false]:2325, [truth]:320184, error rate:0.007209101141363497
+P\L	0	1
+0	319038	38
+1	2287	1146
+[01/(01+10)] TNR:	  0.016344086021505378
+[00/(10+00)] filtered False rate:	 0.9928825955029954
+[01/(01+11)] filtered Truth rate:	 0.03209459459459459
+[11/(10+11)] Precision:	 0.6661811826390912
+[11/(01+11)] Recall:	 0.9679054054054054
+haoz feature(bigger better):	  9.046238979740082
+epoch 4  processing....
+spliting data...
+[ 1000] loss: 0.069
+[ 2000] loss: 0.054
+[ 3000] loss: 0.050
+[ 4000] loss: 0.045
+[ 5000] loss: 0.049
+[ 6000] loss: 0.062
+[ 7000] loss: 0.039
+[ 8000] loss: 0.036
+[ 9000] loss: 0.045
+[10000] loss: 0.040
+mean loss of epoch 4 is: 0.048815
+test info:
+ [total]:322509, [false]:4101, [truth]:318408, error rate:0.012715924206766323
+P\L	0	1
+0	317269	18
+1	4083	1139
+[01/(01+10)] TNR:	  0.0043891733723482075
+[00/(10+00)] filtered False rate:	 0.987294306554806
+[01/(01+11)] filtered Truth rate:	 0.015557476231633534
+[11/(10+11)] Precision:	 0.7818843355036385
+[11/(01+11)] Recall:	 0.9844425237683665
+haoz feature(bigger better):	  9.793286756525891
+epoch 5  processing....
+spliting data...
+[ 1000] loss: 0.051
+[ 2000] loss: 0.070
+[ 3000] loss: 0.055
+[ 4000] loss: 0.043
+[ 5000] loss: 0.045
+[ 6000] loss: 0.044
+[ 7000] loss: 0.073
+[ 8000] loss: 0.038
+[ 9000] loss: 0.048
+[10000] loss: 0.048
+mean loss of epoch 5 is: 0.051386
+test info:
+ [total]:322509, [false]:2181, [truth]:320328, error rate:0.006762601973898403
+P\L	0	1
+0	319225	41
+1	2140	1103
+[01/(01+10)] TNR:	  0.01879871618523613
+[00/(10+00)] filtered False rate:	 0.993340905201251
+[01/(01+11)] filtered Truth rate:	 0.03583916083916084
+[11/(10+11)] Precision:	 0.6598828245451742
+[11/(01+11)] Recall:	 0.9641608391608392
+haoz feature(bigger better):	  8.970261061393867
+epoch 6  processing....
+spliting data...
+[ 1000] loss: 0.052
+[ 2000] loss: 0.045
+[ 3000] loss: 0.062
+[ 4000] loss: 0.058
+[ 5000] loss: 0.057
+[ 6000] loss: 0.050
+[ 7000] loss: 0.048
+[ 8000] loss: 0.078
+[ 9000] loss: 0.043
+[10000] loss: 0.061
+mean loss of epoch 6 is: 0.055116
+test info:
+ [total]:322509, [false]:1749, [truth]:320760, error rate:0.005423104471503121
+P\L	0	1
+0	319623	38
+1	1711	1137
+[01/(01+10)] TNR:	  0.02172670097198399
+[00/(10+00)] filtered False rate:	 0.9946753222503688
+[01/(01+11)] filtered Truth rate:	 0.03234042553191489
+[11/(10+11)] Precision:	 0.6007724719101124
+[11/(01+11)] Recall:	 0.9676595744680851
+haoz feature(bigger better):	  9.046254136822318
+epoch 7  processing....
+spliting data...
+[ 1000] loss: 0.051
+[ 2000] loss: 0.054
+[ 3000] loss: 0.072
+[ 4000] loss: 0.042
+[ 5000] loss: 0.048
+[ 6000] loss: 0.043
+[ 7000] loss: 0.038
+[ 8000] loss: 0.049
+[ 9000] loss: 0.062
+[10000] loss: 0.060
+mean loss of epoch 7 is: 0.052059
+test info:
+ [total]:322509, [false]:1871, [truth]:320638, error rate:0.00580138848838327
+P\L	0	1
+0	319514	47
+1	1824	1124
+[01/(01+10)] TNR:	  0.02512025654730091
+[00/(10+00)] filtered False rate:	 0.9943237338876821
+[01/(01+11)] filtered Truth rate:	 0.04013663535439795
+[11/(10+11)] Precision:	 0.6187245590230664
+[11/(01+11)] Recall:	 0.9598633646456021
+haoz feature(bigger better):	  8.833698912376956
+epoch 8  processing....
+spliting data...
+[ 1000] loss: 0.062
+[ 2000] loss: 0.042
+[ 3000] loss: 0.068
+[ 4000] loss: 0.053
+[ 5000] loss: 0.065
+[ 6000] loss: 0.062
+[ 7000] loss: 0.073
+[ 8000] loss: 0.043
+[ 9000] loss: 0.053
+[10000] loss: 0.038
+mean loss of epoch 8 is: 0.056731
+test info:
+ [total]:322509, [false]:2288, [truth]:320221, error rate:0.007094375660834271
+P\L	0	1
+0	319120	28
+1	2260	1101
+[01/(01+10)] TNR:	  0.012237762237762238
+[00/(10+00)] filtered False rate:	 0.9929678262492999
+[01/(01+11)] filtered Truth rate:	 0.024800708591674048
+[11/(10+11)] Precision:	 0.6724189229396013
+[11/(01+11)] Recall:	 0.975199291408326
+haoz feature(bigger better):	  9.351600100682829
+epoch 9  processing....
+spliting data...
+[ 1000] loss: 0.040
+[ 2000] loss: 0.059
+[ 3000] loss: 0.043
+[ 4000] loss: 0.042
+[ 5000] loss: 0.072
+[ 6000] loss: 0.058
+[ 7000] loss: 0.056
+[ 8000] loss: 0.053
+[ 9000] loss: 0.040
+[10000] loss: 0.040
+mean loss of epoch 9 is: 0.050050
+test info:
+ [total]:322509, [false]:1940, [truth]:320569, error rate:0.0060153360061269605
+P\L	0	1
+0	319452	37
+1	1903	1117
+[01/(01+10)] TNR:	  0.01907216494845361
+[00/(10+00)] filtered False rate:	 0.9940782001213612
+[01/(01+11)] filtered Truth rate:	 0.032062391681109186
+[11/(10+11)] Precision:	 0.6301324503311259
+[11/(01+11)] Recall:	 0.9679376083188909
+haoz feature(bigger better):	  9.072915978103191
+training done!
+final model: /home/haoz/deepfilter/workspace/./models/checkpoint_INDEL_20-10-21-21-32-41_ecpch10.pth
+[debug] ['/home/haoz/data/somatic/FD_10_18_data/test.txt', ''] /home/haoz/deepfilter/workspace /home/haoz/data/somatic/FD_10_18_data/synthetic_indels.leftAlign.vcf
+get fastvc indels data done:  179269
+get merged data done, merged data dict size:  179269
+totally 7472 truth site
+get label done, size: 179269, pos_num: 623, neg_num: 178646
+start normalization...
+[info] inputs shape: (179269, 53)
+normalization done
+FastvcDataset init over
+total length:  179269
+-----------------compare result------------------
+------- Indels compare result: --------
+fastvc truth snv num: 7472, fastvc total output: 2347
+fastvc find: 618 , filtered: 5, recall: 0.9919743178170144, prec: 0.2633148700468683
+-------------------------------------------------
+-----------------weight info [ 1_200 ]----------------------
+[debug] ['/home/haoz/data/somatic/FD_10_18_data/train.txt'] /home/haoz/deepfilter/workspace /home/haoz/data/somatic/FD_10_18_data/synthetic_indels.leftAlign.vcf
+get fastvc indels data done:  1612545
+get merged data done, merged data dict size:  1612545
+totally 7472 truth site
+get label done, size: 1612545, pos_num: 5774, neg_num: 1606771
+start normalization...
+[info] inputs shape: (1612545, 53)
+normalization done
+FastvcDataset init over
+spliting data...
+[info] n_feature:  53
+initializeing net work
+Net(
+  (hidden0): Linear(in_features=53, out_features=140, bias=True)
+  (hidden1): Linear(in_features=140, out_features=160, bias=True)
+  (hidden2): Linear(in_features=160, out_features=170, bias=True)
+  (hidden3): Linear(in_features=170, out_features=100, bias=True)
+  (hidden4): Linear(in_features=100, out_features=10, bias=True)
+  (predict): Linear(in_features=10, out_features=2, bias=True)
+  (dropout): Dropout(p=0.5, inplace=False)
+)
+Linear(in_features=53, out_features=140, bias=True)
+Linear(in_features=140, out_features=160, bias=True)
+Linear(in_features=160, out_features=170, bias=True)
+Linear(in_features=170, out_features=100, bias=True)
+Linear(in_features=100, out_features=10, bias=True)
+Linear(in_features=10, out_features=2, bias=True)
+Dropout(p=0.5, inplace=False)
+epoch 0  processing....
+[ 1000] loss: 0.254
+[ 2000] loss: 0.109
+[ 3000] loss: 0.078
+[ 4000] loss: 0.072
+[ 5000] loss: 0.067
+[ 6000] loss: 0.076
+[ 7000] loss: 0.061
+[ 8000] loss: 0.047
+[ 9000] loss: 0.061
+[10000] loss: 0.054
+mean loss of epoch 0 is: 0.087180
+test info:
+ [total]:322509, [false]:2136, [truth]:320373, error rate:0.006623070984065561
+P\L	0	1
+0	319220	41
+1	2095	1153
+[01/(01+10)] TNR:	  0.019194756554307114
+[00/(10+00)] filtered False rate:	 0.9934799184600781
+[01/(01+11)] filtered Truth rate:	 0.03433835845896147
+[11/(10+11)] Precision:	 0.6450123152709359
+[11/(01+11)] Recall:	 0.9656616415410385
+haoz feature(bigger better):	  8.970262158897064
+epoch 1  processing....
+spliting data...
+[ 1000] loss: 0.049
+[ 2000] loss: 0.056
+[ 3000] loss: 0.045
+[ 4000] loss: 0.066
+[ 5000] loss: 0.057
+[ 6000] loss: 0.055
+[ 7000] loss: 0.068
+[ 8000] loss: 0.059
+[ 9000] loss: 0.051
+[10000] loss: 0.066
+mean loss of epoch 1 is: 0.057406
+test info:
+ [total]:322509, [false]:2873, [truth]:319636, error rate:0.008908278528661216
+P\L	0	1
+0	318571	22
+1	2851	1065
+[01/(01+10)] TNR:	  0.007657500870170553
+[00/(10+00)] filtered False rate:	 0.9911300408808358
+[01/(01+11)] filtered Truth rate:	 0.020239190432382703
+[11/(10+11)] Precision:	 0.7280388151174668
+[11/(01+11)] Recall:	 0.9797608095676172
+haoz feature(bigger better):	  9.59271328606416
+epoch 2  processing....
+spliting data...
+[ 1000] loss: 0.058
+[ 2000] loss: 0.055
+[ 3000] loss: 0.048
+[ 4000] loss: 0.067
+[ 5000] loss: 0.054
+[ 6000] loss: 0.062
+[ 7000] loss: 0.035
+[ 8000] loss: 0.044
+[ 9000] loss: 0.054
+[10000] loss: 0.046
+mean loss of epoch 2 is: 0.052057
+test info:
+ [total]:322509, [false]:2231, [truth]:320278, error rate:0.006917636407046005
+P\L	0	1
+0	319155	35
+1	2196	1123
+[01/(01+10)] TNR:	  0.015688032272523533
+[00/(10+00)] filtered False rate:	 0.9931663508126628
+[01/(01+11)] filtered Truth rate:	 0.030224525043177894
+[11/(10+11)] Precision:	 0.6616450738174149
+[11/(01+11)] Recall:	 0.9697754749568221
+haoz feature(bigger better):	  9.128474519490249
+epoch 3  processing....
+spliting data...
+[ 1000] loss: 0.038
+[ 2000] loss: 0.038
+[ 3000] loss: 0.053
+[ 4000] loss: 0.046
+[ 5000] loss: 0.053
+[ 6000] loss: 0.065
+[ 7000] loss: 0.038
+[ 8000] loss: 0.055
+[ 9000] loss: 0.065
+[10000] loss: 0.043
+mean loss of epoch 3 is: 0.049087
+test info:
+ [total]:322509, [false]:2084, [truth]:320425, error rate:0.006461835173592055
+P\L	0	1
+0	319271	31
+1	2053	1154
+[01/(01+10)] TNR:	  0.014875239923224568
+[00/(10+00)] filtered False rate:	 0.9936108102724975
+[01/(01+11)] filtered Truth rate:	 0.026160337552742614
+[11/(10+11)] Precision:	 0.6401621453071407
+[11/(01+11)] Recall:	 0.9738396624472574
+haoz feature(bigger better):	  9.24983189377327
+epoch 4  processing....
+spliting data...
+[ 1000] loss: 0.049
+[ 2000] loss: 0.066
+[ 3000] loss: 0.049
+[ 4000] loss: 0.047
+[ 5000] loss: 0.060
+[ 6000] loss: 0.050
+[ 7000] loss: 0.070
+[ 8000] loss: 0.035
+[ 9000] loss: 0.037
+[10000] loss: 0.047
+mean loss of epoch 4 is: 0.050670
+test info:
+ [total]:322509, [false]:1555, [truth]:320954, error rate:0.004821570870890425
+P\L	0	1
+0	319900	60
+1	1495	1054
+[01/(01+10)] TNR:	  0.03858520900321544
+[00/(10+00)] filtered False rate:	 0.9953484030554303
+[01/(01+11)] filtered Truth rate:	 0.05385996409335727
+[11/(10+11)] Precision:	 0.586504511573166
+[11/(01+11)] Recall:	 0.9461400359066428
+haoz feature(bigger better):	  8.58951584325238
+epoch 5  processing....
+spliting data...
+[ 1000] loss: 0.048
+[ 2000] loss: 0.051
+[ 3000] loss: 0.045
+[ 4000] loss: 0.064
+[ 5000] loss: 0.095
+[ 6000] loss: 0.051
+[ 7000] loss: 0.067
+[ 8000] loss: 0.059
+[ 9000] loss: 0.048
+[10000] loss: 0.049
+mean loss of epoch 5 is: 0.057788
+test info:
+ [total]:322509, [false]:2588, [truth]:319921, error rate:0.008024582259719883
+P\L	0	1
+0	318798	32
+1	2556	1123
+[01/(01+10)] TNR:	  0.012364760432766615
+[00/(10+00)] filtered False rate:	 0.9920461547078923
+[01/(01+11)] filtered Truth rate:	 0.027705627705627706
+[11/(10+11)] Precision:	 0.6947540092416418
+[11/(01+11)] Recall:	 0.9722943722943723
+haoz feature(bigger better):	  9.218069547275796
+epoch 6  processing....
+spliting data...
+[ 1000] loss: 0.045
+[ 2000] loss: 0.057
+[ 3000] loss: 0.048
+[ 4000] loss: 0.070
+[ 5000] loss: 0.063
+[ 6000] loss: 0.057
+[ 7000] loss: 0.072
+[ 8000] loss: 0.042
+[ 9000] loss: 0.084
+[10000] loss: 0.043
+mean loss of epoch 6 is: 0.058541
+test info:
+ [total]:322509, [false]:2417, [truth]:320092, error rate:0.0074943644983550845
+P\L	0	1
+0	318945	31
+1	2386	1147
+[01/(01+10)] TNR:	  0.012825817128671908
+[00/(10+00)] filtered False rate:	 0.9925746348780541
+[01/(01+11)] filtered Truth rate:	 0.02631578947368421
+[11/(10+11)] Precision:	 0.6753467308236626
+[11/(01+11)] Recall:	 0.9736842105263158
+haoz feature(bigger better):	  9.24982115261756
+epoch 7  processing....
+spliting data...
+[ 1000] loss: 0.077
+[ 2000] loss: 0.066
+[ 3000] loss: 0.064
+[ 4000] loss: 0.049
+[ 5000] loss: 0.067
+[ 6000] loss: 0.083
+[ 7000] loss: 0.069
+[ 8000] loss: 0.057
+[ 9000] loss: 0.058
+[10000] loss: 0.040
+mean loss of epoch 7 is: 0.062738
+test info:
+ [total]:322509, [false]:1656, [truth]:320853, error rate:0.005134740425848581
+P\L	0	1
+0	319816	35
+1	1621	1037
+[01/(01+10)] TNR:	  0.021135265700483092
+[00/(10+00)] filtered False rate:	 0.9949570211270016
+[01/(01+11)] filtered Truth rate:	 0.03264925373134328
+[11/(10+11)] Precision:	 0.6098570353649361
+[11/(01+11)] Recall:	 0.9673507462686567
+haoz feature(bigger better):	  9.128490947149473
+epoch 8  processing....
+spliting data...
+[ 1000] loss: 0.050
+[ 2000] loss: 0.087
+[ 3000] loss: 0.065
+[ 4000] loss: 0.043
+[ 5000] loss: 0.045
+[ 6000] loss: 0.050
+[ 7000] loss: 0.051
+[ 8000] loss: 0.068
+[ 9000] loss: 0.073
+[10000] loss: 0.061
+mean loss of epoch 8 is: 0.058928
+test info:
+ [total]:322509, [false]:1841, [truth]:320668, error rate:0.005708367828494708
+P\L	0	1
+0	319530	45
+1	1796	1138
+[01/(01+10)] TNR:	  0.024443237370994023
+[00/(10+00)] filtered False rate:	 0.9944106608242097
+[01/(01+11)] filtered Truth rate:	 0.03803888419273035
+[11/(10+11)] Precision:	 0.6121336059986366
+[11/(01+11)] Recall:	 0.9619611158072696
+haoz feature(bigger better):	  8.877182921760722
+epoch 9  processing....
+spliting data...
+[ 1000] loss: 0.063
+[ 2000] loss: 0.043
+[ 3000] loss: 0.070
+[ 4000] loss: 0.031
+[ 5000] loss: 0.096
+[ 6000] loss: 0.050
+[ 7000] loss: 0.079
+[ 8000] loss: 0.050
+[ 9000] loss: 0.058
+[10000] loss: 0.050
+mean loss of epoch 9 is: 0.059098
+test info:
+ [total]:322509, [false]:2141, [truth]:320368, error rate:0.006638574427380321
+P\L	0	1
+0	319252	36
+1	2105	1116
+[01/(01+10)] TNR:	  0.01681457262961233
+[00/(10+00)] filtered False rate:	 0.9934496525670827
+[01/(01+11)] filtered Truth rate:	 0.03125
+[11/(10+11)] Precision:	 0.6535237503880782
+[11/(01+11)] Recall:	 0.96875
+haoz feature(bigger better):	  9.100307912895387
+training done!
+final model: /home/haoz/deepfilter/workspace/./models/checkpoint_INDEL_20-10-21-21-40-07_ecpch10.pth
+[debug] ['/home/haoz/data/somatic/FD_10_18_data/test.txt', ''] /home/haoz/deepfilter/workspace /home/haoz/data/somatic/FD_10_18_data/synthetic_indels.leftAlign.vcf
+get fastvc indels data done:  179269
+get merged data done, merged data dict size:  179269
+totally 7472 truth site
+get label done, size: 179269, pos_num: 623, neg_num: 178646
+start normalization...
+[info] inputs shape: (179269, 53)
+normalization done
+FastvcDataset init over
+total length:  179269
+-----------------compare result------------------
+------- Indels compare result: --------
+fastvc truth snv num: 7472, fastvc total output: 2532
+fastvc find: 618 , filtered: 5, recall: 0.9919743178170144, prec: 0.24407582938388625
+-------------------------------------------------
+-----------------weight info [ 1_400 ]----------------------
+[debug] ['/home/haoz/data/somatic/FD_10_18_data/train.txt'] /home/haoz/deepfilter/workspace /home/haoz/data/somatic/FD_10_18_data/synthetic_indels.leftAlign.vcf
+get fastvc indels data done:  1612545
+get merged data done, merged data dict size:  1612545
+totally 7472 truth site
+get label done, size: 1612545, pos_num: 5774, neg_num: 1606771
+start normalization...
+[info] inputs shape: (1612545, 53)
+normalization done
+FastvcDataset init over
+spliting data...
+[info] n_feature:  53
+initializeing net work
+Net(
+  (hidden0): Linear(in_features=53, out_features=140, bias=True)
+  (hidden1): Linear(in_features=140, out_features=160, bias=True)
+  (hidden2): Linear(in_features=160, out_features=170, bias=True)
+  (hidden3): Linear(in_features=170, out_features=100, bias=True)
+  (hidden4): Linear(in_features=100, out_features=10, bias=True)
+  (predict): Linear(in_features=10, out_features=2, bias=True)
+  (dropout): Dropout(p=0.5, inplace=False)
+)
+Linear(in_features=53, out_features=140, bias=True)
+Linear(in_features=140, out_features=160, bias=True)
+Linear(in_features=160, out_features=170, bias=True)
+Linear(in_features=170, out_features=100, bias=True)
+Linear(in_features=100, out_features=10, bias=True)
+Linear(in_features=10, out_features=2, bias=True)
+Dropout(p=0.5, inplace=False)
+epoch 0  processing....
+[ 1000] loss: 0.249
+[ 2000] loss: 0.108
+[ 3000] loss: 0.082
+[ 4000] loss: 0.082
+[ 5000] loss: 0.064
+[ 6000] loss: 0.070
+[ 7000] loss: 0.054
+[ 8000] loss: 0.055
+[ 9000] loss: 0.075
+[10000] loss: 0.071
+mean loss of epoch 0 is: 0.090718
+test info:
+ [total]:322509, [false]:1908, [truth]:320601, error rate:0.005916113968912495
+P\L	0	1
+0	319429	46
+1	1862	1172
+[01/(01+10)] TNR:	  0.02410901467505241
+[00/(10+00)] filtered False rate:	 0.9942046306930478
+[01/(01+11)] filtered Truth rate:	 0.03776683087027915
+[11/(10+11)] Precision:	 0.6137112722478576
+[11/(01+11)] Recall:	 0.9622331691297209
+haoz feature(bigger better):	  8.855203447915551
+epoch 1  processing....
+spliting data...
+[ 1000] loss: 0.048
+[ 2000] loss: 0.055
+[ 3000] loss: 0.075
+[ 4000] loss: 0.047
+[ 5000] loss: 0.054
+[ 6000] loss: 0.042
+[ 7000] loss: 0.067
+[ 8000] loss: 0.050
+[ 9000] loss: 0.102
+[10000] loss: 0.056
+mean loss of epoch 1 is: 0.059554
+test info:
+ [total]:322509, [false]:1881, [truth]:320628, error rate:0.0058323953750127906
+P\L	0	1
+0	319526	48
+1	1833	1102
+[01/(01+10)] TNR:	  0.025518341307814992
+[00/(10+00)] filtered False rate:	 0.9942960987555973
+[01/(01+11)] filtered Truth rate:	 0.04173913043478261
+[11/(10+11)] Precision:	 0.6245315161839864
+[11/(01+11)] Recall:	 0.9582608695652174
+haoz feature(bigger better):	  8.812646124165235
+epoch 2  processing....
+spliting data...
+[ 1000] loss: 0.053
+[ 2000] loss: 0.050
+[ 3000] loss: 0.052
+[ 4000] loss: 0.058
+[ 5000] loss: 0.068
+[ 6000] loss: 0.045
+[ 7000] loss: 0.060
+[ 8000] loss: 0.048
+[ 9000] loss: 0.046
+[10000] loss: 0.050
+mean loss of epoch 2 is: 0.052930
+test info:
+ [total]:322509, [false]:2141, [truth]:320368, error rate:0.006638574427380321
+P\L	0	1
+0	319303	45
+1	2096	1065
+[01/(01+10)] TNR:	  0.021018215787015414
+[00/(10+00)] filtered False rate:	 0.9934785111341354
+[01/(01+11)] filtered Truth rate:	 0.04054054054054054
+[11/(10+11)] Precision:	 0.6630813033850047
+[11/(01+11)] Recall:	 0.9594594594594594
+haoz feature(bigger better):	  8.877176255389005
+epoch 3  processing....
+spliting data...
+[ 1000] loss: 0.065
+[ 2000] loss: 0.043
+[ 3000] loss: 0.058
+[ 4000] loss: 0.042
+[ 5000] loss: 0.060
+[ 6000] loss: 0.062
+[ 7000] loss: 0.063
+[ 8000] loss: 0.071
+[ 9000] loss: 0.061
+[10000] loss: 0.060
+mean loss of epoch 3 is: 0.058405
+test info:
+ [total]:322509, [false]:2346, [truth]:320163, error rate:0.00727421560328549
+P\L	0	1
+0	318968	41
+1	2305	1195
+[01/(01+10)] TNR:	  0.017476555839727195
+[00/(10+00)] filtered False rate:	 0.9928254163904219
+[01/(01+11)] filtered Truth rate:	 0.03317152103559871
+[11/(10+11)] Precision:	 0.6585714285714286
+[11/(01+11)] Recall:	 0.9668284789644013
+haoz feature(bigger better):	  8.970257037225787
+epoch 4  processing....
+spliting data...
+[ 1000] loss: 0.057
+[ 2000] loss: 0.051
+[ 3000] loss: 0.044
+[ 4000] loss: 0.057
+[ 5000] loss: 0.066
+[ 6000] loss: 0.075
+[ 7000] loss: 0.063
+[ 8000] loss: 0.082
+[ 9000] loss: 0.065
+[10000] loss: 0.057
+mean loss of epoch 4 is: 0.062080
+test info:
+ [total]:322509, [false]:3345, [truth]:319164, error rate:0.010371803577574579
+P\L	0	1
+0	318065	22
+1	3323	1099
+[01/(01+10)] TNR:	  0.006576980568011958
+[00/(10+00)] filtered False rate:	 0.9896604726996652
+[01/(01+11)] filtered Truth rate:	 0.019625334522747548
+[11/(10+11)] Precision:	 0.7514699231117141
+[11/(01+11)] Recall:	 0.9803746654772525
+haoz feature(bigger better):	  9.592691834550193
+epoch 5  processing....
+spliting data...
+[ 1000] loss: 0.042
+[ 2000] loss: 0.048
+[ 3000] loss: 0.081
+[ 4000] loss: 0.089
+[ 5000] loss: 0.063
+[ 6000] loss: 0.061
+[ 7000] loss: 0.065
+[ 8000] loss: 0.089
+[ 9000] loss: 0.072
+[10000] loss: 0.095
+mean loss of epoch 5 is: 0.070608
+test info:
+ [total]:322509, [false]:297242, [truth]:25267, error rate:0.9216548995531908
+P\L	0	1
+0	24078	0
+1	297242	1189
+[01/(01+10)] TNR:	  0.0
+[00/(10+00)] filtered False rate:	 0.07493464459106187
+[01/(01+11)] filtered Truth rate:	 0.0
+[11/(10+11)] Precision:	 0.9960158294547148
+[11/(01+11)] Recall:	 1.0
+haoz feature(bigger better):	  13.897094978951316
+epoch 6  processing....
+spliting data...
+[ 1000] loss: 0.067
+[ 2000] loss: 0.038
+[ 3000] loss: 0.057
+[ 4000] loss: 0.078
+[ 5000] loss: 0.071
+[ 6000] loss: 0.067
+[ 7000] loss: 0.062
+[ 8000] loss: 0.062
+[ 9000] loss: 0.053
+[10000] loss: 0.106
+mean loss of epoch 6 is: 0.066195
+test info:
+ [total]:322509, [false]:4138, [truth]:318371, error rate:0.012830649687295548
+P\L	0	1
+0	317263	13
+1	4125	1108
+[01/(01+10)] TNR:	  0.003141614306428226
+[00/(10+00)] filtered False rate:	 0.9871650466103277
+[01/(01+11)] filtered Truth rate:	 0.01159678858162355
+[11/(10+11)] Precision:	 0.7882667685839863
+[11/(01+11)] Recall:	 0.9884032114183765
+haoz feature(bigger better):	  10.118618707300618
+epoch 7  processing....
+spliting data...
+[ 1000] loss: 0.071
+[ 2000] loss: 0.066
+[ 3000] loss: 0.071
+[ 4000] loss: 0.058
+[ 5000] loss: 0.054
+[ 6000] loss: 0.064
+[ 7000] loss: 0.045
+[ 8000] loss: 0.078
+[ 9000] loss: 0.089
+[10000] loss: 0.082
+mean loss of epoch 7 is: 0.067949
+test info:
+ [total]:322509, [false]:2638, [truth]:319871, error rate:0.008179616692867486
+P\L	0	1
+0	318761	23
+1	2615	1110
+[01/(01+10)] TNR:	  0.008718726307808946
+[00/(10+00)] filtered False rate:	 0.9918631136114707
+[01/(01+11)] filtered Truth rate:	 0.02030008826125331
+[11/(10+11)] Precision:	 0.702013422818792
+[11/(01+11)] Recall:	 0.9796999117387467
+haoz feature(bigger better):	  9.548277416801035
+epoch 8  processing....
+spliting data...
+[ 1000] loss: 0.081
+[ 2000] loss: 0.063
+[ 3000] loss: 0.076
+[ 4000] loss: 0.077
+[ 5000] loss: 0.050
+[ 6000] loss: 0.096
+[ 7000] loss: 0.073
+[ 8000] loss: 0.063
+[ 9000] loss: 0.044
+[10000] loss: 0.063
+mean loss of epoch 8 is: 0.068461
+test info:
+ [total]:322509, [false]:2352, [truth]:320157, error rate:0.007292819735263202
+P\L	0	1
+0	319051	26
+1	2326	1106
+[01/(01+10)] TNR:	  0.011054421768707483
+[00/(10+00)] filtered False rate:	 0.9927623943219335
+[01/(01+11)] filtered Truth rate:	 0.022968197879858657
+[11/(10+11)] Precision:	 0.6777389277389277
+[11/(01+11)] Recall:	 0.9770318021201413
+haoz feature(bigger better):	  9.42569932633677
+epoch 9  processing....
+spliting data...
+[ 1000] loss: 0.081
+[ 2000] loss: 0.080
+[ 3000] loss: 0.099
+[ 4000] loss: 0.104
+[ 5000] loss: 0.118
+[ 6000] loss: 0.113
+[ 7000] loss: 0.066
+[ 8000] loss: 0.067
+[ 9000] loss: 0.070
+[10000] loss: 0.067
+mean loss of epoch 9 is: 0.086335
+test info:
+ [total]:322509, [false]:2547, [truth]:319962, error rate:0.00789745402453885
+P\L	0	1
+0	318833	32
+1	2515	1129
+[01/(01+10)] TNR:	  0.012563800549666274
+[00/(10+00)] filtered False rate:	 0.9921735937363855
+[01/(01+11)] filtered Truth rate:	 0.02756244616709733
+[11/(10+11)] Precision:	 0.6901756311745335
+[11/(01+11)] Recall:	 0.9724375538329026
+haoz feature(bigger better):	  9.218070828423004
+training done!
+final model: /home/haoz/deepfilter/workspace/./models/checkpoint_INDEL_20-10-21-21-47-31_ecpch10.pth
+[debug] ['/home/haoz/data/somatic/FD_10_18_data/test.txt', ''] /home/haoz/deepfilter/workspace /home/haoz/data/somatic/FD_10_18_data/synthetic_indels.leftAlign.vcf
+get fastvc indels data done:  179269
+get merged data done, merged data dict size:  179269
+totally 7472 truth site
+get label done, size: 179269, pos_num: 623, neg_num: 178646
+start normalization...
+[info] inputs shape: (179269, 53)
+normalization done
+FastvcDataset init over
+total length:  179269
+-----------------compare result------------------
+------- Indels compare result: --------
+fastvc truth snv num: 7472, fastvc total output: 2572
+fastvc find: 619 , filtered: 4, recall: 0.9935794542536116, prec: 0.2406687402799378
+-------------------------------------------------

@@ -65,7 +65,7 @@ def format_snv_data_item(jri, fisher = True):
         exit(-1)
     data = list()
     # key is chrom:pos like "chr1:131022:A:T"
-    key = jri[2] + ":" + jri[3] + ":" + jri[5] + ":" + jri[6]
+    key = jri[2] + ":" + jri[3] + ":" + jri[5] + ":" + jri[6] #TODO: case sensitive
     for sf in fvc_sf:
         data.append(jri[fe2i[sf]])
     data.extend(varLabel_to_label[jri[fe2i["VarLabel"]]])#varlabel
@@ -166,7 +166,7 @@ def get_labels_dict(data_dict, truth_path):
                 #if len(chrom) < 6: #-------just for chm test
                     alts = alt.split(",")
                     for alt in alts:
-                        site = chrom + ":" + pos + ":" + ref + ":" + alt
+                        site = chrom + ":" + pos + ":" + ref.upper() + ":" + alt.upper()
                         truth_vars.add(site)
                     #truth_vars[site] = list([ref, alt])  
     print("totally {} truth site".format(len(truth_vars)))
