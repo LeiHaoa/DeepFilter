@@ -9,23 +9,30 @@ from sklearn import preprocessing
 from sklearn.model_selection import train_test_split
 import pickle
 from features import features_to_index as fe2i, fvc_selected_features as fvc_sf
+import random
 
-type_to_label = {"SNV":     [1, 0, 0, 0, 0, 0], 
-                "Deletion": [0, 1, 0, 0, 0, 0], 
-                "Insertion":[0, 0, 1, 0, 0, 0], 
-                "Complex":  [0, 0, 0, 1, 0, 0], 
-                "MNV":      [0, 0, 0, 0, 1, 0], 
-                "NONE":     [0, 0, 0, 0, 0, 1]}
+type_to_label = {"SNV":     [1, 0, 0, 0], 
+                "Deletion": [0, 1, 0, 0], 
+                "Insertion":[0, 0, 1, 0], 
+                "Complex":  [0, 0, 0, 1], 
+}
 
 indels_label = {
                 "Deletion": [1, 0, 0], 
                 "Insertion":[0, 1, 0], 
                 "Complex":  [0, 0, 1], 
                 }
+
 snv_label = "SNV"
 
-FVC_INDEL_FEATURES = 25  + 1 
-FVC_SNV_FEATURES = FVC_INDEL_FEATURES - 5
+sbfalg_label = {
+    "0":[1,0,0],
+    "1":[0,1,0],
+    "2":[0,0,1],
+}
+
+FVC_INDEL_FEATURES = 27 
+FVC_SNV_FEATURES = 27
 #SK2_FEATURES = 13
 SK2_FEATURES = 0
 
@@ -108,6 +115,9 @@ def format_indel_data_item(jri, fisher = True):
         data.extend(indels_label[jri[fe2i["varType"]]])
     else:
         data.extend(indels_label[jri[fe2i["varType"]]])
+    sb_flags = jri[fe2i['strandbiasflag']].split(';')
+    data.extend(sbfalg_label[sb_flags[0]])
+    data.extend(sbfalg_label[sb_flags[1]])
 
     if len(data) != FVC_INDEL_FEATURES:
         print("fvc data length error: \n", len(data), data, " ori\n", jri)
@@ -119,6 +129,10 @@ def format_snv_data_item(jri, fisher = True):
     key = jri[2] + ":" + jri[3] + ":" + jri[5] + ":" + jri[6]
     for sf in fvc_sf:
         data.append(jri[fe2i[sf]])
+    # strand bias flag
+    sb_flags = jri[fe2i['strandbiasflag']].split(';')
+    data.extend(sbfalg_label[sb_flags[0]])
+    data.extend(sbfalg_label[sb_flags[1]])
 
     if len(data) != FVC_SNV_FEATURES:
         print("fvc data length error: \n", len(data), data, " ori\n", jri)
@@ -375,8 +389,9 @@ class FastvcTrainLoader(torch.utils.data.Dataset):
         return len(self.labels)
 
 class Dataset:
-    def __init__(self, reload, re_exec, vartype, pama_list, base_path, truth_path):
+    def __init__(self, reload, training, re_exec, vartype, pama_list, base_path, truth_path):
         self.data = dict()
+        self.training = training
         if not reload:
             merged_data_dict = {}
             if re_exec:
@@ -384,7 +399,7 @@ class Dataset:
                 fastvc_cmd, gen_cmd, sk2_cmd = prepare_cmds(fasta_file, region_file, bam_file, 40, base_path)
                 merged_data_dict = run_tools_and_get_data(fastvc_cmd, gen_cmd, sk2_cmd, base_path) 
             else:
-                fvc_res_path, sk2_res_path = pama_list
+                fvc_res_path = pama_list[0]
                 merged_data_dict = get_data(fvc_res_path, vtype = vartype) 
             assert(len(merged_data_dict) > 0)
 
@@ -396,10 +411,13 @@ class Dataset:
             self.labels = list()
             self.raw_indexs = list()
             for k, v in merged_data_dict.items():
+                if self.training and merged_label_dict[k] == 0 and random.randint(0, 100) > 0:
+                    continue
                 keys.append(k)
                 self.inputs.append(v[0])
                 self.labels.append(merged_label_dict[k])
                 self.raw_indexs.append(v[1])
+            print("data size:", len(merged_data_dict), "after f:", len(keys))
             #--- standlizaton ---#            
             '''
             min_max_scaler = preprocessing.MinMaxScaler()
@@ -408,7 +426,7 @@ class Dataset:
             #---inputs Normalization ---#
             self.inputs = np.asfarray(self.inputs)
             print("start normalization...")
-            #self.inputs = preprocessing.normalize(self.inputs, axis = 0, norm = 'l2') 
+            #self.inputs = preprocessing.normalize(self.inputs, axis = 0, norm = 'max') 
             self.inputs = preprocessing.scale(self.inputs, axis = 0, with_mean = True, with_std = True, copy = True) 
             print("[info] inputs shape:", self.inputs.shape)
             '''

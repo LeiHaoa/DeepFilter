@@ -119,3 +119,11 @@ som_selected_features = [
     "shift3", "MSI", "MSI_NT",
     "Pvalue", "Oddratio"
     ]
+
+#som_selected_features = [
+#    "Var1Depth", "Var1AltDepth", "Var1RefFwdReads",  "Var1AltFwdReads", "Var1AF",
+#    "Var1PMean", "Var1PStd", "Var1QMean", "Var1QStd", "Var1MQ", "Var1Sig_Noise", "Var1HiAF", "Var1NM", 
+#    "Var2Depth", "Var2AltDepth", "Var2RefFwdReads", "Var2AltFwdReads", "Var2AF",
+#    "Var2PMean", "Var2PStd", "Var2QMean", "Var2QStd", "Var2MQ", "Var2Sig_Noise", "Var2HiAF", "Var2NM", 
+#    "Pvalue", "Oddratio"
+#    ]

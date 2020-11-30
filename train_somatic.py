@@ -1,4 +1,6 @@
+import argparse
 import datetime
+import math
 import os
 import sys
 
@@ -12,11 +14,10 @@ from torch.autograd import Variable
 from torchvision import transforms
 
 import somatic_data_loader as data_loader
-from somatic_data_loader import Dataset, SOM_INDEL_FEATURES, SOM_SNV_FEATURES, FastvcTrainLoader
 from MyLogger import Logger
-from nn_net import Net
-import math
-import argparse
+from nn_net import Net, IndelNet
+from somatic_data_loader import (SOM_INDEL_FEATURES, SOM_SNV_FEATURES, Dataset,
+                                 FastvcTrainLoader)
 
 log_tag = "train_snv_drop5_notloose" #[CHANGE]
 sys.stdout = Logger(filename = "./logs/{}_{}.txt".format(log_tag, datetime.datetime.now().strftime("%y-%m-%d-%H-%M-%S")))
@@ -40,16 +41,8 @@ def train_epoch(train_loader, net, optimizer):
         epoch_loss.append(loss_.item())
         runing_loss += loss_.item()
 
-        if i % 10000 == 9999:
-            print("[%5d] loss: %.3f" % (i + 1, runing_loss / 10000))
-            #np.set_printoptions(precision = 3, threshold=10000)
-            #print("[inputs info]: \n {}".format(inputs.data.cpu().numpy()))
-            #print("[pred info]:\n {}".format(outputs.data.cpu().numpy()))
-            #print("[label info]:\n {}".format(labels.data.cpu().numpy()))
-            #print('[net info]:')
-            #for layer in net.modules():
-            #    if isinstance(layer, nn.Linear):
-            #        print(layer.weight)
+        if i % 100 == 99:
+            print("[%5d] loss: %.3f" % (i + 1, runing_loss / 100))
             runing_loss = 0.0
 
     return epoch_loss
@@ -104,11 +97,18 @@ def test_epoch(test_loader, net, optimizer):
     haoz_feature = -1 * math.log((TNR + 0.000001) * (false/total))
     print("[00/(10+00)] filtered False rate:\t {}".format(g00 /(g10 + g00)))
     print("[01/(01+11)] filtered Truth rate:\t {}".format(g01 / (g01 + g11)))
-    print("[11/(10+11)] Precision:\t {}".format(g10 / (g10 + g11)))
+    print("[11/(10+11)] caller Precision:\t {}".format(g11 / (g10 + g11)))
+    print("[(11+00)/(10+01+11+00)] filter Accuracy:\t {}".format( (g11+g00) / (g10 + g01 + g11 + g00)))
     print("[11/(01+11)] Recall:\t {}".format(g11 / (g01 + g11)))
     print("haoz feature(bigger better):\t ", haoz_feature)
 
     return haoz_feature
+
+def adjust_learning_rate(optimizer, epoch, lr):
+    """Sets the learning rate to the initial LR decayed by 10 every 30 epochs"""
+    lr_new = lr * (0.1 ** (epoch // 1000))
+    for param_group in optimizer.param_groups:
+        param_group['lr'] = lr_new
 
 def train_somatic(args, use_cuda = False):
     #--------------------------------------------------------#
@@ -126,8 +126,6 @@ def train_somatic(args, use_cuda = False):
     out_dir = os.path.join(base_path, args.model_out)
     if not os.path.exists(out_dir):
         os.mkdir(out_dir)
-    #fastvc_result_path = "/home/haoz/data/out_fisher.vcf"
-    #fastvc_result_path = "/home/haoz/data/wgs_loose_goodvar.txt"
     fastvc_result_path = args.train_data #[CHANGE]
     VarType = args.var_type #SNV or INDEL
     batch_size = args.batch_size
@@ -139,10 +137,10 @@ def train_somatic(args, use_cuda = False):
     reload_from_dupfile = False #load from file(True) or compute generate data again(Fasle)
     data_path = "./dataset_{}.pkl".format(VarType)
     if args.re_exec:
-        dataset = Dataset(reload_from_dupfile, args.re_exec, VarType, [region_file, fasta_file, bam_file], 
+        dataset = Dataset(reload_from_dupfile, True, args.re_exec, VarType, [region_file, fasta_file, bam_file], 
                                 base_path, truth_path)
     else:
-        dataset = Dataset(reload_from_dupfile, args.re_exec, VarType, [fastvc_result_path],
+        dataset = Dataset(reload_from_dupfile, True, args.re_exec, VarType, [fastvc_result_path],
                                 base_path, truth_path)
     if reload_from_dupfile:
         dataset.load(data_path)
@@ -152,11 +150,21 @@ def train_somatic(args, use_cuda = False):
         dataset.split(random_state = None)
         #dataset.store(data_path)
     #------------------------network setting---------------------#
-    max_epoch = 10 
+    max_epoch = 5000 
     save_freq = 10 # save every xx save_freq
-    n_feature = data_loader.SOM_INDEL_FEATURES if VarType == "INDEL" else data_loader.SOM_SNV_FEATURES
+    n_feature = 0
+    if VarType == "INDEL":
+        n_feature = data_loader.SOM_INDEL_FEATURES 
+        net = IndelNet(n_feature, [140, 160, 170, 100, 10] , 2)
+    elif VarType == "SNV":
+        n_feature = data_loader.SOM_SNV_FEATURES
+        net = Net(n_feature, [140, 160, 170, 100, 10] , 2)
+        #net = Net(n_feature, [80, 120, 140, 120, 200] , 2)
+    else:
+        print("illegal VarType: {} !!".format(VarType))
+        exit(0)
     print("[info] n_feature: ", n_feature)
-    net = Net(n_feature, [140, 160, 170, 100, 10] , 2)
+    #net = Net(n_feature, [140, 160, 170, 100, 200] , 2)
     if use_cuda:
         net.cuda()
     #------------------------------------------------------------#
@@ -164,8 +172,8 @@ def train_somatic(args, use_cuda = False):
     n_epoch = 0
     #optimizer
     #optimizer = optim.SGD(net.parameters(), lr = 0.01, momentum = 0.9)
-    #optimizer = optim.Adam(net.parameters(), lr = 0.01)
-    optimizer = torch.optim.Adadelta(net.parameters(), lr=0.1, rho=0.96, eps=1e-05, weight_decay=1e-4)
+    optimizer = optim.Adam(net.parameters(), lr = 0.01)
+    #optimizer = torch.optim.Adadelta(net.parameters(), lr=0.1, rho=0.956, eps=1e-010, weight_decay=1e-3)
     weight = torch.Tensor(class_weight) #[CHANGE]
     if(use_cuda):
         weight = weight.cuda()
@@ -191,6 +199,7 @@ def train_somatic(args, use_cuda = False):
         print("epoch", epoch, " processing....")
         if (not reload_from_dupfile) and (epoch != 0):
             dataset.split(random_state = None)
+        adjust_learning_rate(optimizer, epoch, 0.01)
         test_dataset = FastvcTrainLoader(dataset.data['test'])
         test_loader = torch.utils.data.DataLoader(test_dataset, 
                                     batch_size = batch_size, shuffle = True,
@@ -223,23 +232,20 @@ def train_somatic(args, use_cuda = False):
             epoch_loss.append(loss_.item())
             runing_loss += loss_.item()
     
-            if i % 1000 == 999:
-                print("[%5d] loss: %.3f" % (i + 1, runing_loss / 999))
+            if i % 5 == 4:
+                print("[%5d] loss: %.5f" % (i + 1, runing_loss / 5))
                 runing_loss = 0.0
     
         print("mean loss of epoch %d is: %f" % (epoch, sum(epoch_loss) / len(epoch_loss)))
         epoch_feature = test_epoch(test_loader, net, optimizer)
-        if n_epoch == - 1: # (save_freq - 1):
-            max_haoz_feature = epoch_feature
-            if not os.path.exists(out_dir):
-                os.mkdir(out_dir)
+        if n_epoch % 100 == 99: # (save_freq - 1):
             tag = "{}_{}".format(VarType, datetime.datetime.now().strftime("%y-%m-%d-%H-%M-%S"))
             torch.save({
                 "state_dict": net.state_dict(),
-                "optimizer": optimizer.state_dict(),
                 "tag": tag,
+                "optimizer": optimizer.state_dict(),
                 "epoch": n_epoch,
-                }, '{}/all_epoch/checkpoint_{}_ecpch{}.pth'.format(out_dir, tag, n_epoch))
+                }, "{}.{}".format(args.out_model_path, n_epoch))
     
     if not os.path.exists(out_dir):
         os.mkdir(out_dir)
@@ -259,7 +265,8 @@ def train_somatic(args, use_cuda = False):
         }, '{}/checkpoint_{}_ecpch{}.pth'.format(out_dir, tag, n_epoch))
     '''
     print("training done!")
-    print("final model:", '{}/checkpoint_{}_ecpch{}.pth'.format(out_dir, tag, n_epoch))
+    #print("final model:", '{}/checkpoint_{}_ecpch{}.pth'.format(out_dir, tag, n_epoch))
+    print("final model:", args.out_model_path)
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(

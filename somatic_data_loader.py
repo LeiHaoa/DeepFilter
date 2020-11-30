@@ -11,6 +11,7 @@ from sklearn.model_selection import train_test_split
 import pickle
 #from features import features_to_index as fe2i, fvc_selected_features as fvc_sf
 from features import som_features_to_index as fe2i, som_selected_features as fvc_sf
+import random
 
 type_to_label = {"SNV":           [1, 0, 0], 
                 "Insertion":      [0, 1, 0], 
@@ -32,7 +33,7 @@ indels_label = {
 snv_label = "SNV"
 
 SOM_INDEL_FEATURES =  53 #46+3
-SOM_SNV_FEATURES = 48 #41 + 5
+SOM_SNV_FEATURES = 41 + 7 #41 + 7
 
 def format_indel_data_item(jri, fisher = True):
     #[FIXME] fisher should always be true, otherwish the map is wrong
@@ -240,7 +241,8 @@ class FastvcTrainLoader(torch.utils.data.Dataset):
         return len(self.labels)
 
 class Dataset:
-    def __init__(self, reload, re_exec, vartype, pama_list, base_path, truth_path):
+    def __init__(self, reload, training, re_exec, vartype, pama_list, base_path, truth_path):
+        self.training = training
         self.data = dict()
         self.inputs = list()
         self.labels = list()
@@ -266,10 +268,13 @@ class Dataset:
             print("get label done, size: {}, pos_num: {}, neg_num: {}".format(len(fastvc_label_dict), pos_num, neg_num))
             keys = list()
             for k, v in merged_data_dict.items():
+                if self.training and fastvc_label_dict[k] == 0 and random.randint(0, 499) > 0:
+                    continue
                 keys.append(k)
                 self.inputs.append(v[0])
                 self.labels.append(fastvc_label_dict[k])
                 self.raw_indexs.append(v[1])
+            print("data size:", len(merged_data_dict), "after f:", len(keys))
             #--- standlizaton ---#            
             '''
             min_max_scaler = preprocessing.MinMaxScaler()

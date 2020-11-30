@@ -14,7 +14,7 @@ from torchvision import transforms
 import somatic_data_loader
 from somatic_data_loader import Dataset, FastvcCallLoader
 from MyLogger import Logger
-from nn_net import Net
+from nn_net import Net, IndelNet
 import math
 import argparse
 
@@ -96,7 +96,6 @@ def call_somatic(args, use_cuda):
     #output_path = "./deepfiltered_out.indel.txt"
     ##checkpoint = os.path.join(models_dir, "checkpoint_fastvc_20-09-21-01-04-02_ecpch93.pth")
     #--------------------------------------------------------#
-    strelka2_result_path = ""
     if args.re_exec:
         region_file = args.region_file
         fasta_file = args.ref_file
@@ -118,10 +117,10 @@ def call_somatic(args, use_cuda):
     reload_from_dupfile = False #load from file(True) or compute generate data again(Fasle)
     data_path = "./call_dataset.pkl"
     if args.re_exec:
-        dataset = Dataset(reload_from_dupfile, args.re_exec, VarType, [region_file, fasta_file, bam_file], 
+        dataset = Dataset(reload_from_dupfile, False, args.re_exec, VarType, [region_file, fasta_file, bam_file], 
                                 base_path, truth_path)
     else:
-        dataset = Dataset(reload_from_dupfile, args.re_exec, VarType, [fastvc_result_path, strelka2_result_path],
+        dataset = Dataset(reload_from_dupfile, False, args.re_exec, VarType, [fastvc_result_path],
                                 base_path, truth_path)
     if reload_from_dupfile:
         dataset.load(data_path)
@@ -131,8 +130,20 @@ def call_somatic(args, use_cuda):
         #dataset.split(random_state = None)
         #dataset.store(data_path)
     #------------------------network setting---------------------#
-    n_feature = somatic_data_loader.SOM_INDEL_FEATURES if VarType == "INDEL" else somatic_data_loader.SOM_SNV_FEATURES
-    net = Net(n_feature, [140, 160, 170, 100, 10] , 2)
+    #n_feature = somatic_data_loader.SOM_INDEL_FEATURES if VarType == "INDEL" else somatic_data_loader.SOM_SNV_FEATURES
+    ##net = Net(n_feature, [40, 60, 70, 60, 100] , 2)
+    #net = Net(n_feature, [80, 120, 140, 120, 200] , 2)
+    n_feature = 0
+    if VarType == "INDEL":
+        n_feature = somatic_data_loader.SOM_INDEL_FEATURES 
+        net = IndelNet(n_feature, [140, 160, 170, 100, 10] , 2)
+    elif VarType == "SNV":
+        n_feature = somatic_data_loader.SOM_SNV_FEATURES
+        net = Net(n_feature, [140, 160, 170, 100, 10] , 2)
+        #net = Net(n_feature, [80, 120, 140, 120, 200] , 2)
+    else:
+        print("illegal VarType: {} !!".format(VarType))
+        exit(0)
     #------------------------------------------------------------#
     device = torch.device('cpu')
     #--- 1:10 network ---#
