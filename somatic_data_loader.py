@@ -159,17 +159,18 @@ def get_labels_dict(data_dict, truth_path):
     truth_vars = set()
     with open(truth_path, 'r') as f:
         for var in f:
+            if var[0] == "#":
+                continue
             items = var.split('\t')
-            if(len(items) == 10 ):
-                chrom, pos, id, ref, alt, _, filter = items[:7]         
-                #if len(chrom) < 6 and filter == "PASS" and (len(ref) > 1 or len(alt) > 1) :
-                if len(chrom) < 6 and filter == "PASS":
-                #if len(chrom) < 6: #-------just for chm test
-                    alts = alt.split(",")
-                    for alt in alts:
-                        site = chrom + ":" + pos + ":" + ref.upper() + ":" + alt.upper()
-                        truth_vars.add(site)
-                    #truth_vars[site] = list([ref, alt])  
+            chrom, pos, id, ref, alt, _, filter = items[:7]         
+            #if len(chrom) < 6 and filter == "PASS" and (len(ref) > 1 or len(alt) > 1) :
+            #if len(chrom) < 6 and filter == "PASS":
+            if len(chrom) < 6: #-------just for chm test
+                alts = alt.split(",")
+                for alt in alts:
+                    site = chrom + ":" + pos + ":" + ref.upper() + ":" + alt.upper()
+                    truth_vars.add(site)
+                #truth_vars[site] = list([ref, alt])  
     print("totally {} truth site".format(len(truth_vars)))
     labels_dict = {}
     positive_num = 0
@@ -268,7 +269,7 @@ class Dataset:
             print("get label done, size: {}, pos_num: {}, neg_num: {}".format(len(fastvc_label_dict), pos_num, neg_num))
             keys = list()
             for k, v in merged_data_dict.items():
-                if self.training and fastvc_label_dict[k] == 0 and random.randint(0, 499) > 0:
+                if self.training and fastvc_label_dict[k] == 0 and random.randint(0, 99) > 0:
                     continue
                 keys.append(k)
                 self.inputs.append(v[0])

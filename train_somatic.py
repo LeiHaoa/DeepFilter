@@ -106,7 +106,7 @@ def test_epoch(test_loader, net, optimizer):
 
 def adjust_learning_rate(optimizer, epoch, lr):
     """Sets the learning rate to the initial LR decayed by 10 every 30 epochs"""
-    lr_new = lr * (0.1 ** (epoch // 1000))
+    lr_new = lr * (0.1 ** (epoch // 100))
     for param_group in optimizer.param_groups:
         param_group['lr'] = lr_new
 
@@ -150,7 +150,7 @@ def train_somatic(args, use_cuda = False):
         dataset.split(random_state = None)
         #dataset.store(data_path)
     #------------------------network setting---------------------#
-    max_epoch = 5000 
+    max_epoch = 500 
     save_freq = 10 # save every xx save_freq
     n_feature = 0
     if VarType == "INDEL":

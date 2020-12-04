@@ -12,13 +12,13 @@ fi
 
 python call_somatic.py \
 	--workspace /home/haoz/deepfilter/workspace \
-	--in_data /home/haoz/data/somatic/FD_10_21_data/test.txt \
+	--in_data /home/haoz/data/somatic/FD_DATASET_1/FD_DATA_2.txt \
 	--truth_file ./empty.vcf\
 	--nthread 20 \
 	--var_type "SNV" \
-	--trained_model /home/haoz/deepfilter/workspace/test/exp_adam_somatic_snv_trainset1018_w1_2.pth.1999 \
+	--trained_model /home/haoz/deepfilter/workspace/test/somatic_snv_fd1_w1_20_step2.pth \
 	--out /home/haoz/deepfilter/workspace/test/filtered_snv.txt
 
 #echo "-----------------compare result------------------"
-python compare_filter_res_som_snv.py 
+#python compare_filter_res_som_snv.py 
 #echo "-------------------------------------------------"
