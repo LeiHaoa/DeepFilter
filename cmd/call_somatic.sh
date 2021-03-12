@@ -16,8 +16,8 @@ python call_somatic.py \
 	--truth_file ./empty.vcf\
 	--nthread 20 \
 	--var_type "SNV" \
-	--trained_model /home/haoz/deepfilter/workspace/test/somatic_snv_fd1_w1_20_step2.pth \
-	--out /home/haoz/deepfilter/workspace/test/filtered_snv.txt
+	--trained_model /home/haoz/deepfilter/workspace/test/somatic_snv_fd1_w1_2 \
+	--out /home/haoz/deepfilter/workspace/test/filtered_snv8.txt
 
 #echo "-----------------compare result------------------"
 #python compare_filter_res_som_snv.py 

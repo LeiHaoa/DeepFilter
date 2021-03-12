@@ -124,7 +124,27 @@ def get_snv_data(fvc_result_path):
             elif len(items) == 61 :
                 k, d = format_snv_data_item(items, True)
                 fastvc_snv_dict[k] = [d, index]
-    print("get fastvc SNV data done: ", len(fastvc_snv_dict))
+    print("get input SNV data done: ", len(fastvc_snv_dict))
+    return fastvc_snv_dict
+
+def get_all_data(fvc_result_path):
+    fastvc_snv_dict = dict()
+    index = -1
+    with open(fvc_result_path, 'r') as f:
+        for line in f:
+            index += 1
+            items = line.strip().split("\t")
+            if len(items) == 61 :
+                if items[fe2i['VarType']] != snv_label:
+                    k, d = format_indel_data_item(items, False)
+                    fastvc_indel_dict[k] = [d, index]
+                else:
+                    k, d = format_snv_data_item(items, True)
+                    fastvc_snv_dict[k] = [d, index]
+            else:
+                print("incorrect input file, did you add --fisher when run rabbitvar or vardict?")
+                exit(-1)
+    print("get input data done: ", len(fastvc_snv_dict))
     return fastvc_snv_dict
 
 def run_tools_and_get_data(fastvc_cmd, gen_cmd, strelka_cmd, base_path):

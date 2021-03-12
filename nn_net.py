@@ -109,5 +109,5 @@ class Net(torch.nn.Module):  #---snv net---#
         # print(m.weight.data.type())
         # input()
         # m.weight.data.fill_(1.0)
-        nn.init.xavier_uniform_(m.weight, gain=nn.init.calculate_gain('Leaky Relu'))
+        nn.init.xavier_uniform_(m.weight, gain=nn.init.calculate_gain('leaky_relu'))
         #nn.init.xavier_uniform_(m.weight, gain = nn.init.calculate_gain('tanh'))

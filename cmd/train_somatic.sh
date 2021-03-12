@@ -1,13 +1,16 @@
 set -x 
 set -e
 
-ROUND=$1
+ROUNDS=(6 7 8 9 10 11 12 13 14 15 16)
 WEIGHT=1_2
 
 TRAIN_DATA=/home/haoz/data/somatic/FD_DATASET_1/FD_DATA_1.txt
 SNV_TRUTH_FILE=/home/haoz/data/somatic/FD_DATASET_1/FDtruth_Data_1.snv.vcf
 INDEL_TRUTH_FILE=/home/haoz/data/somatic/FD_DATASET_1/FDtruth_Data_1.indel.vcf
 
+for ROUND in ${ROUNDS[@]}
+do
+echo "=====================round ${ROUND}===================="
 python train_somatic.py \
     --workspace /home/haoz/deepfilter/workspace \
     --train_data ${TRAIN_DATA} \
@@ -27,7 +30,7 @@ python train_somatic.py \
     --var_type "INDEL" \
 	--weight ${WEIGHT} \
 	--out_model_path /home/haoz/deepfilter/workspace/test/somatic_indel_fd1_w1_2_round${ROUND}.pth
-
+done
 #python call_somatic.py \
 #    --workspace /home/haoz/deepfilter/workspace \
 #    --in_data /home/haoz/data/somatic/FD_10_21_data/test.txt \

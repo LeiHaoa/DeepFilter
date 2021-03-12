@@ -92,14 +92,15 @@ def test_epoch(test_loader, net, optimizer):
         false += len(false_preds)
     print("test info:\n [total]:{}, [false]:{}, [truth]:{}, error rate:{}".format(total, false, total - false, false/total) )
     print("P\\L\t0\t1\n0\t{}\t{}\n1\t{}\t{}".format(g00, g01, g10, g11))
+    epslon = 0.00001
     TNR =  g01 / (g01 + g10)
     print("[01/(01+10)] TNR:\t ", TNR)
-    haoz_feature = -1 * math.log((TNR + 0.000001) * (false/total))
-    print("[00/(10+00)] filtered False rate:\t {}".format(g00 /(g10 + g00)))
-    print("[01/(01+11)] filtered Truth rate:\t {}".format(g01 / (g01 + g11)))
-    print("[11/(10+11)] caller Precision:\t {}".format(g11 / (g10 + g11)))
+    haoz_feature = -1 * math.log((TNR + epslon) * (false/total))
+    print("[00/(10+00)] filtered False rate:\t {}".format(g00 /(g10 + g00 + epslon)))
+    print("[01/(01+11)] filtered Truth rate:\t {}".format(g01 / (g01 + g11 + epslon)))
+    print("[11/(10+11)] caller Precision:\t {}".format(g11 / (g10 + g11 + epslon)))
     print("[(11+00)/(10+01+11+00)] filter Accuracy:\t {}".format( (g11+g00) / (g10 + g01 + g11 + g00)))
-    print("[11/(01+11)] Recall:\t {}".format(g11 / (g01 + g11)))
+    print("[11/(01+11)] Recall:\t {}".format(g11 / (g01 + g11 + epslon)))
     print("haoz feature(bigger better):\t ", haoz_feature)
 
     return haoz_feature
@@ -238,7 +239,7 @@ def train_somatic(args, use_cuda = False):
     
         print("mean loss of epoch %d is: %f" % (epoch, sum(epoch_loss) / len(epoch_loss)))
         epoch_feature = test_epoch(test_loader, net, optimizer)
-        if n_epoch % 100 == 99: # (save_freq - 1):
+        if n_epoch % 100 == -1: # (save_freq - 1):
             tag = "{}_{}".format(VarType, datetime.datetime.now().strftime("%y-%m-%d-%H-%M-%S"))
             torch.save({
                 "state_dict": net.state_dict(),

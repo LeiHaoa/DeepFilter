@@ -1,4 +1,6 @@
+import argparse
 import datetime
+import math
 import os
 import sys
 
@@ -12,11 +14,10 @@ from torch.autograd import Variable
 from torchvision import transforms
 
 import somatic_data_loader
-from somatic_data_loader import Dataset, FastvcCallLoader
 from MyLogger import Logger
-from nn_net import Net, IndelNet
-import math
-import argparse
+from nn_net import IndelNet, Net
+from somatic_data_loader import Dataset, FastvcCallLoader
+
 
 def print_cmp2x2(p, l):
     p = p.cpu().numpy()
@@ -36,44 +37,21 @@ def print_cmp2x2(p, l):
                 g11 += 1
     return g00, g01, g10, g11
 
-def test_call(test_loader, net):
-    runing_loss = 0.0
-    g00, g01, g10, g11 = 0, 0, 0, 0
-    total = 0
-    truth = 0
-    false = 0
-    for i, data in enumerate(test_loader, 0):
-        inputs, labels = data #TODO #DONE
-        inputs, labels = Variable(inputs).float(), Variable(labels).long()
-        total += len(inputs)
-        if use_cuda:
-            inputs, labels = inputs.cuda(), labels.cuda()
-
-        outputs = net(inputs) #outputs is the prob of each class(P or N)
+sys.stdout = Logger(filename = "./logs/mcall_somatic.out")
+def ensumble_infer(inputs, nets, batchsize):
+    predicted_sum = torch.zeros(inputs.shape[0])
+    #for i in range(1, 10):
+    for net in nets:
+        outputs = net(inputs)
         _, predicted = torch.max(outputs, 1)
-        t00, t01, t10, t11 = print_cmp2x2(predicted, labels)
-        g00 += t00
-        g01 += t01
-        g10 += t10
-        g11 += t11
-        compare_labels = (predicted == labels)
-        false_preds = np.where(compare_labels.data.cpu().numpy() == 0)[0]
-        false += len(false_preds)
-        if i % 10000 == 0:
-            print("P|L\t0\t1\n0\t{}\t{}\n1\t{}\t{}".format(g00, g01, g10, g11))
-    print("test info:\n [total]:{}, [false]:{}, [truth]:{}, error rate:{}".format(total, false, total - false, false/total) )
-    print("P\\L\t0\t1\n0\t{}\t{}\n1\t{}\t{}".format(g00, g01, g10, g11))
-    TNR =  g01 / (g01 + g10)
-    print("[01/(01+10)] TNR:\t ", TNR)
-    haoz_feature = -1 * math.log((TNR + 0.000001) * (false/total))
-    print("[00/(10+00)] filtered False rate:\t {}".format(g00 /(g10 + g00)))
-    print("[01/(01+11)] filtered Truth rate:\t {}".format(g01 / (g01 + g11)))
-    print("[11/(10+11)] Precision:\t {}".format(g10 / (g10 + g11)))
-    print("[11/(01+11)] Recall:\t {}".format(g11 / (g01 + g11)))
-    print("haoz feature(bigger better):\t ", haoz_feature)
+        predicted_sum += predicted
 
+    if use_cuda:
+        predicted_sum = predicted_sum.cpu()
+    predicted_sum = predicted_sum.numpy()
+    positive_index = np.where(predicted_sum >= 15)
+    return positive_index 
 
-sys.stdout = Logger(filename = "./logs/mcall_indel.out")
 
 def call_somatic(args, use_cuda):
     #--------------------------------------------------------#
@@ -130,31 +108,36 @@ def call_somatic(args, use_cuda):
         #dataset.split(random_state = None)
         #dataset.store(data_path)
     #------------------------network setting---------------------#
-    #n_feature = somatic_data_loader.SOM_INDEL_FEATURES if VarType == "INDEL" else somatic_data_loader.SOM_SNV_FEATURES
-    ##net = Net(n_feature, [40, 60, 70, 60, 100] , 2)
-    #net = Net(n_feature, [80, 120, 140, 120, 200] , 2)
+    device = torch.device('cpu')
     n_feature = 0
     if VarType == "INDEL":
         n_feature = somatic_data_loader.SOM_INDEL_FEATURES 
-        net = IndelNet(n_feature, [140, 160, 170, 100, 10] , 2)
+        nets = list()
+        for net_index in range(1, 17):
+            model_name = checkpoint + "_round{}.pth".format(net_index)
+            net = IndelNet(n_feature, [140, 160, 170, 100, 10] , 2)
+            pretrained_dict = torch.load(model_name, map_location = device)
+            pretrained_state_dict = pretrained_dict["state_dict"]
+            net.load_state_dict(pretrained_state_dict)
+            net.eval()
+            nets.append(net)
     elif VarType == "SNV":
         n_feature = somatic_data_loader.SOM_SNV_FEATURES
-        net = Net(n_feature, [140, 160, 170, 100, 10] , 2)
-        #net = Net(n_feature, [80, 120, 140, 120, 200] , 2)
+        nets = list()
+        for net_index in range(1, 16):
+            model_name = checkpoint + "_round{}.pth".format(net_index)
+            print("loading ", model_name)
+            net = Net(n_feature, [140, 160, 170, 100, 10] , 2)
+            #net = Net(n_feature, [80, 120, 140, 120, 200] , 2)
+            pretrained_dict = torch.load(model_name, map_location = device)
+            pretrained_state_dict = pretrained_dict["state_dict"]
+            net.load_state_dict(pretrained_state_dict)
+            net.eval()
+            nets.append(net)
     else:
         print("illegal VarType: {} !!".format(VarType))
         exit(0)
     #------------------------------------------------------------#
-    device = torch.device('cpu')
-    #--- 1:10 network ---#
-    pretrained_dict = torch.load(checkpoint, map_location = device)
-    model_tag = pretrained_dict["tag"]
-    epoch_num = pretrained_dict["epoch"]
-    pretrained_state_dict = pretrained_dict["state_dict"]
-    
-    net.load_state_dict(pretrained_state_dict)
-    net.eval()
-    
     epoch_loss = [] 
     runing_loss = 0.0
     use_cuda = False
@@ -177,8 +160,10 @@ def call_somatic(args, use_cuda):
         total += len(inputs)
         if use_cuda:
             inputs, labels = inputs.cuda(), labels.cuda()
-    
-        outputs = net(inputs) #outputs is the prob of each class(P or N)
+
+        result_indexs.update(set(raw_indexs.numpy()[ensumble_infer(inputs, nets, batch_size)]))
+        '''
+        outputs = nets[0](inputs) #outputs is the prob of each class(P or N)
         # _, predicted = torch.max(outputs, 1)
         # _, predicted2 = torch.max(outputs2, 1)
         # _, predicted3 = torch.max(outputs3, 1)
@@ -192,6 +177,7 @@ def call_somatic(args, use_cuda):
         #print(len(positive_index[0]), positive_index[0])
         #print("raw index",set(raw_indexs.numpy()[positive_index]))
         result_indexs.update(set(raw_indexs.numpy()[positive_index]))
+        '''
     fout = open(out_file, 'w')
     rindex = 0
     with open(fastvc_result_path, 'r') as f:
