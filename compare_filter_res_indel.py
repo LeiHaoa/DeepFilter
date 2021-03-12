@@ -1,8 +1,12 @@
 import sys
 import os
 
-fastvc_file = "/home/haoz/deepfilter/workspace/test/filtered_snv.txt" 
-truth_file = "/home/haoz/data/somatic/FD_10_18_data/synthetic_indels.leftAlign.vcf"
+#fastvc_file = "/home/haoz/deepfilter/workspace/test/filtered_snv.txt" 
+#fastvc_file = "/home/haoz/data/somatic/FD_10_18_data/train3.txt" 
+#fastvc_file = "/home/haoz/deepfilter/workspace/test/germ_filtered_indel.txt"
+fastvc_file = "/home/haoz/data/test.txt"
+#truth_file = "/home/haoz/data/somatic/FD_10_18_data/synthetic_indels.leftAlign.vcf"
+truth_file = "/home/haoz/data/HG001_GRCh38_GIAB_highconf_CG-IllFB-IllGATKHC-Ion-10X-SOLID_CHROM1-X_v.3.3.2_highconf_PGandRTGphasetransfer.vcf"
 sk_file    = "/home/haoz/data/somatic/somatic.indels.vcf"
 cmp_sk2 = False
 cmp_fvc = True
@@ -73,7 +77,7 @@ for k, v in truth_indels.items():
 test_total_truth = 129557
 fvc_total_truth = 623 
 if cmp_fvc:
-    print("fastvc truth snv num: {}, fastvc total output: {}\nfastvc find: {} , filtered: {}, recall: {}, prec: {}"\
+    print("fastvc truth snv num: {}, fastvc total output: {}\nfastvc find: {} , recall: {}, prec: {}"\
     .format(len(truth_indels), len(fastvc_indels), fvc_cnt, fvc_cnt / fvc_total_truth, fvc_cnt / len(fastvc_indels)))
 if cmp_sk2:
     print("strelka truth snv num: {}, strelka total output: {}\nstrelka find: {} recall: {}, prec: {}"\

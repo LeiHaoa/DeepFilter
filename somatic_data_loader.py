@@ -11,6 +11,7 @@ from sklearn.model_selection import train_test_split
 import pickle
 #from features import features_to_index as fe2i, fvc_selected_features as fvc_sf
 from features import som_features_to_index as fe2i, som_selected_features as fvc_sf
+import random
 
 type_to_label = {"SNV":           [1, 0, 0], 
                 "Insertion":      [0, 1, 0], 
@@ -32,7 +33,7 @@ indels_label = {
 snv_label = "SNV"
 
 SOM_INDEL_FEATURES =  53 #46+3
-SOM_SNV_FEATURES = 48 #41 + 5
+SOM_SNV_FEATURES = 41 + 7 #41 + 7
 
 def format_indel_data_item(jri, fisher = True):
     #[FIXME] fisher should always be true, otherwish the map is wrong
@@ -65,7 +66,7 @@ def format_snv_data_item(jri, fisher = True):
         exit(-1)
     data = list()
     # key is chrom:pos like "chr1:131022:A:T"
-    key = jri[2] + ":" + jri[3] + ":" + jri[5] + ":" + jri[6]
+    key = jri[2] + ":" + jri[3] + ":" + jri[5] + ":" + jri[6] #TODO: case sensitive
     for sf in fvc_sf:
         data.append(jri[fe2i[sf]])
     data.extend(varLabel_to_label[jri[fe2i["VarLabel"]]])#varlabel
@@ -153,6 +154,59 @@ def run_tools_and_get_data(fastvc_cmd, gen_cmd, strelka_cmd, base_path):
 
     return fastvc_dict           
 
+def get_labels_dict_SJZP(data_dict, truth_path):
+    #truth_vars = dict()
+    truth_vars = set()
+    with open(truth_path, 'r') as f:
+        for line in f:
+            var = line.split('\t')
+            chrom = ""
+            if(var[0][:3] == "chr"):
+                chrom = var[0][3:]
+            else:
+                chrom = var[0]
+
+            pos, ref, alt, vaf = var[1], var[3], var[4], var[7]       
+            site = chrom + ":" + pos + ":" + ref.upper() + ":" + alt.upper()
+            #print("truth site:", site)
+            truth_vars.add(site)
+    #-------process detected result--------#
+    print("totally {} truth site".format(len(truth_vars)))
+    labels_dict = {}
+    positive_num = 0
+    negtive_num = 0
+    for k, v in data_dict.items():
+        v = v[0]
+        [chrom, pos, ref, alt] = k.split(':')
+        if(chrom == "chr"):
+            chrom = chrom[0][3:]
+        var_type = ""
+        site = k
+        if len(v) == SOM_INDEL_FEATURES:
+            if v[50] == 1:
+                var_type = "Deletion"
+                #print("find deletion", k)
+            elif v[51] == 1:
+                var_type = "Insertion"
+                #print("find insertion", k)
+        if var_type == "Insertion":
+            ref = "."
+            alt = alt[1:]
+            site = chrom + ":" + pos + ":" + ref.upper() + ":" + alt.upper()
+        elif var_type == "Deletion":
+            pos = str(int(pos) + 1)
+            ref = ref[1:]
+            alt = "."
+            site = chrom + ":" + pos + ":" + ref.upper() + ":" + alt.upper()
+        #print("site:", site)
+        if site in truth_vars:
+            labels_dict[k] = 1
+            positive_num += 1
+        else:
+            labels_dict[k] = 0
+            negtive_num += 1
+    return positive_num, negtive_num, labels_dict
+
 def get_labels_dict(data_dict, truth_path):
     #truth_vars = dict()
     truth_vars = set()
@@ -166,7 +220,7 @@ def get_labels_dict(data_dict, truth_path):
                 #if len(chrom) < 6: #-------just for chm test
                     alts = alt.split(",")
                     for alt in alts:
-                        site = chrom + ":" + pos + ":" + ref + ":" + alt
+                        site = chrom + ":" + pos + ":" + ref.upper() + ":" + alt.upper()
                         truth_vars.add(site)
                     #truth_vars[site] = list([ref, alt])  
     print("totally {} truth site".format(len(truth_vars)))
@@ -262,14 +316,17 @@ class Dataset:
             assert(len(merged_data_dict) > 0)
 
             print("get merged data done, merged data dict size: ", len(merged_data_dict))
-            pos_num, neg_num, fastvc_label_dict = get_labels_dict(merged_data_dict, truth_path)
+            pos_num, neg_num, fastvc_label_dict = get_labels_dict_SJZP(merged_data_dict, truth_path)
             print("get label done, size: {}, pos_num: {}, neg_num: {}".format(len(fastvc_label_dict), pos_num, neg_num))
             keys = list()
             for k, v in merged_data_dict.items():
+                if fastvc_label_dict[k] == 0 and random.randint(0, 9) > 10:
+                    continue
                 keys.append(k)
                 self.inputs.append(v[0])
                 self.labels.append(fastvc_label_dict[k])
                 self.raw_indexs.append(v[1])
+            print("origional:", len(merged_data_dict), "after f:", len(keys))
             #--- standlizaton ---#            
             '''
             min_max_scaler = preprocessing.MinMaxScaler()

@@ -6,7 +6,7 @@
 #include <string>
 
 
-int main()
+int test_main()
 {
     // 加载模型
     //std::shared_ptr<torch::jit::script::Module> module = torch::jit::load("checkpoint_fastvc_20-10-06-20-26-58_ecpch10.pt");
@@ -36,4 +36,6 @@ int main()
     return 0;
 }
 
-
+int inference(vector<float>){
+    
+}

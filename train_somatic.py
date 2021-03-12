@@ -1,4 +1,6 @@
+import argparse
 import datetime
+import math
 import os
 import sys
 
@@ -7,16 +9,13 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 import torch.optim as optim
-import torchvision
 from torch.autograd import Variable
-from torchvision import transforms
 
 import somatic_data_loader as data_loader
-from somatic_data_loader import Dataset, SOM_INDEL_FEATURES, SOM_SNV_FEATURES, FastvcTrainLoader
 from MyLogger import Logger
-from nn_net import Net
-import math
-import argparse
+from nn_net import Net, IndelNet
+from somatic_data_loader import (SOM_INDEL_FEATURES, SOM_SNV_FEATURES, Dataset,
+                                 FastvcTrainLoader)
 
 log_tag = "train_snv_drop5_notloose" #[CHANGE]
 sys.stdout = Logger(filename = "./logs/{}_{}.txt".format(log_tag, datetime.datetime.now().strftime("%y-%m-%d-%H-%M-%S")))
@@ -42,14 +41,6 @@ def train_epoch(train_loader, net, optimizer):
 
         if i % 10000 == 9999:
             print("[%5d] loss: %.3f" % (i + 1, runing_loss / 10000))
-            #np.set_printoptions(precision = 3, threshold=10000)
-            #print("[inputs info]: \n {}".format(inputs.data.cpu().numpy()))
-            #print("[pred info]:\n {}".format(outputs.data.cpu().numpy()))
-            #print("[label info]:\n {}".format(labels.data.cpu().numpy()))
-            #print('[net info]:')
-            #for layer in net.modules():
-            #    if isinstance(layer, nn.Linear):
-            #        print(layer.weight)
             runing_loss = 0.0
 
     return epoch_loss
@@ -99,13 +90,13 @@ def test_epoch(test_loader, net, optimizer):
         false += len(false_preds)
     print("test info:\n [total]:{}, [false]:{}, [truth]:{}, error rate:{}".format(total, false, total - false, false/total) )
     print("P\\L\t0\t1\n0\t{}\t{}\n1\t{}\t{}".format(g00, g01, g10, g11))
-    TNR =  g01 / (g01 + g10)
+    TNR =  g01 / (g01 + g10 + 1e-5)
     print("[01/(01+10)] TNR:\t ", TNR)
-    haoz_feature = -1 * math.log((TNR + 0.000001) * (false/total))
-    print("[00/(10+00)] filtered False rate:\t {}".format(g00 /(g10 + g00)))
-    print("[01/(01+11)] filtered Truth rate:\t {}".format(g01 / (g01 + g11)))
-    print("[11/(10+11)] Precision:\t {}".format(g10 / (g10 + g11)))
-    print("[11/(01+11)] Recall:\t {}".format(g11 / (g01 + g11)))
+    haoz_feature = -1 * math.log((TNR + 0.000001) * (false/total) + 1e-5)
+    print("[00/(10+00)] filtered False rate:\t {}".format(g00 /(g10 + g00 + 1e-5)))
+    print("[01/(01+11)] filtered Truth rate:\t {}".format(g01 / (g01 + g11 + 1e-5)))
+    print("[11/(10+11)] Precision:\t {}".format(g10 / (g10 + g11 + 1e-5)))
+    print("[11/(01+11)] Recall:\t {}".format(g11 / (g01 + g11 + 1e-5)))
     print("haoz feature(bigger better):\t ", haoz_feature)
 
     return haoz_feature
@@ -126,8 +117,6 @@ def train_somatic(args, use_cuda = False):
     out_dir = os.path.join(base_path, args.model_out)
     if not os.path.exists(out_dir):
         os.mkdir(out_dir)
-    #fastvc_result_path = "/home/haoz/data/out_fisher.vcf"
-    #fastvc_result_path = "/home/haoz/data/wgs_loose_goodvar.txt"
     fastvc_result_path = args.train_data #[CHANGE]
     VarType = args.var_type #SNV or INDEL
     batch_size = args.batch_size
@@ -152,11 +141,21 @@ def train_somatic(args, use_cuda = False):
         dataset.split(random_state = None)
         #dataset.store(data_path)
     #------------------------network setting---------------------#
-    max_epoch = 10 
+    max_epoch = 100 
     save_freq = 10 # save every xx save_freq
-    n_feature = data_loader.SOM_INDEL_FEATURES if VarType == "INDEL" else data_loader.SOM_SNV_FEATURES
+    n_feature = 0
+    if VarType == "INDEL":
+        n_feature = data_loader.SOM_INDEL_FEATURES 
+        net = IndelNet(n_feature, [140, 160, 170, 100, 10] , 2)
+    elif VarType == "SNV":
+        n_feature = data_loader.SOM_SNV_FEATURES
+        net = Net(n_feature, [140, 160, 170, 100, 10] , 2)
+        #net = Net(n_feature, [80, 120, 140, 120, 200] , 2)
+    else:
+        print("illegal VarType: {} !!".format(VarType))
+        exit(0)
     print("[info] n_feature: ", n_feature)
-    net = Net(n_feature, [140, 160, 170, 100, 10] , 2)
+    #net = Net(n_feature, [140, 160, 170, 100, 200] , 2)
     if use_cuda:
         net.cuda()
     #------------------------------------------------------------#
@@ -164,8 +163,8 @@ def train_somatic(args, use_cuda = False):
     n_epoch = 0
     #optimizer
     #optimizer = optim.SGD(net.parameters(), lr = 0.01, momentum = 0.9)
-    #optimizer = optim.Adam(net.parameters(), lr = 0.01)
-    optimizer = torch.optim.Adadelta(net.parameters(), lr=0.1, rho=0.96, eps=1e-05, weight_decay=1e-4)
+    optimizer = optim.Adam(net.parameters(), lr = 0.01)
+    #optimizer = torch.optim.Adadelta(net.parameters(), lr=0.1, rho=0.956, eps=1e-010, weight_decay=1e-3)
     weight = torch.Tensor(class_weight) #[CHANGE]
     if(use_cuda):
         weight = weight.cuda()
@@ -223,8 +222,8 @@ def train_somatic(args, use_cuda = False):
             epoch_loss.append(loss_.item())
             runing_loss += loss_.item()
     
-            if i % 1000 == 999:
-                print("[%5d] loss: %.3f" % (i + 1, runing_loss / 999))
+            if i % 10 == 9:
+                print("[%5d] loss: %.5f" % (i + 1, runing_loss / 9))
                 runing_loss = 0.0
     
         print("mean loss of epoch %d is: %f" % (epoch, sum(epoch_loss) / len(epoch_loss)))
