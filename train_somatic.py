@@ -9,16 +9,16 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 import torch.optim as optim
+#from MyLogger import Logger
+from nn_net import IndelNet, Net
 from torch.autograd import Variable
 
 import somatic_data_loader as data_loader
-from MyLogger import Logger
-from nn_net import Net, IndelNet
 from somatic_data_loader import (SOM_INDEL_FEATURES, SOM_SNV_FEATURES, Dataset,
                                  FastvcTrainLoader)
 
 log_tag = "train_snv_drop5_notloose" #[CHANGE]
-sys.stdout = Logger(filename = "./logs/{}_{}.txt".format(log_tag, datetime.datetime.now().strftime("%y-%m-%d-%H-%M-%S")))
+#sys.stdout = Logger(filename = "./logs/{}_{}.txt".format(log_tag, datetime.datetime.now().strftime("%y-%m-%d-%H-%M-%S")))
 def train_epoch(train_loader, net, optimizer):
     epoch_loss = [] 
     runing_loss = 0.0
@@ -62,6 +62,7 @@ def print_cmp2x2(p, l):
             else:
                 g11 += 1
     return g00, g01, g10, g11
+
 def test_epoch(test_loader, net, optimizer):
     epoch_loss = [] 
     runing_loss = 0.0
@@ -102,12 +103,6 @@ def test_epoch(test_loader, net, optimizer):
     return haoz_feature
 
 def train_somatic(args, use_cuda = False):
-    #--------------------------------------------------------#
-    #region_file = "/home/old_home/haoz/workspace/data/NA12878/ConfidentRegions.bed"
-    #fasta_file = "/home/old_home/haoz/workspace/data/hg38/hg38.fa"
-    #bam_file = "/home/old_home/haoz/workspace/data/NA12878/NA12878_S1.bam"
-    #truth_path =  "/home/haoz/data/HG001_GRCh38_GIAB_highconf_CG-IllFB-IllGATKHC-Ion-10X-SOLID_CHROM1-X_v.3.3.2_highconf_PGandRTGphasetransfer.vcf"
-    #base_path = "/home/haoz/deepfilter/workspace"
     if args.re_exec:
         region_file = args.region_file
         fasta_file = args.ref_file
@@ -127,12 +122,8 @@ def train_somatic(args, use_cuda = False):
     
     reload_from_dupfile = False #load from file(True) or compute generate data again(Fasle)
     data_path = "./dataset_{}.pkl".format(VarType)
-    if args.re_exec:
-        dataset = Dataset(reload_from_dupfile, args.re_exec, VarType, [region_file, fasta_file, bam_file], 
-                                base_path, truth_path)
-    else:
-        dataset = Dataset(reload_from_dupfile, args.re_exec, VarType, [fastvc_result_path],
-                                base_path, truth_path)
+    dataset = Dataset(reload_from_dupfile, args.re_exec, VarType, [fastvc_result_path],
+                      base_path, truth_path)
     if reload_from_dupfile:
         dataset.load(data_path)
     else:
@@ -163,8 +154,8 @@ def train_somatic(args, use_cuda = False):
     n_epoch = 0
     #optimizer
     #optimizer = optim.SGD(net.parameters(), lr = 0.01, momentum = 0.9)
-    optimizer = optim.Adam(net.parameters(), lr = 0.01)
-    #optimizer = torch.optim.Adadelta(net.parameters(), lr=0.1, rho=0.956, eps=1e-010, weight_decay=1e-3)
+    #optimizer = optim.Adam(net.parameters(), lr = 0.1)
+    optimizer = torch.optim.Adadelta(net.parameters(), lr=0.1, rho=0.956, eps=1e-010, weight_decay=1e-3)
     weight = torch.Tensor(class_weight) #[CHANGE]
     if(use_cuda):
         weight = weight.cuda()
@@ -222,8 +213,8 @@ def train_somatic(args, use_cuda = False):
             epoch_loss.append(loss_.item())
             runing_loss += loss_.item()
     
-            if i % 10 == 9:
-                print("[%5d] loss: %.5f" % (i + 1, runing_loss / 9))
+            if i % 100 == 99:
+                print("[%5d] loss: %.5f" % (i + 1, runing_loss / 100))
                 runing_loss = 0.0
     
         print("mean loss of epoch %d is: %f" % (epoch, sum(epoch_loss) / len(epoch_loss)))
@@ -269,7 +260,7 @@ if __name__ == "__main__":
     parser.add_argument('--bam_file', help = "input alignment file(.bam)", type=str, required = False)
     parser.add_argument('--workspace', help = "workspace", type=str, required = True)
     parser.add_argument('--train_data', help = "RabbitVar intermidiate file(with fisher test)", type=str, required = True)
-    parser.add_argument('--truth_file', help = "truth file / the ground truth(.vcf)", type=str, required = True)
+    parser.add_argument('--truth_file', help = "truth file / the ground truth(.vcf)", type=str, required = False)
     parser.add_argument('--model_out', help = "the path you want to store your model", type=str, default="./models")
     parser.add_argument('--var_type', help = "var type you want to train(SNV/INDEL)", type=str, required = True)
     #parser.add_argument('--var_type', help = "var type you want to train(SNV/INDEL)", type=str, required = True)

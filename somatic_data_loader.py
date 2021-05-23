@@ -1,17 +1,20 @@
 import os
+import pickle
+import random
 import shutil
 import subprocess
 import sys
 
 import numpy as np
-from numpy.lib.shape_base import split
+import pandas as pd
 import torch
-from sklearn import preprocessing 
+from numpy.lib.shape_base import split
+from sklearn import preprocessing
 from sklearn.model_selection import train_test_split
-import pickle
+
 #from features import features_to_index as fe2i, fvc_selected_features as fvc_sf
-from features import som_features_to_index as fe2i, som_selected_features as fvc_sf
-import random
+from features import som_features_to_index as fe2i
+from features import som_selected_features as fvc_sf
 
 type_to_label = {"SNV":           [1, 0, 0], 
                 "Insertion":      [0, 1, 0], 
@@ -32,7 +35,7 @@ indels_label = {
                 }
 snv_label = "SNV"
 
-SOM_INDEL_FEATURES =  53 #46+3
+SOM_INDEL_FEATURES =  43 #46+3
 SOM_SNV_FEATURES = 41 + 7 #41 + 7
 
 def format_indel_data_item(jri, fisher = True):
@@ -281,7 +284,6 @@ class FastvcCallLoader(torch.utils.data.Dataset):
         return len(self.labels)
 
 class FastvcTrainLoader(torch.utils.data.Dataset):
-
     def __init__(self, data):
         self.inputs = data[0]
         self.labels = data[1]
@@ -300,7 +302,22 @@ class Dataset:
         self.labels = list()
         self.raw_indexs = list()
         self.re_exec = re_exec
-        self.prepare_data(reload, vartype, pama_list, base_path, truth_path)
+        #self.prepare_data(reload, vartype, pama_list, base_path, truth_path)
+        self.prepare_from_tsv(pama_list)
+
+    def prepare_from_tsv(self, pama_list):
+        print("[debug], tsv filename: ", pama_list)
+        filepath = pama_list[0]
+        df_header = ["RefLength", "AltLength", "VarType", *fvc_sf, "VarLabel", "label", "proba"]
+        df_input_header = ["RefLength", "AltLength", *fvc_sf]
+        self.df = pd.read_csv(filepath, header=None)
+        self.df.columns = df_header
+
+        self.inputs = self.df[df_input_header]
+        self.labels = self.df['label'].to_numpy()
+        self.inputs = preprocessing.scale(self.inputs, axis = 0, with_mean = True, with_std = True, copy = True)
+        print("Normalization done")
+
 
     def prepare_data(self, reload, vartype, pama_list, base_path, truth_path):
         print('[debug]', pama_list, base_path, truth_path)
@@ -352,6 +369,7 @@ class Dataset:
         x_train, x_test, y_train, y_test = train_test_split(self.inputs, self.labels, 
                                 test_size = test_size, random_state = random_state)
 
+        print("split result:", type(x_train), x_train.shape)
         self.data['train'] = [x_train, y_train]
         self.data['test'] = [x_test, y_test]
 
