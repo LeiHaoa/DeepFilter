@@ -4,6 +4,8 @@ import random
 import shutil
 import subprocess
 import sys
+sys.path.append("/home/haoz/RabbitVar/utils")
+from datautil import *
 
 import numpy as np
 import pandas as pd
@@ -16,10 +18,7 @@ from sklearn.model_selection import train_test_split
 from features import som_features_to_index as fe2i
 from features import som_selected_features as fvc_sf
 
-type_to_label = {"SNV":           [1, 0, 0], 
-                "Insertion":      [0, 1, 0], 
-                "Deletion":       [0, 0, 1]}
-varLabel_to_label = {
+varLabel_to_label_onehot = {
     "Germline"      : [1, 0, 0, 0, 0, 0, 0],
     "StrongLOH"     : [0, 1, 0, 0, 0, 0, 0],
     "LikelyLOH"     : [0, 0, 1, 0, 0, 0, 0],
@@ -28,14 +27,46 @@ varLabel_to_label = {
     "AFDiff"        : [0, 0, 0, 0, 0, 1, 0],
     "SampleSpecific": [0, 0, 0, 0, 0, 0, 1]
 }
-indels_label = {
+varLabel_to_label = {
+    "Germline"      : 0,
+    "StrongLOH"     : 1,
+    "LikelyLOH"     : 2,
+    "StrongSomatic" : 3,
+    "LikelySomatic" : 4,
+    "AFDiff"        : 5,
+    "SampleSpecific": 6,
+}
+label_to_varLabel = {
+   0 :  "Germline"      ,
+   1 :  "StrongLOH"     ,
+   2 :  "LikelyLOH"     ,
+   3 :  "StrongSomatic" ,
+   4 :  "LikelySomatic" ,
+   5 :  "AFDiff"        ,
+   6 :  "SampleSpecific",
+}
+
+indels_label_onehot = {
                 "Deletion": [1, 0, 0], 
                 "Insertion":[0, 1, 0], 
                 "Complex":  [0, 0, 1], 
                 }
+types_to_label = {
+                "SNV": 0,
+                "Deletion": 1, 
+                "Insertion":2, 
+                "Complex":  3, 
+                }
+label_to_types = {
+        0: "SNV",
+        1: "Deletion", 
+        2: "Insertion", 
+        3: "Complex", 
+        }
 snv_label = "SNV"
 
-SOM_INDEL_FEATURES =  43 #46+3
+#SOM_INDEL_FEATURES =  43 #46+3
+SOM_INDEL_FEATURES =  2 + len(fvc_sf) + 3 + 7
 SOM_SNV_FEATURES = 41 + 7 #41 + 7
 
 def format_indel_data_item(jri, fisher = True):
@@ -49,16 +80,14 @@ def format_indel_data_item(jri, fisher = True):
         data.append(jri[fe2i[sf]])
      
     if fisher:
-        data.extend(varLabel_to_label[jri[fe2i["VarLabel"]]])#varlabel
-        data.extend(indels_label[jri[fe2i["VarType" ]]]) #vartype
+        data.extend(indels_label_onehot[jri[fe2i["VarType"]]]) #vartype
+        data.extend(varLabel_to_label_onehot[jri[fe2i["VarLabel"]]])#varlabel
     else:
         print("not support to train if you not run rabbitvar without --fiser!!")
         exit(-1)
-        data.extend(varLabel_to_label[jri[fe2i["VarLabel"]]])#varlabel
-        data.extend(indels_label[jri[fe2i["VarType"]]])
 
     if len(data) != SOM_INDEL_FEATURES:
-        print("fvc data length error: \n", len(data), data, " ori\n", jri)
+        print("fvc data length error: \n", len(data), "-", SOM_INDEL_FEATURES , data, " ori\n", jri)
         exit(-1)
     #print("format:", key, data)
     return key, data
@@ -98,7 +127,7 @@ def get_indel_data(fvc_result_path):
             #for i, it in enumerate(items):
             #    print(i, "--", it)
             #exit(0)
-            if items[fe2i['VarType']] not in indels_label:
+            if items[fe2i['VarType']] not in indels_label_onehot:
                 #print(items[fe2i['VarType']])
                 continue
             if len(items) == 55:
@@ -241,47 +270,21 @@ def get_labels_dict(data_dict, truth_path):
             negtive_num += 1
     return positive_num, negtive_num, labels_dict
 
-def prepare_cmds(fasta_file, region_file, bam_file, thread_number, base_path):
-    #--- fastvc cmd prepareing ---#
-    fvc_list = list() 
-    fastvc_path = ""
-    fvc_list.append(fastvc_path)
-    fvc_list.append("-i {}".format(region_file))
-    fvc_list.append("-G {}".format(fasta_file))
-    fvc_list.append("-f 0.01")
-    fvc_list.append("-N NA12878")
-    fvc_list.append("-b {}".format(bam_file))
-    fvc_list.append("-c 1 -S 2 -E 3 -g 4")
-    fvc_list.append("--fisher")
-    fvc_list.append("--th {}".format(thread_number))
-    fvc_list.append("--out {}".format(os.path.join(base_path, "tmpspace/fastvc_space/out.txt")))
-    fastvc_cmd = " ".join(fvc_list)    
-
-    #--- strelka cmd prepareing ---#
-    #-- 1. generate workspace and script --#
-    sk2_conf_path = ""
-    gen_cmd = "{} --bam {} --referenceFasta {} --callRegions {} --runDir {}".format(sk2_conf_path, 
-        bam_file, fasta_file, region_file, os.path.join(base_path, "tmpspace/strelka_space")) 
-
-    #-- 2. strelka run command --#
-    sk2_cmd = "{}/tmpspace/strelka_space/runWorkflow.py  -m local -j {}".format(base_path, thread_number)
-
-    return fastvc_cmd, gen_cmd, sk2_cmd
-
 class FastvcCallLoader(torch.utils.data.Dataset):
 
     def __init__(self, data):
-        self.inputs = data[0]
-        self.labels = data[1]
-        self.raw_indexs = data[2]
+        #self.labels = data[1]
+        #self.raw_indexs = data[2]
+        self.inputs = data
 
     def __getitem__(self, index):
-        input, label = self.inputs[index], self.labels[index]
-        raw_index = self.raw_indexs[index]
-        return input, np.asarray(label), raw_index
+        #input, label = self.inputs[index], self.labels[index]
+        #raw_index = self.raw_indexs[index]
+        #return input, np.asarray(label), raw_index
+        return self.inputs[index]
 
     def __len__(self):
-        return len(self.labels)
+        return len(self.inputs)
 
 class FastvcTrainLoader(torch.utils.data.Dataset):
     def __init__(self, data):
@@ -296,28 +299,90 @@ class FastvcTrainLoader(torch.utils.data.Dataset):
         return len(self.labels)
 
 class Dataset:
-    def __init__(self, reload, re_exec, vartype, pama_list, base_path, truth_path):
+    def __init__(self, is_train, re_exec, vartype, pama_list, base_path, truth_path):
+        self.df_input_header = ["RefLength", "AltLength", *fvc_sf, "Deletion", "Insertion", "Complex","Germline", "StrongLOH", "LikelyLOH", "StrongSomatic", "LikelySomatic", "AFDiff", "SampleSpecific"]
         self.data = dict()
         self.inputs = list()
         self.labels = list()
         self.raw_indexs = list()
+        self.stdscaler = preprocessing.StandardScaler()
         self.re_exec = re_exec
+        if is_train:
+            self.prepare_from_tsv(pama_list, vartype)
+        else:
+            self.prepare_from_txt(pama_list, vartype)
         #self.prepare_data(reload, vartype, pama_list, base_path, truth_path)
-        self.prepare_from_tsv(pama_list)
 
-    def prepare_from_tsv(self, pama_list):
+    def prepare_from_tsv(self, pama_list, vartype):
         print("[debug], tsv filename: ", pama_list)
         filepath = pama_list[0]
-        df_header = ["RefLength", "AltLength", "VarType", *fvc_sf, "VarLabel", "label", "proba"]
-        df_input_header = ["RefLength", "AltLength", *fvc_sf]
+        if vartype == 'INDEL':
+            df_header = ["RefLength", "AltLength", "VarType", *fvc_sf, "VarLabel", "label"]
+        else:
+            df_header = []
+
         self.df = pd.read_csv(filepath, header=None)
         self.df.columns = df_header
+        ## hard filter first
+        self.df = hard_filter(self.df)
+        print("truth-false: ", sum(self.df['label'] == 1), sum(self.df['label'] == 0) )
 
-        self.inputs = self.df[df_input_header]
+        #process label to onehort
+        columns = ["Deletion", "Insertion", "Complex"]
+        tmp = self.df["VarType"].apply(lambda x: indels_label_onehot[label_to_types[x]]).to_list()
+        assert len(tmp) == len(self.df) 
+        self.df[columns] = tmp
+        tmp = self.df["VarLabel"].apply(lambda x: varLabel_to_label_onehot[label_to_varLabel[x]]).to_list()
+        columns = ["Germline", "StrongLOH", "LikelyLOH", "StrongSomatic", "LikelySomatic", "AFDiff", "SampleSpecific"]
+        self.df[columns] = tmp
+        assert len(tmp) == len(self.df) 
+
+        self.inputs = self.df[self.df_input_header]
+
+        assert not self.inputs.isnull().values.any()
         self.labels = self.df['label'].to_numpy()
-        self.inputs = preprocessing.scale(self.inputs, axis = 0, with_mean = True, with_std = True, copy = True)
+        #self.inputs = preprocessing.scale(self.inputs, axis = 0, with_mean = True, with_std = True, copy = True)
+        #print(self.inputs[:10])
         print("Normalization done")
 
+    def prepare_from_txt(self, pama_list, vartype):
+        in_file = pama_list[0]
+        cr = pd.read_csv(in_file, delimiter = '\t', header = None, engine = 'c', skipinitialspace = True)
+        cr.columns = [*som_features, 'None'] #TODO: i should change the code of c++ to avoid the None colum
+        cr['VarLabel'] = cr['VarLabel'].map(varLabel_to_label)
+        cr['VarType'] = cr['VarType'].map(types_to_label)
+        cr['RefLength'] = cr['Ref'].str.len()
+        cr['AltLength'] = cr['Alt'].str.len()
+        columns = ["Deletion", "Insertion", "Complex"]
+        if vartype == "INDEL":
+            cr = cr[cr["VarType"] != 0]
+            print("before hard filter: ", len(cr))
+            cr = hard_filter(cr)
+            print("after hard filter: ", len(cr))
+            tmp = cr["VarType"].apply(lambda x: indels_label_onehot[label_to_types[x]]).to_list()
+            assert len(tmp) == len(cr) 
+            cr[columns] = tmp
+            tmp = cr["VarLabel"].apply(lambda x: varLabel_to_label_onehot[label_to_varLabel[x]]).to_list()
+            columns = ["Germline", "StrongLOH", "LikelyLOH", "StrongSomatic", "LikelySomatic", "AFDiff", "SampleSpecific"]
+            cr[columns] = tmp
+
+            self.df = cr
+            self.inputs = self.df[self.df_input_header]
+
+        #snv data process 
+        elif vartype == "SNV":
+            cr = cr[cr['VarType'] == 0]
+            print("before hard filter: ", len(cr))
+            cr = hard_filter(cr)
+            print("after hard filter: ", len(cr))
+            
+            self.inputs = snvs[[*som_selected_features, "VarLabel"]].to_numpy() #TODO
+        else:
+            print('error variant type: ', vartype)
+
+        #self.inputs = preprocessing.scale(self.inputs, axis = 0, with_mean = True, with_std = True, copy = True)
+        self.inputs = self.stdscaler.fit_transform(self.inputs)
+        print("Normalization done")
 
     def prepare_data(self, reload, vartype, pama_list, base_path, truth_path):
         print('[debug]', pama_list, base_path, truth_path)
@@ -343,14 +408,24 @@ class Dataset:
                 self.inputs.append(v[0])
                 self.labels.append(fastvc_label_dict[k])
                 self.raw_indexs.append(v[1])
-            print("origional:", len(merged_data_dict), "after f:", len(keys))
+            assert len(merged_data_dict) == len(keys)
+            #--- load into dataframe ---#
+            self.inputs = pd.DataFrame(self.inputs, columns=self.df_input_header, dtype=float)
+            data = self.inputs
+            self.hard_flag = ((data['Var1AF'] < 0.01)
+                              | (data['Var1QMean'] <= 20)
+                              | (data['Var1NM'] >= 6)
+                              | (data['Var1NM'] < 0)
+                              | ((data['StrongSomatic'] != 1) & (data['LikelySomatic'] != 1)))
+            print("hard flag length: ", len(self.hard_flag), self.hard_flag)
+            assert len(self.hard_flag) == len(self.inputs)
             #--- standlizaton ---#            
             '''
             min_max_scaler = preprocessing.MinMaxScaler()
             self.inputs = min_max_scaler.fit_transform(self.inputs)
             '''
             #---inputs Normalization ---#
-            self.inputs = np.asfarray(self.inputs)
+            #self.inputs = np.asfarray(self.inputs)
             print("start normalization...")
             #self.inputs = preprocessing.normalize(self.inputs, axis = 0, norm = 'l2') 
             self.inputs = preprocessing.scale(self.inputs, axis = 0, with_mean = True, with_std = True, copy = True) 
@@ -370,8 +445,8 @@ class Dataset:
                                 test_size = test_size, random_state = random_state)
 
         print("split result:", type(x_train), x_train.shape)
-        self.data['train'] = [x_train, y_train]
-        self.data['test'] = [x_test, y_test]
+        self.data['train'] = [self.stdscaler.fit_transform(x_train), y_train]
+        self.data['test'] = [self.stdscaler.fit_transform(x_test), y_test]
 
     def load(self, store_path):
         if not os.path.exists(store_path):
