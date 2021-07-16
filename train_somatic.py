@@ -96,7 +96,7 @@ def test_epoch(test_loader, net, optimizer):
     haoz_feature = -1 * math.log((TNR + 0.000001) * (false/total) + 1e-5)
     print("[00/(10+00)] filtered False rate:\t {}".format(g00 /(g10 + g00 + 1e-5)))
     print("[01/(01+11)] filtered Truth rate:\t {}".format(g01 / (g01 + g11 + 1e-5)))
-    print("[11/(10+11)] Precision:\t {}".format(g10 / (g10 + g11 + 1e-5)))
+    print("[11/(10+11)] Precision:\t {}".format(g11 / (g10 + g11 + 1e-5)))
     print("[11/(01+11)] Recall:\t {}".format(g11 / (g01 + g11 + 1e-5)))
     print("haoz feature(bigger better):\t ", haoz_feature)
 
@@ -120,19 +120,13 @@ def train_somatic(args, use_cuda = False):
     class_weight = list([int(wstr[0]), int(wstr[1])])
     #--------------------------------------------------------#
     
-    reload_from_dupfile = False #load from file(True) or compute generate data again(Fasle)
     data_path = "./dataset_{}.pkl".format(VarType)
-    dataset = Dataset(reload_from_dupfile, args.re_exec, VarType, [fastvc_result_path],
+    is_train = True
+    dataset = Dataset(is_train, args.re_exec, VarType, [fastvc_result_path],
                       base_path, truth_path)
-    if reload_from_dupfile:
-        dataset.load(data_path)
-    else:
-        if os.path.exists(data_path):
-            os.remove(data_path)
-        dataset.split(random_state = None)
-        #dataset.store(data_path)
+    dataset.split(random_state = None)
     #------------------------network setting---------------------#
-    max_epoch = 100 
+    max_epoch = 20 
     save_freq = 10 # save every xx save_freq
     n_feature = 0
     if VarType == "INDEL":
@@ -154,8 +148,9 @@ def train_somatic(args, use_cuda = False):
     n_epoch = 0
     #optimizer
     #optimizer = optim.SGD(net.parameters(), lr = 0.01, momentum = 0.9)
-    #optimizer = optim.Adam(net.parameters(), lr = 0.1)
-    optimizer = torch.optim.Adadelta(net.parameters(), lr=0.1, rho=0.956, eps=1e-010, weight_decay=1e-3)
+    optimizer = optim.Adam(net.parameters(), lr = 1e-3)
+    scheduler = torch.optim.lr_scheduler.ExponentialLR(optimizer, gamma=0.99)
+    #optimizer = torch.optim.Adadelta(net.parameters(), lr=0.1, rho=0.956, eps=1e-010, weight_decay=1e-3)
     weight = torch.Tensor(class_weight) #[CHANGE]
     if(use_cuda):
         weight = weight.cuda()
@@ -177,9 +172,10 @@ def train_somatic(args, use_cuda = False):
     #------------------------------------------------------------#
     
     max_haoz_feature = 0
+    last_meanlose = 0
     for epoch in range(max_epoch):
         print("epoch", epoch, " processing....")
-        if (not reload_from_dupfile) and (epoch != 0):
+        if epoch != 0:
             dataset.split(random_state = None)
         test_dataset = FastvcTrainLoader(dataset.data['test'])
         test_loader = torch.utils.data.DataLoader(test_dataset, 
@@ -217,7 +213,12 @@ def train_somatic(args, use_cuda = False):
                 print("[%5d] loss: %.5f" % (i + 1, runing_loss / 100))
                 runing_loss = 0.0
     
+        mean_lose = sum(epoch_loss) / len(epoch_loss)
         print("mean loss of epoch %d is: %f" % (epoch, sum(epoch_loss) / len(epoch_loss)))
+        if abs(mean_lose - last_meanlose) < 1e-5:
+            print("model lose keep unchanged, stop training")
+            #break
+        last_meanlose = mean_lose
         epoch_feature = test_epoch(test_loader, net, optimizer)
         if n_epoch == - 1: # (save_freq - 1):
             max_haoz_feature = epoch_feature
@@ -229,7 +230,8 @@ def train_somatic(args, use_cuda = False):
                 "optimizer": optimizer.state_dict(),
                 "tag": tag,
                 "epoch": n_epoch,
-                }, '{}/all_epoch/checkpoint_{}_ecpch{}.pth'.format(out_dir, tag, n_epoch))
+                }, '{}.{}'.format(args.out_model_path, n_epoch))
+        scheduler.step()
     
     if not os.path.exists(out_dir):
         os.mkdir(out_dir)
@@ -240,16 +242,8 @@ def train_somatic(args, use_cuda = False):
         "optimizer": optimizer.state_dict(),
         "epoch": n_epoch,
         }, args.out_model_path)
-    '''
-    torch.save({
-        "state_dict": net.state_dict(),
-        "tag": tag,
-        "optimizer": optimizer.state_dict(),
-        "epoch": n_epoch,
-        }, '{}/checkpoint_{}_ecpch{}.pth'.format(out_dir, tag, n_epoch))
-    '''
     print("training done!")
-    print("final model:", '{}/checkpoint_{}_ecpch{}.pth'.format(out_dir, tag, n_epoch))
+    print("final model:", args.out_model_path)
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(

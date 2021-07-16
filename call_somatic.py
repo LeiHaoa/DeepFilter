@@ -189,7 +189,7 @@ def call_somatic(args, use_cuda):
         predicted = predicted.numpy()
         summm += sum(predicted)
         pred_collection = np.append(pred_collection, predicted)
-        positive_index = np.where(predicted == 1)
+        #positive_index = np.where(predicted == 1)
         #print(len(positive_index[0]), positive_index[0])
         #result_indexs.update(set(raw_indexs.numpy()[positive_index]))
     assert len(pred_collection) == len(dataset.df)

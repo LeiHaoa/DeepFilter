@@ -300,7 +300,8 @@ class FastvcTrainLoader(torch.utils.data.Dataset):
 
 class Dataset:
     def __init__(self, is_train, re_exec, vartype, pama_list, base_path, truth_path):
-        self.df_input_header = ["RefLength", "AltLength", *fvc_sf, "Deletion", "Insertion", "Complex","Germline", "StrongLOH", "LikelyLOH", "StrongSomatic", "LikelySomatic", "AFDiff", "SampleSpecific"]
+        self.indel_input_header = ["RefLength", "AltLength", *fvc_sf, "Deletion", "Insertion", "Complex","Germline", "StrongLOH", "LikelyLOH", "StrongSomatic", "LikelySomatic", "AFDiff", "SampleSpecific"]
+        self.snv_input_header = [*fvc_sf, "Germline", "StrongLOH", "LikelyLOH", "StrongSomatic", "LikelySomatic", "AFDiff", "SampleSpecific"]
         self.data = dict()
         self.inputs = list()
         self.labels = list()
@@ -319,25 +320,36 @@ class Dataset:
         if vartype == 'INDEL':
             df_header = ["RefLength", "AltLength", "VarType", *fvc_sf, "VarLabel", "label"]
         else:
-            df_header = []
+            df_header = [*fvc_sf, "VarLabel", "label"]
 
         self.df = pd.read_csv(filepath, header=None)
         self.df.columns = df_header
         ## hard filter first
+        print("before hard filter: ", len(self.df))
         self.df = hard_filter(self.df)
+        print("after hard filter: ", len(self.df))
+        #----- experiments: keep only af >= 0.1
+        #self.df = self.df[self.df["Var1AF"] >= 0.1]
+        print("high af number:", len(self.df))
+
         print("truth-false: ", sum(self.df['label'] == 1), sum(self.df['label'] == 0) )
 
         #process label to onehort
-        columns = ["Deletion", "Insertion", "Complex"]
-        tmp = self.df["VarType"].apply(lambda x: indels_label_onehot[label_to_types[x]]).to_list()
-        assert len(tmp) == len(self.df) 
-        self.df[columns] = tmp
+        if vartype == "INDEL":
+            columns = ["Deletion", "Insertion", "Complex"]
+            tmp = self.df["VarType"].apply(lambda x: indels_label_onehot[label_to_types[x]]).to_list()
+            assert len(tmp) == len(self.df) 
+            self.df[columns] = tmp
+
         tmp = self.df["VarLabel"].apply(lambda x: varLabel_to_label_onehot[label_to_varLabel[x]]).to_list()
         columns = ["Germline", "StrongLOH", "LikelyLOH", "StrongSomatic", "LikelySomatic", "AFDiff", "SampleSpecific"]
         self.df[columns] = tmp
         assert len(tmp) == len(self.df) 
 
-        self.inputs = self.df[self.df_input_header]
+        if vartype == "INDEL":
+            self.inputs = self.df[self.indel_input_header]
+        else:
+            self.inputs = self.df[self.snv_input_header]
 
         assert not self.inputs.isnull().values.any()
         self.labels = self.df['label'].to_numpy()
@@ -359,6 +371,9 @@ class Dataset:
             print("before hard filter: ", len(cr))
             cr = hard_filter(cr)
             print("after hard filter: ", len(cr))
+            #----- experiments: keep only af >= 0.1
+            #cr = cr[cr['Var1AF'] >= 0.1]
+            print("high af variant: ", len(cr))
             tmp = cr["VarType"].apply(lambda x: indels_label_onehot[label_to_types[x]]).to_list()
             assert len(tmp) == len(cr) 
             cr[columns] = tmp
@@ -367,7 +382,7 @@ class Dataset:
             cr[columns] = tmp
 
             self.df = cr
-            self.inputs = self.df[self.df_input_header]
+            self.inputs = self.df[self.indel_input_header]
 
         #snv data process 
         elif vartype == "SNV":
@@ -375,8 +390,12 @@ class Dataset:
             print("before hard filter: ", len(cr))
             cr = hard_filter(cr)
             print("after hard filter: ", len(cr))
-            
-            self.inputs = snvs[[*som_selected_features, "VarLabel"]].to_numpy() #TODO
+
+            tmp = cr["VarLabel"].apply(lambda x: varLabel_to_label_onehot[label_to_varLabel[x]]).to_list()
+            columns = ["Germline", "StrongLOH", "LikelyLOH", "StrongSomatic", "LikelySomatic", "AFDiff", "SampleSpecific"]
+            cr[columns] = tmp
+            self.df = cr
+            self.inputs = self.df[self.snv_input_header]
         else:
             print('error variant type: ', vartype)
 
@@ -410,7 +429,7 @@ class Dataset:
                 self.raw_indexs.append(v[1])
             assert len(merged_data_dict) == len(keys)
             #--- load into dataframe ---#
-            self.inputs = pd.DataFrame(self.inputs, columns=self.df_input_header, dtype=float)
+            self.inputs = pd.DataFrame(self.inputs, columns=self.indel_input_header, dtype=float)
             data = self.inputs
             self.hard_flag = ((data['Var1AF'] < 0.01)
                               | (data['Var1QMean'] <= 20)

@@ -1,12 +1,12 @@
-set -x 
+set -x
 set -e
 
+weight=$1
+
 python train_somatic.py \
-    --workspace /home/haoz/deepfilter/workspace \
-    --train_data /home/haoz/data/somatic/FD_10_18_data/train.txt \
-    --truth_file /home/haoz/data/somatic/FD_10_18_data/synthetic_snvs.vcf \
-    --nthread 20 \
-    --var_type "SNV" \
-	--weight 1_10 \
-	--out_model_path /home/haoz/deepfilter/workspace/test/checkpoint_snv_w1_10.pth
-	#--pretrained_model /home/haoz/deepfilter/workspace/models/checkpoint_INDEL_20-10-20-20-22-45_ecpch10.pth \
+  --workspace /home/haoz/RabbitVar/DeepFilter \
+  --train_data  /home/haoz/RabbitVar/DeepFilter/train_data/data_indel_all.tsv \
+  --nthread 8 \
+  --var_type "INDEL" \
+  --weight ${weight} \
+  --out_model_path /home/haoz/RabbitVar/DeepFilter/models/checkpoint_indel_w${weight}.adam.pth

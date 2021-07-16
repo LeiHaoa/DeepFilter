@@ -22,8 +22,12 @@ class IndelNet(torch.nn.Module):
     self.hidden3 = nn.Linear(hidden_sizes[2], hidden_sizes[3])
     self.hidden4 = nn.Linear(hidden_sizes[3], hidden_sizes[4])
     self.predict = nn.Linear(hidden_sizes[-1], n_output) # output layer
-    #self.predict = nn.Linear(hidden_sizes[0], n_output) # output layer
     self.dropout = nn.Dropout(p = 0.5)
+    #self.bn0 = nn.BatchNorm1d(hidden_sizes[0])
+    #self.bn1 = nn.BatchNorm1d(hidden_sizes[1])
+    #self.bn2 = nn.BatchNorm1d(hidden_sizes[2])
+    #self.bn3 = nn.BatchNorm1d(hidden_sizes[3])
+    #self.bn4 = nn.BatchNorm1d(hidden_sizes[4])
   
   def forward(self, x): 
     '''
@@ -34,15 +38,20 @@ class IndelNet(torch.nn.Module):
     #print("----------------print out input--------------")
     act_f = F.leaky_relu
     #act_f = torch.tanh
-    x = act_f(self.hidden0(x)) 
+    x = act_f(self.hidden0(x))
+    #x = self.bn0(x)
     x = self.dropout(x)
     x = act_f(self.hidden1(x)) 
+    #x = self.bn1(x)
     x = self.dropout(x)
     x = act_f(self.hidden2(x))
+    #x = self.bn2(x)
     x = self.dropout(x)
     x = act_f(self.hidden3(x))
+    #x = self.bn3(x)
     x = self.dropout(x)
     x = act_f(self.hidden4(x))
+    #x = self.bn4(x)
     x = self.predict(x) 
     #print("6\n", x)
     return x
