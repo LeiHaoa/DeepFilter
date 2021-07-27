@@ -4,13 +4,13 @@ rabbitvar filter
 
 A deep-learning-based variant filter for VarDict
 
-## Pipline 
+## Pipeline 
 There are three main steps in DeepFilter: 
 - DeepFilter uses a hard filter strategy to the intermediate results produced by VarDict. Variants that match these conditions will be filtered out.
 - Then, the filtered data is the input to the network for inference.
 - Finally, DeepFilter formats the filtered data into VCF file.
 
-![pipeline](./image/pipeline.pdf)
+![pipeline](./image/pipeline.png)
 
 ## An example using DeepFilter to filter INDEL or SNV variants
 
