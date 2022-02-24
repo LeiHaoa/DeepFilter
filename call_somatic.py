@@ -221,7 +221,7 @@ if __name__ == "__main__":
     parser.add_argument('--bam_file', help = "input alignment file(.bam)", type=str, required = False)
     parser.add_argument('--workspace', help = "workspace", type=str, required = True)
     parser.add_argument('--in_data', help = "RabbitVar intermidiate file(with fisher test)", type=str, required = True)
-    parser.add_argument('--truth_file', help = "truth file / the ground truth(.vcf)", type=str, required = True)
+    parser.add_argument('--truth_file', help = "truth file / the ground truth(.vcf)", type=str, required = False)
     parser.add_argument('--model_out', help = "the path you want to store your model", type=str, default="./models")
     parser.add_argument('--var_type', help = "var type you want to train(SNV/INDEL)", type=str, required = True)
     #parser.add_argument('--var_type', help = "var type you want to train(SNV/INDEL)", type=str, required = True)

@@ -354,7 +354,9 @@ class Dataset:
         assert not self.inputs.isnull().values.any()
         self.labels = self.df['label'].to_numpy()
         #self.inputs = preprocessing.scale(self.inputs, axis = 0, with_mean = True, with_std = True, copy = True)
-        #print(self.inputs[:10])
+        print("start normalization...")
+        self.inputs = preprocessing.normalize(self.inputs, axis = 0, norm = 'l2') 
+        #self.inputs = preprocessing.scale(self.inputs, axis = 0, with_mean = True, with_std = True, copy = True) 
         print("Normalization done")
 
     def prepare_from_txt(self, pama_list, vartype):
@@ -446,8 +448,8 @@ class Dataset:
             #---inputs Normalization ---#
             #self.inputs = np.asfarray(self.inputs)
             print("start normalization...")
-            #self.inputs = preprocessing.normalize(self.inputs, axis = 0, norm = 'l2') 
-            self.inputs = preprocessing.scale(self.inputs, axis = 0, with_mean = True, with_std = True, copy = True) 
+            self.inputs = preprocessing.normalize(self.inputs, axis = 0, norm = 'l2') 
+            #self.inputs = preprocessing.scale(self.inputs, axis = 0, with_mean = True, with_std = True, copy = True) 
             print("[info] inputs shape:", self.inputs.shape)
             '''
             np.set_printoptions(precision = 3, threshold=1000)
@@ -458,7 +460,7 @@ class Dataset:
             print("normalization done")
             print("FastvcDataset init over")
 
-    def split(self, test_size = 0.2, random_state = 0):
+    def split(self, test_size = 0.1, random_state = 0):
         print("spliting data...")
         x_train, x_test, y_train, y_test = train_test_split(self.inputs, self.labels, 
                                 test_size = test_size, random_state = random_state)
