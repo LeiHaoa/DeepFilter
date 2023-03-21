@@ -9,7 +9,7 @@ import torch.nn.functional as F
 import torch.optim as optim
 #import torchvision
 from torch.autograd import Variable
-sys.path.append("/home/haoz/RabbitVar/utils")
+sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), './utils'))
 from vcf_writer import *
 
 import somatic_data_loader
