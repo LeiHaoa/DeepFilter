@@ -4,7 +4,7 @@ import random
 import shutil
 import subprocess
 import sys
-sys.path.append("/home/haoz/RabbitVar/utils")
+sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), './utils'))
 from datautil import *
 
 import numpy as np
