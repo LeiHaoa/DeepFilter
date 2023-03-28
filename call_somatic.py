@@ -78,26 +78,6 @@ def test_call(test_loader, net):
 #sys.stdout = Logger(filename = "./logs/mcall_indel.out")
 
 def call_somatic(args, use_cuda):
-    #--------------------------------------------------------#
-    #region_file = "/home/old_home/haoz/workspace/data/NA12878/ConfidentRegions.bed"
-    #fasta_file = "/home/old_home/haoz/workspace/data/hg38/hg38.fa"
-    #bam_file = "/home/old_home/haoz/workspace/data/NA12878/NA12878_S1.bam"
-    #base_path = "/home/haoz/deepfilter/workspace"
-    #models_dir = os.path.join(base_path, "models")
-    #re_exec = False
-    #strelka2_result_path = "/home/old_home/haoz/workspace/VCTools/strelka-2.9.10.centos6_x86_64/hg38run_40th/results/variants/variants.vcf"
-    ##fastvc_result_path = "/home/haoz/data/lh_fisher.txt"
-    ##truth_path =  "/home/haoz/data/full.37m.vcf"
-    ##fastvc_result_path = "/home/haoz/data/out_fisher.vcf"
-    #fastvc_result_path = "/home/haoz/data/somatic/FD_10_18_data/test.txt"
-    ##fastvc_result_path = "/home/haoz/data/somatic/FDSynthetic.notloose.txt"
-    ##fastvc_result_path = "/home/haoz/data/chm1_chm13.txt"
-    #truth_path =  "/home/haoz/data/somatic/synthetic_indels.leftAlign.vcf"
-    #checkpoint_w1_10 = os.path.join(models_dir, "checkpoint_INDEL_20-10-21-13-13-07_ecpch10.pth")
-    #
-    #output_path = "./deepfiltered_out.indel.txt"
-    ##checkpoint = os.path.join(models_dir, "checkpoint_fastvc_20-09-21-01-04-02_ecpch93.pth")
-    #--------------------------------------------------------#
     if args.re_exec:
         region_file = args.region_file
         fasta_file = args.ref_file

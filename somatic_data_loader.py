@@ -17,6 +17,7 @@ from sklearn.model_selection import train_test_split
 #from features import features_to_index as fe2i, fvc_selected_features as fvc_sf
 from features import som_features_to_index as fe2i
 from features import som_selected_features as fvc_sf
+from features import som_features
 
 varLabel_to_label_onehot = {
     "Germline"      : [1, 0, 0, 0, 0, 0, 0],
@@ -56,12 +57,18 @@ types_to_label = {
                 "Deletion": 1, 
                 "Insertion":2, 
                 "Complex":  3, 
+                "INV": 4,
+                "DUP": 5,
+                "DEL": 6
                 }
 label_to_types = {
         0: "SNV",
         1: "Deletion", 
         2: "Insertion", 
         3: "Complex", 
+        4: "INV",
+        5: "DUP",
+        6: "DEL",
         }
 snv_label = "SNV"
 
@@ -362,9 +369,16 @@ class Dataset:
     def prepare_from_txt(self, pama_list, vartype):
         in_file = pama_list[0]
         cr = pd.read_csv(in_file, delimiter = '\t', header = None, engine = 'c', skipinitialspace = True)
-        cr.columns = [*som_features, 'None'] #TODO: i should change the code of c++ to avoid the None colum
+        if(len(cr.columns) == 61): #VarDict
+            cr.columns = [*som_features]
+        elif(len(cr.columns) == 62): #RabbitVar
+            cr.columns = [*som_features, 'None']
+        #processing INF:
+        cr = cr.replace([np.inf, -np.inf], np.nan)
         cr['VarLabel'] = cr['VarLabel'].map(varLabel_to_label)
         cr['VarType'] = cr['VarType'].map(types_to_label)
+        #drop SV variants
+        cr = cr[cr['VarType'] < 4]
         cr['RefLength'] = cr['Ref'].str.len()
         cr['AltLength'] = cr['Alt'].str.len()
         columns = ["Deletion", "Insertion", "Complex"]
@@ -375,7 +389,6 @@ class Dataset:
             print("after hard filter: ", len(cr))
             #----- experiments: keep only af >= 0.1
             #cr = cr[cr['Var1AF'] >= 0.1]
-            print("high af variant: ", len(cr))
             tmp = cr["VarType"].apply(lambda x: indels_label_onehot[label_to_types[x]]).to_list()
             assert len(tmp) == len(cr) 
             cr[columns] = tmp
@@ -403,6 +416,7 @@ class Dataset:
 
         #self.inputs = preprocessing.scale(self.inputs, axis = 0, with_mean = True, with_std = True, copy = True)
         self.inputs = self.stdscaler.fit_transform(self.inputs)
+        #print(self.inputs)
         print("Normalization done")
 
     def prepare_data(self, reload, vartype, pama_list, base_path, truth_path):
